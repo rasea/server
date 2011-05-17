@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.jboss.seam.Component;
 import org.rasea.core.entity.Application;
-import org.rasea.core.entity.Credentials;
 import org.rasea.core.entity.Operation;
 import org.rasea.core.entity.Permission;
 import org.rasea.core.entity.Resource;
@@ -25,15 +24,16 @@ import org.rasea.core.service.UserService;
 import org.rasea.extensions.entity.User;
 import org.rasea.ws.v1.exception.ExceptionFactory;
 import org.rasea.ws.v1.exception.WebServiceException;
+import org.rasea.ws.v1.type.CredentialsType;
 
 public abstract class AbstractWebService {
 
-	protected void checkAuthentication(final Credentials credentials) throws WebServiceException {
+	protected void checkAuthentication(final CredentialsType credentialsType) throws WebServiceException {
 		try {
-			final boolean authenticated = this.getUserService().authenticate(credentials.getUsername(), credentials.getPassword());
+			final boolean authenticated = this.getUserService().authenticate(credentialsType.getUsername(), credentialsType.getPassword());
 
 			if (!authenticated) {
-				throw ExceptionFactory.createAuthenticationFailed(credentials.getUsername());
+				throw ExceptionFactory.createAuthenticationFailed(credentialsType.getUsername());
 			}
 
 		} catch (final Exception cause) {
@@ -41,9 +41,9 @@ public abstract class AbstractWebService {
 		}
 	}
 
-	protected void checkPermission(final Credentials credentials, final String resourceName, final String operationName) throws WebServiceException {
+	protected void checkPermission(final CredentialsType credentialsType, final String resourceName, final String operationName) throws WebServiceException {
 		try {
-			final String username = credentials.getUsername();
+			final String username = credentialsType.getUsername();
 
 			final Application application = this.getDefaultApplication();
 			final List<Permission> permissions = this.getPermissionService().find(application, new User(username));

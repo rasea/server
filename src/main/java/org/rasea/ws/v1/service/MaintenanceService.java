@@ -12,7 +12,6 @@ import javax.jws.soap.SOAPBinding.Style;
 import javax.jws.soap.SOAPBinding.Use;
 
 import org.rasea.core.entity.Application;
-import org.rasea.core.entity.Credentials;
 import org.rasea.core.entity.Operation;
 import org.rasea.core.entity.Permission;
 import org.rasea.core.entity.Resource;
@@ -28,16 +27,17 @@ import org.rasea.ws.v1.request.ResourceNameRequest;
 import org.rasea.ws.v1.request.ResourceRequest;
 import org.rasea.ws.v1.request.UserNameRequest;
 import org.rasea.ws.v1.response.OperationsResponse;
+import org.rasea.ws.v1.type.CredentialsType;
 
 @WebService(name = "Maintenance_v1", targetNamespace = "http://rasea.org/ps/wsdl/Maintenance_v1", serviceName = "Maintenance_v1", portName = "MaintenancePort_v1")
 @SOAPBinding(parameterStyle = ParameterStyle.BARE, style = Style.DOCUMENT, use = Use.LITERAL)
 public class MaintenanceService extends AbstractWebService {
 
 	@WebMethod
-	public void addApplication(final ApplicationRequest param, @WebParam(header = true) final Credentials credentials) throws WebServiceException {
+	public void addApplication(final ApplicationRequest param, @WebParam(header = true) final CredentialsType credentialsType) throws WebServiceException {
 		try {
-			this.checkAuthentication(credentials);
-			this.checkPermission(credentials, "application", Constants.DEFAULT_OPERATION_INSERT);
+			this.checkAuthentication(credentialsType);
+			this.checkPermission(credentialsType, "application", Constants.DEFAULT_OPERATION_INSERT);
 
 			this.getApplicationService().insert(param.getApplication());
 
@@ -47,10 +47,10 @@ public class MaintenanceService extends AbstractWebService {
 	}
 
 	@WebMethod
-	public void addOperation(final OperationRequest param, @WebParam(header = true) final Credentials credentials) throws WebServiceException {
+	public void addOperation(final OperationRequest param, @WebParam(header = true) final CredentialsType credentialsType) throws WebServiceException {
 		try {
-			this.checkAuthentication(credentials);
-			this.checkPermission(credentials, "operation", Constants.DEFAULT_OPERATION_INSERT);
+			this.checkAuthentication(credentialsType);
+			this.checkPermission(credentialsType, "operation", Constants.DEFAULT_OPERATION_INSERT);
 
 			final Application application = this.getApplication(param.getApplicationName());
 			param.getOperation().setApplication(application);
@@ -63,7 +63,7 @@ public class MaintenanceService extends AbstractWebService {
 	}
 
 	@WebMethod
-	public void addPermission(final PermissionRequest param, @WebParam(header = true) final Credentials credentials) throws WebServiceException {
+	public void addPermission(final PermissionRequest param, @WebParam(header = true) final CredentialsType credentialsType) throws WebServiceException {
 
 		try {
 			final Application application = this.getApplication(param.getApplicationName());
@@ -79,10 +79,10 @@ public class MaintenanceService extends AbstractWebService {
 	}
 
 	@WebMethod
-	public void addResource(final ResourceRequest param, @WebParam(header = true) final Credentials credentials) throws WebServiceException {
+	public void addResource(final ResourceRequest param, @WebParam(header = true) final CredentialsType credentialsType) throws WebServiceException {
 		try {
-			this.checkAuthentication(credentials);
-			this.checkPermission(credentials, "resource", Constants.DEFAULT_OPERATION_INSERT);
+			this.checkAuthentication(credentialsType);
+			this.checkPermission(credentialsType, "resource", Constants.DEFAULT_OPERATION_INSERT);
 
 			final Application application = this.getApplication(param.getApplicationName());
 			param.getResource().setApplication(application);
@@ -96,7 +96,7 @@ public class MaintenanceService extends AbstractWebService {
 
 	@WebMethod
 	@WebResult(name = "application")
-	public Application applicationDetail(final ApplicationNameRequest param, @WebParam(header = true) final Credentials credentials)
+	public Application applicationDetail(final ApplicationNameRequest param, @WebParam(header = true) final CredentialsType credentialsType)
 			throws WebServiceException {
 		Application result = null;
 
@@ -111,10 +111,10 @@ public class MaintenanceService extends AbstractWebService {
 	}
 
 	@WebMethod
-	public void assignOwner(final UserNameRequest param, @WebParam(header = true) final Credentials credentials) throws WebServiceException {
+	public void assignOwner(final UserNameRequest param, @WebParam(header = true) final CredentialsType credentialsType) throws WebServiceException {
 		try {
-			this.checkAuthentication(credentials);
-			this.checkPermission(credentials, "owner", Constants.DEFAULT_OPERATION_UPDATE);
+			this.checkAuthentication(credentialsType);
+			this.checkPermission(credentialsType, "owner", Constants.DEFAULT_OPERATION_UPDATE);
 
 			final User user = this.getUser(param.getUsername());
 			final Application application = this.getApplication(param.getApplicationName());
@@ -126,10 +126,10 @@ public class MaintenanceService extends AbstractWebService {
 	}
 
 	@WebMethod
-	public void deassignOwner(final UserNameRequest param, @WebParam(header = true) final Credentials credentials) throws WebServiceException {
+	public void deassignOwner(final UserNameRequest param, @WebParam(header = true) final CredentialsType credentialsType) throws WebServiceException {
 		try {
-			this.checkAuthentication(credentials);
-			this.checkPermission(credentials, "owner", Constants.DEFAULT_OPERATION_UPDATE);
+			this.checkAuthentication(credentialsType);
+			this.checkPermission(credentialsType, "owner", Constants.DEFAULT_OPERATION_UPDATE);
 
 			final User user = this.getUser(param.getUsername());
 			final Application application = this.getApplication(param.getApplicationName());
@@ -141,11 +141,11 @@ public class MaintenanceService extends AbstractWebService {
 	}
 
 	@WebMethod
-	public void deleteApplication(final ApplicationNameRequest param, @WebParam(header = true) final Credentials credentials)
+	public void deleteApplication(final ApplicationNameRequest param, @WebParam(header = true) final CredentialsType credentialsType)
 			throws WebServiceException {
 		try {
-			this.checkAuthentication(credentials);
-			this.checkPermission(credentials, "application", Constants.DEFAULT_OPERATION_DELETE);
+			this.checkAuthentication(credentialsType);
+			this.checkPermission(credentialsType, "application", Constants.DEFAULT_OPERATION_DELETE);
 
 			final Application application = this.getApplication(param.getApplicationName());
 			this.getApplicationService().delete(application);
@@ -156,10 +156,10 @@ public class MaintenanceService extends AbstractWebService {
 	}
 
 	@WebMethod
-	public void deleteOperation(final OperationNameRequest param, @WebParam(header = true) final Credentials credentials) throws WebServiceException {
+	public void deleteOperation(final OperationNameRequest param, @WebParam(header = true) final CredentialsType credentialsType) throws WebServiceException {
 		try {
-			this.checkAuthentication(credentials);
-			this.checkPermission(credentials, "operation", Constants.DEFAULT_OPERATION_DELETE);
+			this.checkAuthentication(credentialsType);
+			this.checkPermission(credentialsType, "operation", Constants.DEFAULT_OPERATION_DELETE);
 
 			final Application application = this.getApplication(param.getApplicationName());
 			final Operation operation = this.getOperation(application, param.getOperationName());
@@ -172,14 +172,14 @@ public class MaintenanceService extends AbstractWebService {
 	}
 
 	@WebMethod
-	public void deletePermission(final PermissionRequest param, @WebParam(header = true) final Credentials credentials) throws WebServiceException {
+	public void deletePermission(final PermissionRequest param, @WebParam(header = true) final CredentialsType credentialsType) throws WebServiceException {
 	}
 
 	@WebMethod
-	public void deleteResource(final ResourceNameRequest param, @WebParam(header = true) final Credentials credentials) throws WebServiceException {
+	public void deleteResource(final ResourceNameRequest param, @WebParam(header = true) final CredentialsType credentialsType) throws WebServiceException {
 		try {
-			this.checkAuthentication(credentials);
-			this.checkPermission(credentials, "resource", Constants.DEFAULT_OPERATION_DELETE);
+			this.checkAuthentication(credentialsType);
+			this.checkPermission(credentialsType, "resource", Constants.DEFAULT_OPERATION_DELETE);
 
 			final Application application = this.getApplication(param.getApplicationName());
 			final Resource resource = this.getResource(application, param.getResourceName());
@@ -193,7 +193,7 @@ public class MaintenanceService extends AbstractWebService {
 
 	@WebMethod
 	@WebResult(name = "operation")
-	public Operation operationDetail(final OperationNameRequest param, @WebParam(header = true) final Credentials credentials)
+	public Operation operationDetail(final OperationNameRequest param, @WebParam(header = true) final CredentialsType credentialsType)
 			throws WebServiceException {
 		Operation result = null;
 
@@ -210,7 +210,7 @@ public class MaintenanceService extends AbstractWebService {
 
 	@WebMethod
 	@WebResult(name = "resource")
-	public Resource resourceDetail(final ResourceNameRequest param, @WebParam(header = true) final Credentials credentials)
+	public Resource resourceDetail(final ResourceNameRequest param, @WebParam(header = true) final CredentialsType credentialsType)
 			throws WebServiceException {
 		Resource result = null;
 
@@ -227,11 +227,11 @@ public class MaintenanceService extends AbstractWebService {
 
 	@WebMethod
 	@WebResult(name = "operations")
-	public OperationsResponse resourceOperations(final ResourceNameRequest param, @WebParam(header = true) final Credentials credentials)
+	public OperationsResponse resourceOperations(final ResourceNameRequest param, @WebParam(header = true) final CredentialsType credentialsType)
 			throws WebServiceException {
 
-		this.checkAuthentication(credentials);
-		this.checkPermission(credentials, "resource", Constants.DEFAULT_OPERATION_SHOW);
+		this.checkAuthentication(credentialsType);
+		this.checkPermission(credentialsType, "resource", Constants.DEFAULT_OPERATION_SHOW);
 
 		final OperationsResponse result = new OperationsResponse();
 
