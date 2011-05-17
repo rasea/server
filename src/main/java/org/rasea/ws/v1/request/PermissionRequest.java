@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.rasea.core.entity.Permission;
+import org.rasea.ws.v1.type.PermissionType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "applicationName", "permission" })
@@ -15,13 +15,13 @@ public class PermissionRequest {
 	private String applicationName;
 
 	@XmlElement(required = true)
-	private Permission permission;
+	private PermissionType permission;
 
 	public String getApplicationName() {
 		return this.applicationName;
 	}
 
-	public Permission getPermission() {
+	public PermissionType getPermission() {
 		return this.permission;
 	}
 
@@ -29,7 +29,7 @@ public class PermissionRequest {
 		this.applicationName = applicationName;
 	}
 
-	public void setPermission(final Permission permission) {
+	public void setPermission(final PermissionType permission) {
 		this.permission = permission;
 	}
 

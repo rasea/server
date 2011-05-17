@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.rasea.core.entity.Operation;
+import org.rasea.ws.v1.type.OperationType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "applicationName", "operation" })
@@ -15,13 +15,13 @@ public class OperationRequest {
 	private String applicationName;
 
 	@XmlElement(required = true)
-	private Operation operation;
+	private OperationType operation;
 
 	public String getApplicationName() {
 		return this.applicationName;
 	}
 
-	public Operation getOperation() {
+	public OperationType getOperation() {
 		return this.operation;
 	}
 
@@ -29,7 +29,7 @@ public class OperationRequest {
 		this.applicationName = applicationName;
 	}
 
-	public void setOperation(final Operation operation) {
+	public void setOperation(final OperationType operation) {
 		this.operation = operation;
 	}
 

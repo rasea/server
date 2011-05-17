@@ -28,12 +28,12 @@ import org.rasea.ws.v1.type.CredentialsType;
 
 public abstract class AbstractWebService {
 
-	protected void checkAuthentication(final CredentialsType credentialsType) throws WebServiceException {
+	protected void checkAuthentication(final CredentialsType credentials) throws WebServiceException {
 		try {
-			final boolean authenticated = this.getUserService().authenticate(credentialsType.getUsername(), credentialsType.getPassword());
+			final boolean authenticated = this.getUserService().authenticate(credentials.getUsername(), credentials.getPassword());
 
 			if (!authenticated) {
-				throw ExceptionFactory.createAuthenticationFailed(credentialsType.getUsername());
+				throw ExceptionFactory.createAuthenticationFailed(credentials.getUsername());
 			}
 
 		} catch (final Exception cause) {
@@ -41,9 +41,9 @@ public abstract class AbstractWebService {
 		}
 	}
 
-	protected void checkPermission(final CredentialsType credentialsType, final String resourceName, final String operationName) throws WebServiceException {
+	protected void checkPermission(final CredentialsType credentials, final String resourceName, final String operationName) throws WebServiceException {
 		try {
-			final String username = credentialsType.getUsername();
+			final String username = credentials.getUsername();
 
 			final Application application = this.getDefaultApplication();
 			final List<Permission> permissions = this.getPermissionService().find(application, new User(username));

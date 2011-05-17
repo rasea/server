@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.rasea.core.entity.Resource;
+import org.rasea.ws.v1.type.ResourceType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "applicationName", "resource" })
@@ -15,13 +15,13 @@ public class ResourceRequest {
 	private String applicationName;
 
 	@XmlElement(required = true)
-	private Resource resource;
+	private ResourceType resource;
 
 	public String getApplicationName() {
 		return this.applicationName;
 	}
 
-	public Resource getResource() {
+	public ResourceType getResource() {
 		return this.resource;
 	}
 
@@ -29,7 +29,7 @@ public class ResourceRequest {
 		this.applicationName = applicationName;
 	}
 
-	public void setResource(final Resource resource) {
+	public void setResource(final ResourceType resource) {
 		this.resource = resource;
 	}
 

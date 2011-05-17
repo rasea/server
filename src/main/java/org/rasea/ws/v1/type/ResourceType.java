@@ -1,22 +1,37 @@
 package org.rasea.ws.v1.type;
 
-import java.io.Serializable;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-@SuppressWarnings("serial")
+import org.rasea.core.entity.Resource;
+
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "resource", propOrder = { "name", "displayName" })
-public class ResourceType implements Serializable {
+@XmlType(propOrder = { "name", "displayName" })
+public class ResourceType {
 
 	@XmlElement(required = true)
 	private String name;
 
 	@XmlElement(required = true)
 	private String displayName;
+
+	public Resource parse() {
+		Resource resource = new Resource();
+		resource.setName(name);
+		resource.setDisplayName(displayName);
+
+		return resource;
+	}
+
+	public static ResourceType parse(Resource operation) {
+		ResourceType type = new ResourceType();
+		type.setName(operation.getName());
+		type.setDisplayName(operation.getDisplayName());
+
+		return type;
+	}
 
 	public String getName() {
 		return name;

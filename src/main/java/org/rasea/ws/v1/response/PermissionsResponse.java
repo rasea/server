@@ -7,20 +7,20 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.rasea.core.entity.Permission;
+import org.rasea.ws.v1.type.PermissionType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "permissions" })
 public class PermissionsResponse {
-	
+
 	@XmlElement(name = "permission", required = true)
-	private List<Permission> permissions;
-	
-	public List<Permission> getPermissions() {
+	private List<PermissionType> permissions;
+
+	public List<PermissionType> getPermissions() {
 		return this.permissions;
 	}
-	
-	public void setPermissions(final List<Permission> permissions) {
+
+	public void setPermissions(final List<PermissionType> permissions) {
 		this.permissions = permissions;
 	}
 }
