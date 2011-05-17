@@ -1,0 +1,69 @@
+ -----
+ Início: bem vindo
+ -----
+ Cleverson Sacramento
+ -----
+
+Início: bem vindo ao Rasea!
+
+  O Rasea é um projeto de código-aberto, que consolida anos de pesquisas (2006), experiências e evoluções.
+  Atualmente o Rasea é utilizado por órgãos públicos do Estado da Bahia e do Distrito Federal em aplicações
+  que suportam o negócio destas instituições.
+  
+  
+*Funcionalidades
+  
+  Adotando uma abordagem orientada à serviços, as principais funcionalidades do Rasea são:
+  
+  * Solução para controle de acesso incluindo <<autenticação>> e <<autorização>>;
+   
+  * Arquitetura fundamentada em <<padrões abertos>>;
+  
+  * <<Unificação>> da base de usuários e do controle de acesso;
+  
+  * Módulo administrativo <<simples>> e intuitivo disponível via <<Web>>;
+  
+  * Módulo de serviços utilizando <<Web Services>>;
+  
+  * Modelo <<independente>> de plataforma;
+  
+  * Integração com a base <<LDAP>> (e.g., Active Directory) da instituição;
+  
+  * Fundamentação no padrão RBAC (ANSI INCITS 359-2004).
+
+
+*Comunidade
+
+  Todas as atividades do projeto são públicadas abertamente para a comunidade, sendo possível acompanhar o projeto
+  de várias formas diferentes:
+  
+  * {{{http://twitter.rasea.org/}Twitter}}: Fique por dentro de tudo que acontece no projeto acompanhando nossas
+  micro-publicações;
+  
+  * {{{http://sourceforge.net/mailarchive/forum.php?forum_name=rasea-users}Lista de usuários}}: Compartilhe suas
+  experiências com outros usuários, para isso basta
+  {{{https://lists.sourceforge.net/lists/listinfo/rasea-users}inscrever-se}} na lista;
+
+  * {{{http://blog.rasea.org/}Blog}}: Acompanhe as publicações informais e detalhadas sobre o projeto;
+  
+  * {{{http://forum.rasea.org/}Fórum}}: Espaço com recursos avançados para promover debates, discussões e
+  troca de experiências entre os usuários do projeto;
+  
+  * {{{http://sf.rasea.org/}SourceForge}}: Visite o nosso espaço no SourceForge e tenha acesso à diversos
+  recursos do projeto;
+  
+  * {{{http://tracker.rasea.org/}Tracker}}: Notifique bugs ou sugira melhorias para o projeto, para isso
+  basta {{{https://sourceforge.net/apps/trac/rasea/newticket}abrir um chamado}} para a equipe;
+  
+  * {{{http://roadmap.rasea.org/}Roadmap}}: Veja o nosso plano de trabalho atualizado;
+  
+  * {{{mailto://contato@rasea.org}Contato}}: Quer contribuir com o projeto e não sabe como? Entre em
+  {{{mailto://contato@rasea.org}contato}} conosco.
+  
+
+*Por onde comerçar?
+
+  Siga a documentação do projeto, que explica o
+  {{{./reference/reference-installation.html}passo-a-passo da instalação}} do servidor Rasea.
+  
+  

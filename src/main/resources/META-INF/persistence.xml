@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+	<persistence-unit name="rasea" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+
+		<!--
+		<jar-file>rasea-extensions-0.0.1.RC2-SNAPSHOT.jar</jar-file>
+		<class>org.rasea.extensions.entity.User</class>
+		-->
+		
+		<properties>
+			<property name="hibernate.show_sql" value="false"></property>
+			<property name="hibernate.format_sql" value="false"></property>
+		</properties>
+	</persistence-unit>
+</persistence>

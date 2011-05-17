@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	template="layout/list.xhtml">
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<ui:param name="query" value="#{applicationList}" />
+	<ui:param name="home" value="#{applicationEdit}" />
+
+	<ui:define name="opt">
+		<s:button value="#{messages['org.rasea.operation.import']}"
+			disabled="#{!s:hasPermission(home.name, query.importOperation)}"
+			view="/uploadApplication.xhtml" />
+		<h:commandButton action="#{query.exportApplications}"
+			value="#{messages['org.rasea.operation.export']}"
+			disabled="#{(query.resultCount eq 0) or (!s:hasPermission(home.name, query.exportOperation))}"
+			onclick="return confirm('Todas as aplicações listadas a baixo serão exportadas.');" />
+	</ui:define>
+
+	<ui:define name="grid">
+		<rich:column sortBy="#{entity.displayName}">
+			<f:facet name="header">
+				<h:outputText
+					value="#{messages['org.rasea.application.displayName.label']}" />
+			</f:facet>
+
+			<ui:param name="inplaceRendered"
+				value="#{!(entity eq defaultApplication) and s:hasPermission(home.name, home.updateOperation)}" />
+
+			<rich:inplaceInput value="#{entity.displayName}" selectOnEdit="true"
+				rendered="#{inplaceRendered}">
+				<a4j:support event="onviewactivated" action="#{query.update}"
+					ajaxSingle="true" />
+			</rich:inplaceInput>
+
+			<h:outputText value="#{entity.displayName}"
+				rendered="#{!inplaceRendered}" />
+		</rich:column>
+
+		<rich:column sortBy="#{entity.name}">
+			<f:facet name="header">
+				<h:outputText
+					value="#{messages['org.rasea.application.name.label']}" />
+			</f:facet>
+			<h:outputText value="#{entity.name}" />
+		</rich:column>
+
+		<rich:column sortable="false">
+			<f:facet name="header">
+				<rich:spacer />
+			</f:facet>
+
+			<h:commandButton action="#{query.exportApplication}"
+				value="#{messages['org.rasea.operation.export']}"
+				disabled="#{!s:hasPermission(home.name, query.exportOperation)}" />
+		</rich:column>
+	</ui:define>
+</ui:composition>

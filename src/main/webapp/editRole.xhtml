@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	template="layout/edit.xhtml">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<ui:param name="home" value="#{roleEdit}" />
+	<ui:param name="canUpdate"
+		value="#{s:hasPermission(home.name, home.updateOperation) or s:hasPermission('member', home.updateOperation)}" />
+	<ui:param name="deleteDisabled" value="#{home.instance eq defaultRole}" />
+	<ui:param name="readonly"
+		value="#{home.instance eq defaultRole or !s:hasPermission(home.name, home.updateOperation)}" />
+
+	<ui:define name="form">
+		<s:decorate template="layout/form.xhtml">
+			<ui:define name="label">
+				<h:outputLabel
+					value="#{messages['org.rasea.role.displayName.label']}"
+					for="#{deleteDisabled ? 'displayNameFromResourceBundle' : 'displayName'}" />
+			</ui:define>
+
+			<h:inputText id="displayNameFromResourceBundle" size="60"
+				maxlength="255" value="#{messages[home.instance.displayName]}"
+				required="true" disabled="true" rendered="#{deleteDisabled}" />
+			<h:inputText id="displayName" size="60" maxlength="255"
+				value="#{home.instance.displayName}" required="true"
+				disabled="#{readonly}" rendered="#{not (deleteDisabled)}" />
+		</s:decorate>
+
+		<s:decorate template="layout/form.xhtml">
+			<ui:define name="label">
+				<h:outputLabel value="#{messages['org.rasea.role.name.label']}"
+					for="#{deleteDisabled ? 'nameFromResourceBundle' : 'name'}" />
+			</ui:define>
+			<h:inputText id="nameFromResourceBundle"
+				value="#{messages[home.instance.name]}" required="true"
+				disabled="true" rendered="#{deleteDisabled}" />
+			<h:inputText id="name" size="60" maxlength="100"
+				value="#{home.instance.name}" required="true" disabled="#{readonly}"
+				rendered="#{not (deleteDisabled)}" />
+		</s:decorate>
+
+		<s:decorate template="layout/form.xhtml">
+			<ui:define name="label">
+				<h:outputLabel value="#{messages['org.rasea.role.enabled.label']}"
+					for="enabled" />
+			</ui:define>
+			<h:selectBooleanCheckbox id="enabled"
+				value="#{home.instance.enabled}" required="true"
+				disabled="#{readonly}" />
+		</s:decorate>
+
+		<s:decorate template="layout/form.xhtml"
+			rendered="#{s:hasPermission('member', home.showOperation)}">
+			<ui:define name="label">
+				<h:outputLabel value="#{messages['org.rasea.role.members.label']}"
+					for="member" />
+			</ui:define>
+			<rich:pickList id="member" value="#{home.instance.members}"
+				showButtonsLabel="false"
+				disabled="#{home.instance eq defaultRole or !s:hasPermission('member', home.updateOperation)}">
+				<s:selectItems value="#{home.allUsers}" var="user"
+					label="#{messages[user.displayName]}" />
+				<f:converter converterId="userConverter" />
+			</rich:pickList>
+		</s:decorate>
+	</ui:define>
+</ui:composition>

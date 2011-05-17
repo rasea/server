@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	template="layout/list.xhtml">
+
+	<ui:param name="query" value="#{roleList}" />
+	<ui:param name="home" value="#{roleEdit}" />
+
+	<ui:define name="grid">
+		<rich:column
+			sortBy="#{currentApplication eq defaultApplication ? messages[entity.displayName] : entity.displayName}">
+			<f:facet name="header">
+				<h:outputText
+					value="#{messages['org.rasea.role.displayName.label']}" />
+			</f:facet>
+
+			<ui:param name="inplaceRendered"
+				value="#{!(entity eq defaultRole) and s:hasPermission(home.name, home.updateOperation)}" />
+
+			<rich:inplaceInput value="#{entity.displayName}" selectOnEdit="true"
+				rendered="#{inplaceRendered}">
+				<a4j:support event="onviewactivated" action="#{query.update}"
+					ajaxSingle="true" />
+			</rich:inplaceInput>
+
+			<h:outputText value="#{messages[entity.displayName]}"
+				rendered="#{!inplaceRendered}" />
+		</rich:column>
+
+		<rich:column
+			sortBy="#{currentApplication eq defaultApplication ? messages[entity.name] : entity.name}">
+			<f:facet name="header">
+				<h:outputText value="#{messages['org.rasea.role.name.label']}" />
+			</f:facet>
+			<h:outputText
+				value="#{currentApplication eq defaultApplication ? messages[entity.name] : entity.name}" />
+		</rich:column>
+
+		<rich:column sortable="false">
+			<f:facet name="header">
+				<rich:spacer />
+			</f:facet>
+			<s:button view="/matrixRole.xhtml"
+				value="#{messages['org.rasea.authorization.button.label']}"
+				disabled="#{not s:hasPermission('authorization', home.showOperation)}">
+				<f:param name="id" value="#{entity.id}" />
+			</s:button>
+		</rich:column>
+	</ui:define>
+</ui:composition>

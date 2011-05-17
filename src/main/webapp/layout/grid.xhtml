@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<ui:param name="rows" value="#{rows}" />
+
+	<rich:dataTable value="#{list}" var="entity" rendered="#{count gt 0}"
+		cellpadding="0" cellspacing="0" border="0"
+		rows="#{empty rows ? 10 : rows}" headerClass="left" width="100%">
+		<ui:insert name="gridTitle" />
+
+		<rich:column width="1%"
+			rendered="#{empty editRendered ? true : editRendered}"
+			sortable="false">
+			<f:facet name="header"
+				rendered="#{empty headerRendered ? true : headerRendered}">
+				<rich:spacer
+					rendered="#{empty headerRendered ? true : headerRendered}" />
+			</f:facet>
+			<s:link view="#{empty home?'/':home.editView}" rendered="#{empty id}">
+				<s:graphicImage value="img/_ico_edit.png" style="border:0px;" />
+				<f:param name="id" value="#{entity.id}" />
+				<ui:insert name="param" />
+			</s:link>
+			<s:link view="#{empty home?'/':home.editView}"
+				rendered="#{not empty id}">
+				<s:graphicImage value="img/_ico_edit.png" style="border:0px;" />
+				<f:param name="id" value="#{id}" />
+				<ui:insert name="param" />
+			</s:link>
+		</rich:column>
+
+		<ui:insert name="grid" />
+
+		<f:facet name="footer">
+			<rich:datascroller pageIndexVar="pageIndex" pagesVar="pages"
+				rendered="#{empty dataScroller ? true : dataScroller}">
+				<f:facet name="pages">
+					<h:outputText value="#{pageIndex} / #{pages}" />
+				</f:facet>
+			</rich:datascroller>
+		</f:facet>
+	</rich:dataTable>
+	<h:outputText value="#{messages['br.com.avansys.EmptyList']}"
+		rendered="#{count eq 0}" />
+</ui:composition>

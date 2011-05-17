@@ -1,0 +1,43 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	template="layout/edit.xhtml">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<ui:param name="home" value="#{operationEdit}" />
+	<ui:param name="saveDisabled"
+		value="#{currentApplication eq defaultApplication}" />
+	<ui:param name="deleteDisabled" value="#{saveDisabled}" />
+	<ui:param name="readOnly"
+		value="#{currentApplication eq defaultApplication or !s:hasPermission(home.name, home.updateOperation)}" />
+
+	<ui:define name="form">
+		<s:decorate template="layout/form.xhtml">
+			<ui:define name="label">
+				<h:outputLabel
+					value="#{messages['org.rasea.operation.displayName.label']}"
+					for="displayName" />
+			</ui:define>
+			<h:inputText id="displayNameFromResourceBundle" size="60"
+				maxlength="255" value="#{messages[home.instance.displayName]}"
+				required="true" disabled="true" rendered="#{saveDisabled}" />
+			<h:inputText id="displayName" size="60" maxlength="255"
+				value="#{home.instance.displayName}" required="true"
+				disabled="#{readOnly}" rendered="#{!(saveDisabled)}" />
+		</s:decorate>
+
+		<s:decorate template="layout/form.xhtml">
+			<ui:define name="label">
+				<h:outputLabel value="#{messages['org.rasea.operation.name.label']}"
+					for="name" />
+			</ui:define>
+			<h:inputText id="name" size="60" maxlength="100"
+				value="#{home.instance.name}" required="true" disabled="#{readOnly}" />
+		</s:decorate>
+	</ui:define>
+</ui:composition>

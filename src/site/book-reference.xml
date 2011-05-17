@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<book xmlns="http://maven.apache.org/BOOK/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/BOOK/1.0.0 ../../../doxia/doxia-book/target/generated-site/xsd/book-1.0.0.xsd">
+	<id>reference</id>
+	<title>Referência</title>
+	<author>Cleverson Sacramento</author>
+	<chapters>
+		<chapter>
+			<id>reference-get-started</id>
+			<title>Primeiros passos</title>
+			<sections>
+				<section>
+					<id>reference-installation</id>
+				</section>
+			</sections>
+		</chapter>
+		<chapter>
+			<id>reference-project</id>
+			<title>Projeto Rasea</title>
+			<sections>
+				<section>
+					<id>reference-architecture</id>
+				</section>
+			</sections>
+		</chapter>
+		<chapter>
+			<id>reference-configuration</id>
+			<title>Configurações</title>
+			<sections>
+				<section>
+					<id>reference-configuration-server</id>
+				</section>
+				<section>
+					<id>reference-configuration-agent</id>
+				</section>
+			</sections>
+		</chapter>
+	</chapters>
+</book>

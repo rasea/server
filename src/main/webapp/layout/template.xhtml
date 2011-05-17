@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<head>
+<p:resources />
+<meta http-equiv="X-UA-Compatible" content="IE=7" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>#{settings.application.description}</title>
+
+<link href="stylesheet/default.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" />
+
+<link href="stylesheet/jquery.ajaxLoader.css" rel="stylesheet"
+	type="text/css" />
+<script type="text/javascript" src="script/jquery.ajaxLoader.js"></script>
+
+<script type="text/javascript">
+var resizeTimer = null;
+jQuery(window).bind('resize', function() { 
+	if (resizeTimer) clearTimeout(resizeTimer); 
+	resizeTimer = setTimeout(_resize, 100);
+});
+function _resize() {
+	heightMenu();
+	bgMenu();
+}
+jQuery(document).ready(function() {
+	setTimeout('_resize()', 100);
+});
+</script>
+<ui:insert name="head" />
+</head>
+
+<body>
+<rich:jQuery name="heightMenu" timing="onJScall"
+	selector="#menuLayoutLeft" rendered="#{identity.loggedIn}"
+	query="height(jQuery('#menuLayoutLeft').parent().height())" />
+<rich:jQuery name="bgMenu" timing="onJScall" selector="#menuLayoutLeft"
+	rendered="#{identity.loggedIn}"
+	query="css('background','url(img/_bg_menu_vertical.jpg) repeat-y right')" />
+
+<rich:jQuery timing="onload" selector="#body"
+	query="parent().parent().parent().addClass('layoutContentBg')" />
+
+<rich:jQuery name="ajaxLoad" timing="onJScall" selector=".toolbarTopo"
+	query="ajaxLoader()" />
+<rich:jQuery name="ajaxUnload" timing="onJScall" selector=".toolbarTopo"
+	query="ajaxLoaderRemove()" />
+<a4j:status onstart="ajaxLoad()" onstop="ajaxUnload()" />
+
+<p:growl id="message" sticky="true" showSummary="true"
+	showDetail="false" globalOnly="true" />
+
+<p:layout fullPage="true">
+	<p:layoutUnit position="top" height="92" collapse="false"
+		resize="false" scroll="false" rendered="#{identity.loggedIn}">
+		<s:div
+			style="height: 66px; background: url(img/bg_topo.jpg) repeat-x;">
+			<s:div style="float: left;">
+				<img src="img/topo_logo.jpg" />
+			</s:div>
+			<s:div style="float: right;">
+				<img src="img/topo_detalhe.jpg" />
+			</s:div>
+		</s:div>
+		<rich:toolBar styleClass="toolbarTopo">
+			<s:div styleClass="version">
+				<h:outputText value="v.${settings.application.version}" />
+			</s:div>
+			<rich:toolBarGroup location="left" rendered="#{identity.loggedIn}">
+				<rich:spacer width="1px" />
+				<ui:include src="../toolbar.xhtml" />
+			</rich:toolBarGroup>
+			<rich:toolBarGroup location="right" rendered="#{identity.loggedIn}">
+				<h:outputText value="Usuário: #{identity.username}"
+					rendered="#{identity.loggedIn}" />
+				<s:link view="/login.xhtml" value="Logar"
+					rendered="#{not identity.loggedIn}" />
+				<s:link view="/home.xhtml" action="#{identity.logout}" value="Sair"
+					rendered="#{identity.loggedIn}" />
+			</rich:toolBarGroup>
+		</rich:toolBar>
+	</p:layoutUnit>
+
+	<p:layoutUnit position="left" width="200" collapse="false"
+		resize="false" rendered="#{identity.loggedIn}" id="menuLayoutLeft"
+		scroll="false">
+		<ui:include src="../menu.xhtml" />
+	</p:layoutUnit>
+
+	<p:layoutUnit position="center" collapse="false" resize="false"
+		scroll="true">
+		<rich:toolBar rendered="#{identity.loggedIn}"
+			styleClass="toolbarTitle">
+			<rich:toolBarGroup location="left" rendered="#{identity.loggedIn}">
+				<h:outputText value="#{messages[title]}" />
+			</rich:toolBarGroup>
+		</rich:toolBar>
+		<s:div styleClass="layoutContent">
+			<a4j:outputPanel id="body">
+				<ui:insert name="body" />
+			</a4j:outputPanel>
+			<ui:insert name="modal" />
+		</s:div>
+	</p:layoutUnit>
+</p:layout>
+</body>
+</html>

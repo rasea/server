@@ -1,0 +1,11 @@
+#banner {
+	background: url(../images/banner-bg.jpg);
+	height: 83px;
+}
+
+img {
+	border: 1px solid black;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faqs xmlns="http://maven.apache.org/FML/1.0.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/FML/1.0.1 http://maven.apache.org/xsd/fml-1.0.1.xsd"
+  title="FAQ">
+
+  <part id="FAQ">
+    <faq id="significado-de-rasea">
+      <question>O que significa Rasea?</question>
+      <answer>
+        <p>
+          Rasea é um acrônimo <i>cRoss-plAtform accesS control for Enterprise Applications</i>,
+          traduzido como controle de acesso <i>cross</i>-plataforma para aplicações comerciais. O termo
+          foi criado em inglês, apesar do projeto ter atualmente como foco o público brasileiro. Ao
+          criar o nome do projeto, procuramos algo que não soasse como uma mera sigla e que não fosse
+          algo clichê.
+        </p>
+      </answer>
+    </faq>
+  </part>
+</faqs>

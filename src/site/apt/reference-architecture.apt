@@ -1,0 +1,154 @@
+ -----
+ Arquitetura
+ -----
+ Cleverson Sacramento
+ -----
+
+Visão Geral
+
+  O projeto Rasea fundamenta sua arquitetura sobre dois elementos principais (servidor e agente) tratados sob duas perspectivas
+  (independência de plataforma e integração) para possibilitar o controle de acesso <cross>-plataforma às aplicações.
+  
+[../images/rasea-perspective.png]
+  
+  Os elementos da arquitetura atuam como um quebra-cabeça, completando o modelo com o encaixe de todas as peças.
+  A perspectiva <<independência de plataforma>> agrega padrões e tecnologias, possibilitando que aplicações em diferentes
+  plataformas beneficiem-se da solução. A perspectiva <<integração>> promove a interação entre o Rasea, as informações da
+  organização e as aplicações clientes. Enquanto o elemento <<servidor>> preocupa-se com disponibilidade dos serviços, o
+  <<agente>> – consumidor dos serviços – aborda aspectos específicos das plataformas das aplicações.  
+
+  Para padronizar o vocabulário, segue a relação de todos os elementos envolvidos na arquitetura Rasea:
+  
+  * <<Base de controle de acesso>> – Repositório unificado que armazena dados estruturados conforme o padrão RBAC, excetuando-se
+    a entidade usuário. São exemplos de dados armazenados na base de controle de acesso: papéis, objetos, operações e permissões;
+  
+  * <<Credenciais de usuário>> – Dados que identificam os usuários da organização, tais como: nome, senha, e-mail, etc;
+
+  * <<Base de usuários>> – Repositório unificado para armazenamento dos usuários da organização. A base de usuários é composta
+    por instâncias do elemento usuário;
+
+  * <<Servidor>> – Um dos principais elementos da arquitetura, responsável por unificar o controle de acesso, manter a
+    conexão com as bases de dados e prover funcionalidades através do módulo administrativo e do módulo de serviços;
+
+  * <<Módulo administrativo>> – Interface gráfica com o usuário que possibilita o gerenciamento das permissões e autorizações
+    às aplicações, conforme a especificação de operações de administrativas do RBAC;
+  
+  * <<Módulo de serviços>> – Disponibiliza interfaces para integração de aplicações clientes com os serviços de controle de
+    acesso e gerenciamento;
+  
+  * <<Serviços de controle de acesso>> – Agrupamento de serviços (ou <EndPoint>) consumido pelos agentes. Disponibilizam
+    informações necessárias para controle de acesso conforme a especificação RBAC para operações de consulta;
+
+  * <<Serviços de gerenciamento>> – Agrupamento de serviços (ou <EndPoint>) acessado por consumidores que desejam
+    gerenciar o servidor Rasea. Disponibiliza as mesmas funcionalidades do módulo administrativo;
+  
+  * <<Agente>> – Um dos principais elementos da arquitetura, responsável por interceptar e analisar as requisições às
+    aplicações, concedendo ou revogando o acesso com base nas informações obtidas através do serviço de controle de acesso.
+    Executa as operações de apoio ao sistema, conforme com a especificação RBAC;
+  
+  * <<Aplicação parceira>> – É toda aplicação conectada a um agente que utiliza o Rasea como dispositivo para controle de
+    acesso unificado. As aplicações parceiras podem também consumir os serviços de gerenciamento;
+
+  * <<Aplicação autônoma>> – É toda aplicação que não está conectada a um agente e, conseqüentemente, não utiliza o Rasea
+    como dispositivo para controle de acesso unificado. As aplicações autônomas podem consumir os serviços de gerenciamento,
+    caso necessitem integrar com o Rasea.
+    
+  []
+  
+  O elemento central da figura representa o servidor, o qual disponibiliza um módulo administrativo para que o administrador
+  do acesso gerencie as permissões aos sistemas. O servidor provê também o módulo de serviços, que respaldam os agentes com
+  informações suficientes para executar as operações de apoio ao sistema. Os agentes são conectados às aplicações parceiras.
+  As aplicações que não utilizam os serviços para controle de acesso são chamadas de aplicações autônomas, que, por não fazer
+  parte da arquitetura, não foram representadas na figura.
+  
+[../images/rasea-architecture.png]
+
+  O servidor mantém a base de dados que contém informações estruturadas conforme o padrão RBAC, possibilitando o controle de
+  acesso às aplicações. A base de dados que detém as credenciais dos usuários é acessada pelo servidor
+  para executar as tarefas de autenticação. Caso as alternativas de acesso à base de usuários disponibilizadas pelo Rasea não
+  sejam satisfatórias, é possível implementar um método personalizado, graças ao módulo de extensão do servidor.
+
+Integração e Independência de Plataforma
+
+  Uma das premissas do Rasea é garantir a interoperabilidade com aplicações parceiras em diferentes plataformas. Para
+  possibilitar a independência de tecnologia, optou-se por duas estratégias: garantir a independência de plataforma e empregar
+  <Web Services> no canal de comunicação. Os padrões abertos, adotados pela especificação <Web Services>, possibilitam o
+  desacoplamento das aplicações, facilitando o desenvolvimento de componentes independentes de tecnologias.
+  
+  O Rasea não pretende substituir tecnologias, arquiteturas, aplicações ou fontes de informação existentes na organização,
+  e sim possibilitar a integração utilizando padrões abertos. Os problemas de integração são analisados e tratados sob três
+  pontos de vista: aplicação, informação e tecnologia.
+  
+  Além da integração com seus serviços, o Rasea possibilita a conexão com repositórios de credenciais de usuários.
+  Como exemplo, tem-se o LDAP, adotado por diversas instituições com o propósito de unificar o armazenamento e a autenticação
+  dos usuários. A estratégia de armazenamento das credenciais, é definida no arquivo de configuração do servidor. Para garantir
+  a extensibilidade da solução, o Rasea permite que novas estratégias sejam acopladas, atendendo às necessidades específicas
+  de cada cenário.
+  
+  É fundamental que todos os níveis de integração estabeleçam conexões seguras pra garantir integridade, autenticidade e
+  confidencialidades da informação. A integração entre os agentes e  o servidor podem empregar o HTTPS, por exemplo.
+  A conexão com a base de credenciais pode utilizar dutos criptografados, tal como o LDAPS, por exemplo. Apesar de ser
+  altamente aconselhável principalmente em ambientes de produção, a utilização de tais recursos não é obrigatória para o
+  funcionamento do Rasea.
+
+Servidor Rasea
+
+  O servidor é o ponto central da arquitetura Rasea, responsável por: implementar o modelo RBAC, prover serviços por meio
+  de <Web Services>, integrar com dados da organização e disponibilizar uma interface gráfica para gerenciamento do controle
+  de acesso. A figura a seguir destaca o servidor interagindo com elementos essenciais para o seu funcionamento.
+  
+[../images/rasea-server.png]
+
+  Todas as informações fornecidas pelos serviços do Rasea têm sempre como fonte duas bases de dados: a base de autorização,
+  que implementa o modelo RBAC e a base de autenticação, que contém as credenciais dos usuários. A base de autorização é
+  mantida única e exclusivamente pelo servidor Rasea, sendo possível efetuar modificações nos dados através do módulo
+  administrativo ou via serviços de gerenciamento. A escolha da base de usuários é feita no arquivo de configuração do
+  servidor. 
+  
+  Como resposta ao modelo descentralizado, a arquitetura concentra todas as funcionalidades e serviços necessários
+  em um único elemento do modelo: o servidor. Todas as aplicações parceiras dependem dos serviços para executar as tarefas
+  de controle de acesso, portanto é fundamental que o servidor possua: alta disponibilidade, performance e escalabilidade.
+  Enquanto a alta disponibilidade assegura o atendimento às requisições dos agentes, a performance garante a execução em
+  tempo hábil, evitando impactos no negócio da organização. A estrutura do Rasea é escalável.
+  
+[../images/rasea-cluster.png]
+  
+  Para garantir a alta disponibilidade, performance e escalabilidade, o servidor suporta o uso de cluster com balanceamento
+  de carga. O balanceador de carga intercepta todas as chamadas dos agentes ao servidor e decide, com base em uma heurística,
+  qual o servidor atenderá as requisições. Cada servidor é um nó que compõe o cluster. A sessão de cada nó é replicada,
+  garantindo o remanejamento de servidores sem interrupções no serviço. Não é necessária nenhuma configuração especial
+  no Rasea, e sim no Servidor de Aplicação, tal como o suporte do JBoss AS à cluster de aplicações.
+ 
+Agente Rasea
+
+  Toda aplicação parceira deve estar conectada a um agente. O agente Rasea atua como um conversor do modelo independente
+  de plataforma para a tecnologia específica de cada aplicação. Além disso, o agente executa efetivamente as tarefas de
+  controle de acesso às aplicações, prevenindo o acesso não autorizado ao sistema. Nesta seção serão abordadas as duas
+  principais funções do agente: especializar a tecnologia e controlar o acesso à aplicação parceira.
+  
+  Os agentes simplificam o desenvolvimento de aplicações parceiras, que passam a dispor de uma API de controle de acesso
+  local e não precisam se preocupar com detalhes de acesso ao serviço Web. Além disto, os agentes ampliam a atuação do Rasea
+  dentro das aplicações, oferecendo suporte completo à interceptação das tentativas de acesso, prevenindo que usuários não
+  autorizados acessem os recursos protegidos das aplicações.
+  
+  Como elemento da arquitetura, o agente agrega extensibilidade à solução, possibilitando que aplicações projetadas em
+  qualquer tecnologia com suporte ao consumo de <Web Services> integrem com o Rasea, garantindo o controle de acesso unificado
+  de forma independente de plataforma.
+
+[../images/rasea-agent.png]
+
+  Os agentes devem se especializar ao máximo, garantindo o encaixe perfeito com a tecnologia da aplicação parceira. Como
+  exemplo, pode-se citar a utilização de Java na construção de aplicações. Existem diversas ferramentas, paradigmas,
+  frameworks, bibliotecas e tecnologias que podem ser utilizadas na construção de aplicações na plataforma Java, tais como:
+  JSF, Struts, GWT, AWT, dentre outras. É fundamental que exista um agente para cada tecnologia específica.
+  
+  O agente é responsável por interceptar todas as requisições feitas às aplicações parceiras. Todas as tentativas de acesso
+  devem ser tratadas com base nas informações providas pelo servidor. A vagarosidade nas decisões de acesso podem ser críticas
+  para o negócio da organização, portanto os agentes armazenam em <cache> todas as permissões associadas ao usuário.
+  
+  A premissa para todo agente é atuar no ponto central, onde todas as requisições aos recursos das aplicações sejam
+  interceptadas. Para conseguir isto, existem soluções simplórias e soluções arrojadas. Um exemplo de solução simples para
+  agentes Web é a inserção da tag <\<include\>> em todas as páginas, invocando um determinado procedimento que atua como o
+  controlador de acesso, buscando informações no servidor. Esta é uma solução simples, porém pouco elegante. Como exemplo
+  de solução robusta para a plataforma Java, tem-se o JAAS, que atua diretamente no núcleo da máquina virtual, possibilitando
+  o controle refinado das requisições feitas pelos usuários às aplicações.

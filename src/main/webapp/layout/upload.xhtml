@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.ajax4jsf.org/rich"
+	xmlns:p="http://primefaces.prime.com.tr/ui" template="template.xhtml">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<!-- Documentação de parâmetros de abstração de templates
+	
+		 @author Cesar Oliveira
+		 
+		 OBS.: Caso necessite implementar novas customizações,
+		 efetue as devidas mudanças levando em consideração os demais 
+		 projetos, documente no respectivo template e comunique por email 
+		 a Abraão todas as modificações efetuadas.
+		 
+		 Cada parâmetro encontra-se documentado em seu respectivo layout.
+		 
+		 @param backValue       -   Recebe o nome do botão Voltar. (default = Voltar).
+		 @param backRendered    -   Define se o botão de Voltar será renderizado ou não. (default = true).
+		 @param buttons         -   Recebe novos botões.
+		 @param submitValue     -   Recebe o nome do botão de Enviar. (default = Enviar).
+		 @param submitRendered  -   Define se o botão de Enviar será renderizado ou não. (default = true).
+		 @param submitDisabled  -   Define se o botão de Enviar será desabilitado ou não. (default = false).
+		 @param submitOperation -   Define a ação associada ao botão de Enviar. (default = nenhuma).
+		 @param title           -   Define o titulo da página (default = especificado no home).	
+		 @param enctype         -   Define o enctype do form (default = text/plain).	
+	-->
+
+	<ui:param name="title" value="#{home.title}" />
+
+	<ui:define name="body">
+		<s:div id="panel">
+			<rich:tabPanel switchType="client">
+				<rich:tab label="Upload">
+					<h:form enctype="multipart/form-data">
+						<s:decorate template="form.xhtml">
+							<ui:define name="label">
+								<h:outputLabel value="Arquivo" for="file" />
+							</ui:define>
+							<s:fileUpload id="file" data="#{home.data}" required="true" />
+						</s:decorate>
+
+						<rich:spacer height="40px" />
+						<ui:insert name="form" />
+						<rich:spacer height="40px" />
+
+						<h:commandButton
+							value="#{empty submitValue ? 'Enviar' : submitValue}"
+							action="#{home.send}"
+							rendered="#{empty submitRendered ? true : submitRendered}"
+							disabled="#{submitDisabled}">
+							<ui:insert name="param" />
+						</h:commandButton>
+
+						<ui:insert name="buttons" />
+
+						<s:button value="#{empty backValue ? 'Voltar' : backValue}"
+							view="#{home.backView}"
+							rendered="#{empty backRendered ? true : backRendered}">
+							<ui:insert name="param" />
+						</s:button>
+					</h:form>
+				</rich:tab>
+			</rich:tabPanel>
+			<ui:insert name="out" />
+		</s:div>
+	</ui:define>
+
+</ui:composition>

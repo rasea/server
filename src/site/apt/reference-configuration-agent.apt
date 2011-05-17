@@ -1,0 +1,49 @@
+ -----
+ Agente
+ -----
+ Cleverson Sacramento
+ -----
+
+Definição
+
+  O agente é parametrizado a partir do arquivo <<rasea-agent.properties>>, que deve estar disponível no <classpath>
+  do servidor de aplicação. No JBoss AS, este arquivo deve estar na pasta <\<JBOSS_HOME\>/server/default/conf/>. O arquivo
+  consiste em diversas entradas <atributos=valor> separadas por quebra de linha entre si.
+
+Parâmetros
+
+
+*-----------------------------+----------------------------------------------+---------------------*
+|| Parâmetro	              || Descrição                                   || Valor padrão       |
+*-----------------------------+----------------------------------------------+---------------------*
+| protocol                    | Protocolo utilizado na conexão com o servidor:\ | http             |
+|                             | - <<http>>: conexão sem segurança;\          |                     |
+|                             | - <<https>>: conexão segura.                 |                     |
+*-----------------------------+----------------------------------------------+---------------------*
+| host                        | Nome ou IP do host do servidor Rasea.        | localhost           |
+*-----------------------------+----------------------------------------------+---------------------*
+| port                        | Porta do servidor Rasea.                     | 80 para o protocolo HTTP e 443 para o protocolo HTTPS |
+*-----------------------------+----------------------------------------------+---------------------*
+| context                     | Contexto para acessar o servidor Rasea.      | /rasea              |
+*-----------------------------+----------------------------------------------+---------------------*
+| mode                        | Modo de funcionamento do agente:\            | default             |
+|                             | - <<default>>: o agente acessa o servidor Rasea para buscar as informações de controle de acesso;\ | |
+|                             | - <<mock>>: o agente não estabelece contato com o servidor e permite toda tentativa de acesso ao sistema;\ | |
+|                             | - <<load>>: agente permite toda tentativa de acesso ao sistema, cadastrando no servidor todas as permissões à medida que o usuário navega pelo sistema. É também conhecido como modo de carga. | |
+*-----------------------------+----------------------------------------------+---------------------*
+
+  <* parâmetro obrigatório.>
+
+  Exemplo:
+  
++--  
+protocol=HTTP
+host=localhost
+port=8080
+context=/rasea
+mode=default
++--
+
+Exemplos
+
+  Fazer

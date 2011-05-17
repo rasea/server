@@ -1,0 +1,81 @@
+ -----
+ Download
+ -----
+ Cleverson Sacramento
+ -----
+
+Download
+
+%{toc|section=1|fromDepth=2|toDepth=2}
+  
+*{Pacotes}
+
+  Os arquivos do Rasea estão disponíveis para download no site do projeto no SourceForge.net. Para acessá-los diretamente, clique {{{http://download.rasea.org}aqui}}.
+
+~~ *---------------------------+-----------+-------------------+------------*-----------------------+----------+---------------+
+~~ || Pacote                   || Versão   || Categoria        || Data      || Licença              || Binário || Código-fonte |
+~~ *---------------------------+-----------+-------------------+------------*-----------------------+----------+---------------+
+~~ | rasea-extensions          | 0.0.1.RC1 | Release Candidate | 30/12/2009 | {{{http://www.gnu.org/licenses/lgpl-3.0-standalone.html}LGPL}} | {{{https://sourceforge.net/projects/rasea/files/rasea-extensions/0.0.1.RC1/rasea-extensions-0.0.1.RC1-bin.zip/download}rasea-extensions-0.0.1.RC1-bin.zip}} | {{{https://sourceforge.net/projects/rasea/files/rasea-extensions/0.0.1.RC1/rasea-extensions-0.0.1.RC1-src.zip/download}rasea-extensions-0.0.1.RC1-src.zip}} |
+~~ *---------------------------+-----------+-------------------+------------*-----------------------+----------+---------------+
+~~ | rasea-agent-seam          | 0.3.0.RC1 | Release Candidate | 30/12/2009 | {{{http://www.gnu.org/licenses/lgpl-3.0-standalone.html}LGPL}} | {{{https://sourceforge.net/projects/rasea/files/rasea-agent-seam/0.3.0.RC1/rasea-agent-seam-0.3.0.RC1-bin.zip/download}rasea-agent-seam-0.3.0.RC1-bin.zip}} | {{{https://sourceforge.net/projects/rasea/files/rasea-agent-seam/0.3.0.RC1/rasea-agent-seam-0.3.0.RC1-src.zip/download}rasea-agent-seam-0.3.0.RC1-src.zip}} |
+~~ *---------------------------+-----------+-------------------+------------*-----------------------+----------+---------------+
+
+~~ Para outras versões, acesse {{{http://download.rasea.org}aqui}}.
+
+
+*{Repositório Subversion}
+
+  Veja os detalhes para obter o código-fonte {{{https://sourceforge.net/scm/?type=svn&group_id=246496}aqui}}
+ 
+  
+*{Repositório Maven}
+
+  Caso você esteja utilizando o gerenciamento de dependências do Maven em seu projeto, você pode
+  baixar o Rasea diretamente do nosso repositório Maven. Contudo, este procedimento
+  só é aplicável para a instalação das <<extensões>> do servidor e do <<agente>>.  
+  
+  No arquivo <pom.xml> do seu projeto, acrescente o nosso repositório de acordo com o exemplo
+  abaixo:
+  
++--
+<repositories>
+	...
+	<repository>
+		<id>repo.rasea.org</id>
+		<name>Rasea Maven Repository</name>
+		<url>http://repo.rasea.org/maven2/</url>
+		<snapshots>
+			<enabled>false</enabled>
+		</snapshots>
+		<releases>
+			<enabled>true</enabled>
+		</releases>
+	</repository>
+<repositories>
++--
+  
+  Feito isso acrescente as dependências no <pom.xml> do seu projeto de acordo com a sua necessidade. Caso você esteja
+  criando uma extensão do servidor, utilize a seguinte configuração: 
+
++--
+<dependency>
+	<groupId>org.rasea</groupId>
+	<artifactId>rasea-extensions</artifactId>
+	<version>{versão do arquivo}</version>
+	<scope>compile</scope>
+</dependency>
++--
+
+  Se você está interessado em implantar o agente para JBoss Seam no seu projeto, utilize a seguinte configuração:
+
++--
+<dependency>
+	<groupId>org.rasea</groupId>
+	<artifactId>rasea-agent-seam</artifactId>
+	<version>{versão do arquivo}</version>
+	<scope>compile</scope>
+</dependency>
++--
+
+
+ 

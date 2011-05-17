@@ -1,0 +1,63 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.prime.com.tr/ui"
+	template="layout/edit.xhtml">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<ui:param name="home" value="#{resourceEdit}" />
+	<ui:param name="saveDisabled"
+		value="#{currentApplication eq defaultApplication}" />
+	<ui:param name="deleteDisabled" value="#{saveDisabled}" />
+	<ui:param name="readOnly"
+		value="#{currentApplication eq defaultApplication or !s:hasPermission(home.name, home.updateOperation)}" />
+
+	<ui:define name="form">
+		<s:decorate template="layout/form.xhtml">
+			<ui:define name="label">
+				<h:outputLabel
+					value="#{messages['org.rasea.resource.displayName.label']}"
+					for="#{saveDisabled ? 'displayNameFromResourceBundle' : 'displayName'}" />
+			</ui:define>
+			<h:inputText id="displayNameFromResourceBundle" size="60"
+				maxlength="556" value="#{messages[home.instance.displayName]}"
+				required="true" disabled="true" rendered="#{saveDisabled}" />
+			<h:inputText id="displayName" size="60" maxlength="556"
+				value="#{home.instance.displayName}" required="true"
+				rendered="#{!saveDisabled}" disabled="#{readOnly}" />
+		</s:decorate>
+
+		<s:decorate template="layout/form.xhtml">
+			<ui:define name="label">
+				<h:outputLabel value="#{messages['org.rasea.resource.name.label']}"
+					for="#{saveDisabled ? 'nameFromResourceBundle' : 'name'}" />
+			</ui:define>
+			<h:inputText id="nameFromResourceBundle" size="60" maxlength="1024"
+				value="#{messages[home.instance.name]}" required="true"
+				disabled="true" rendered="#{saveDisabled}" />
+			<h:inputText id="name" size="60" maxlength="1024"
+				value="#{home.instance.name}" required="true"
+				rendered="#{!saveDisabled}" disabled="#{readOnly}" />
+		</s:decorate>
+
+		<s:decorate template="layout/form.xhtml">
+			<ui:define name="label">
+				<h:outputLabel
+					value="#{messages['org.rasea.resource.permission.label']}"
+					for="permissions" />
+			</ui:define>
+			<h:selectManyCheckbox id="permissions" layout="pageDirection"
+				value="#{home.instance.operations}" required="true"
+				disabled="#{readOnly}">
+				<s:selectItems value="#{operationService.find(currentApplication)}"
+					var="operation"
+					label="#{saveDisabled ? messages[operation.name] : operation.name}" />
+				<s:convertEntity />
+			</h:selectManyCheckbox>
+		</s:decorate>
+	</ui:define>
+</ui:composition>

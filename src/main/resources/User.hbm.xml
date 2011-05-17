@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+	<class table="R_USER" name="org.rasea.extensions.entity.User">
+		<id column="USERNAME" name="name" />
+
+		<property column="PASSWORD" name="password" length="100" insert="false" update="false" not-null="false" />
+		<property column="DISPLAYNAME" name="displayName" length="255" index="IDX_USER_DISPLAYNAME" not-null="true" />
+		<property column="EMAIL" name="email" length="255" index="IDX_USER_EMAIL" not-null="true" />
+		<property column="ALTERNATE_EMAIL" name="alternateEmail" length="255" index="IDX_USER_ALTERNATE_EMAIL" not-null="false" />
+		<property column="ENABLED" name="enabled" index="IDX_USER_ENABLED" not-null="true" />
+	</class>
+
+</hibernate-mapping>

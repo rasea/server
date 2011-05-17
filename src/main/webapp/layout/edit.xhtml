@@ -1,0 +1,84 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.ajax4jsf.org/rich"
+	xmlns:p="http://primefaces.prime.com.tr/ui" template="template.xhtml">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<!-- Documentação de parâmetros de abstração de templates
+	
+		 @author Cesar Oliveira
+		 
+		 OBS.: Caso necessite implementar novas customizações,
+		 efetue as devidas mudanças levando em consideração os demais 
+		 projetos, documente no respectivo template e comunique por email 
+		 a Abraão todas as modificações efetuadas.
+		 
+		 Cada parâmetro encontra-se documentado em seu respectivo layout.
+		 
+		 @param backValue       -   Recebe o nome do botão Voltar. (default = Voltar).
+		 @param backRendered    -   Define se o botão de Voltar será renderizado ou não. (default = true).
+		 @param buttons         -   Recebe novos botões.
+		 @param deleteValue     -   Recebe o nome do botão de Excluir. (default = Excluir).
+		 @param deleteRendered  -   Define se o botão de Excluir será renderizado ou não. (default = true).
+		 @param deleteDisabled  -   Define se o botão de Excluir será desabilitado ou não. (default = false).
+		 @param canDelete       -   Define se a ação Excluir é permitida ou não. (default = s:hasPermission(home.name, home.deleteOperation)).
+		 @param saveValue       -   Recebe o nome do botão Salvar. (default = Salvar).
+		 @param saveRendered    -   Define se o botão de Salvar será renderizado ou não. (default = true).
+		 @param saveDisabled    -   Define se o botão de Salvar será desabilitado ou não. (default = false).
+		 @param canCreate       -   Define se a ação Salvar novo é permitida ou não. (default = s:hasPermission(home.name, home.createOperation)).
+		 @param canUpdate       -   Define se a ação Salvar existente é permitida ou não. (default = s:hasPermission(home.name, home.updateOperation)).
+		 @param title           -   Define o titulo da página (default = especificado no home).	
+	-->
+
+	<ui:param name="title" value="#{empty title ? home.title : title}" />
+
+	<ui:define name="body">
+		<s:div id="panel">
+			<rich:tabPanel switchType="client">
+				<rich:tab
+					label="#{home.managed and empty tabTitle ? 'Alterar Registro' : ''}#{not home.managed and empty tabTitle ? 'Incluir Registro' : ''}#{tabTitle}">
+					<a4j:form ajaxSubmit="true" reRender="panel">
+						<ui:insert name="form" />
+						<rich:spacer height="40px" />
+						<ui:insert name="button" />
+						<h:commandButton value="#{empty saveValue ? 'Salvar' : saveValue}"
+							action="#{home.persist}"
+							rendered="#{!home.managed and (empty saveRendered ? true : saveRendered)}"
+							onclick="return confirm('#{messages['br.com.avansys.Entity_createConfirm']}');"
+							disabled="#{saveDisabled or not (empty canCreate ? s:hasPermission(home.name, home.createOperation) : canCreate)}">
+							<ui:insert name="param" />
+						</h:commandButton>
+						<h:commandButton value="#{empty saveValue ? 'Salvar' : saveValue}"
+							action="#{home.update}"
+							rendered="#{home.managed and (empty saveRendered ? true : saveRendered)}"
+							onclick="return confirm('#{messages['br.com.avansys.Entity_updateConfirm']}')"
+							disabled="#{saveDisabled or not (empty canUpdate ? s:hasPermission(home.name, home.updateOperation) : canUpdate)}">
+							<ui:insert name="param" />
+						</h:commandButton>
+						<h:commandButton
+							value="#{empty deleteValue ? 'Excluir' : deleteValue}"
+							action="#{home.remove}" immediate="true"
+							rendered="#{home.managed and (empty deleteRendered ? true : deleteRendered)}"
+							onclick="return confirm('#{messages['br.com.avansys.Entity_deleteConfirm']}');"
+							disabled="#{deleteDisabled or not (empty canCreate ? s:hasPermission(home.name, home.deleteOperation) : canCreate)}">
+						</h:commandButton>
+
+						<ui:insert name="buttons" />
+
+						<s:button value="#{empty backValue ? 'Voltar' : backValue}"
+							view="#{home.listView}"
+							rendered="#{empty backRendered ? true : backRendered}">
+							<ui:insert name="param" />
+						</s:button>
+					</a4j:form>
+				</rich:tab>
+			</rich:tabPanel>
+		</s:div>
+		<ui:insert name="out" />
+	</ui:define>
+
+</ui:composition>

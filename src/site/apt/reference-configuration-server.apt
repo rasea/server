@@ -1,0 +1,253 @@
+ -----
+ Servidor
+ -----
+ Cleverson Sacramento
+ -----
+
+Definição
+
+  O servidor Rasea é parametrizado através do arquivo <<rasea-server.properties>>, que deve estar disponível
+  no <classpath> do servidor de aplicação. No JBoss AS, este arquivo deve estar na pasta
+  <\<JBOSS_HOME\>/server/default/conf/>. O arquivo consiste em diversas entradas <atributo=valor> separadas
+  por quebra de linha entre si.
+  
+Parâmetros
+
+%{toc|section=2|fromDepth=2|toDepth=2}
+
+*application
+   
+   Configurações da aplicação Rasea.
+   
+*-----------------------------+----------------------------------------------+---------------------*
+|| Parâmetro	              || Descrição                                   || Valor padrão       |
+*-----------------------------+----------------------------------------------+---------------------*
+| application.description     | Descrição que o Rasea receberá na listagem de sistemas cadastrados. | Rasea |
+*-----------------------------+----------------------------------------------+---------------------*
+
+  <* parâmetro obrigatório.>
+
+  Exemplo:
+  
++--  
+application.description=Sistema de Controle de Acesso
++--
+
+*admin
+
+  Configurações administrativas do servidor.
+
+*-----------------------------+----------------------------------------------+---------------------*
+|| Parâmetro	              || Descrição                                   || Valor padrão       |
+*-----------------------------+----------------------------------------------+---------------------*
+| admin.password *            | Senha do usuário administrador.              | rasea               |
+*-----------------------------+----------------------------------------------+---------------------*
+| admin.email *               | E-mail do usuário administrador.             | no-reply@rasea.org  |
+*-----------------------------+----------------------------------------------+---------------------*
+
+  <* parâmetro obrigatório.>
+
+  Exemplo:
+  
++--  
+admin.password=secret
+admin.email=my@domain.com
++--
+  
+*mail
+
+  Configurações de e-mail utilizadas pelo servidor para enviar mensagens para os usuários, tal como
+  o envio de senhas geradas automaticamente pelo sistema em caso de esquecimento.
+  
+*-----------------------------+----------------------------------------------+---------------------*
+|| Parâmetro	              || Descrição                                   || Valor padrão       |
+*-----------------------------+----------------------------------------------+---------------------*
+| mail.host *                 | Nome ou IP do host SMTP para envio de mensagens. | -               |
+*-----------------------------+----------------------------------------------+---------------------*
+| mail.tls                    | Indica se a conexão é segura ou não:\        | false               |
+|                             | - <<true>>: conexão segura;\                 |                     |
+|                             | - <<false>>: conexão não segura.             |                     |
+*-----------------------------+----------------------------------------------+---------------------*
+| mail.port                   | Porta SMTP para envio de mensagens.          | -                   |
+*-----------------------------+----------------------------------------------+---------------------*
+| mail.username               | Nome do usuário para autenticação no servidor SMTP. | -            |
+*-----------------------------+----------------------------------------------+---------------------*	
+| mail.password               | Senha do usuário para autenticação no servidor SMTP.| -            |
+*-----------------------------+----------------------------------------------+---------------------*
+
+  <* parâmetro obrigatório.>
+
+  Exemplo:
+  
++--  
+mail.host=smtp.gmail.com
+mail.port=465
+mail.tls=true
+mail.username=hello@gmail.com
+mail.password=123456
++--
+
+*database
+
+  Configurações do banco de dados que mantém as informações à respeito do controle de acesso. A estrutura
+  da base de dados pode ser criada automaticamente mediante a configuração do parâmetro {{database.ddl}}.
+
+*-----------------------------+----------------------------------------------+---------------------*
+|| Parâmetro	              || Descrição                                   || Valor padrão       |
+*-----------------------------+----------------------------------------------+---------------------*
+| database.driverClass *      | Nome da classe JDBC utilizada na conexão com o banco de dados. | org.hsqldb.jdbcDriver |
+*-----------------------------+----------------------------------------------+---------------------*
+| database.url *              | URL do banco de dados JDBC.                  | jdbc:hsqldb:rasea-database |
+*-----------------------------+----------------------------------------------+---------------------*
+| database.datasource       | Nome JNDI da datasource a ser usada para conexão com o banco de dados. Esse campo tem prioridade sobre os campos driverClass, url, username e password.  | - |
+*-----------------------------+----------------------------------------------+---------------------*
+| {database.ddl}              | Sincroniza o modelo esperado pelo Rasea com o banco de dados. Para tanto, é preciso que o usuário possua permissão para acessar os meta-dados do banco de dados. Caso este parâmetro não seja definido, nenhuma verificação será feita.\ | update |
+|                             | - <<validate>>: Verifica se o modelo no banco de dados está coerente com o esperado pelo Rasea;\ | |
+|                             | - <<update>>: Atualiza a estrutura do banco de dados, caso o modelo atual não esteja coerente com o esperado pelo Rasea. | |
+*-----------------------------+----------------------------------------------+---------------------*
+| database.username *         | Usuário utilizado na conexão com o banco de dados. | sa            |
+*-----------------------------+----------------------------------------------+---------------------*
+| database.password *         | Senha utilizada na conexão com o banco de dados. | -               |
+*-----------------------------+----------------------------------------------+---------------------*
+
+  <* parâmetro obrigatório.>
+
+  Exemplo:
+  
++--  
+database.driverClass=org.hsqldb.jdbcDriver
+database.url=jdbc:hsqldb:.
+database.username=sa
+database.password=
+database.ddl=update
++--
+  
+*store
+
+  Configuração da base de usuários acessada pelo servidor Rasea.
+  
+*-----------------------------+----------------------------------------------+---------------------*
+|| Parâmetro	              || Descrição                                   || Valor padrão       |
+*-----------------------------+----------------------------------------------+---------------------*
+| store.type                  | Seleção da base única de usuários:\          | default             |
+|                             | - <<default>>: conexão com a base embutida;\ |                     |
+|                             | - <<ldap>>: conexão LDAP;\                   |                     |
+|                             | - <<custom>>: base de usuários customizada.  |                     |
+*-----------------------------+----------------------------------------------+---------------------*
+| store.readonly              | Indica se a base de usuários é apenas para leitura:\ | false       |
+|                             | - <<true>>: apenas leitura;\                 |                     |
+|                             | - <<false>>: leitura e escrita.              |                     |
+*-----------------------------+----------------------------------------------+---------------------*
+
+  <* parâmetro obrigatório.>
+
+  Exemplo:
+  
++--  
+store.type=default
+store.readonly=false
++--
+  
+*ldap
+
+  Configurações da base de dados LDAP.
+  
+*-------------------------------+----------------------------------------------+---------------------*
+|| Parâmetro	                || Descrição                                   || Valor padrão       |
+*-------------------------------+----------------------------------------------+---------------------*
+| ldap.server.protocol          | Protocolo utilizado na conexão com o servidor LDAP:\ | ldap        |
+|                               | - <<ldap>>: conexão sem segurança;\          |                     |
+|                               | - <<ldaps>>: conexão segura.                 |                     |
+*-------------------------------+----------------------------------------------+---------------------*
+| ldap.server.host *            | Nome ou IP do host do servidor LDAP.         | -                   |
+*-------------------------------+----------------------------------------------+---------------------*
+| ldap.server.port              | Porta do servidor LDAP.                      | -                   |
+*-------------------------------+----------------------------------------------+---------------------*
+| {ldap.bind.dn} *              | Nome distinto do usuário do LDAP com privilégios de leitura e escrita. | - |
+*-------------------------------+----------------------------------------------+---------------------*
+| ldap.bind.password *          | Senha do usuário especificado no atributo {{ldap.bind.dn}}. | -    |
+*-------------------------------+----------------------------------------------+---------------------*
+| ldap.user.search-context-dn * | Base de pesquisa dos usuários na estrutura do LDAP. | -            |
+*-------------------------------+----------------------------------------------+---------------------*
+| ldap.user.search-filter       | Filtro utilizado como cláusula restritiva para identificação de usuários na base LDAP em conjunto com o atributo {{ldap.user.object-classes}} | - |  
+*-------------------------------+----------------------------------------------+---------------------*
+| ldap.user.insert-pattern-dn * | Padrão a ser utilizado como nome distinto na inserção de novos usuários na base ldap. | - |
+*-------------------------------+----------------------------------------------+---------------------*
+| ldap.user.name-attribute      | Nome do atributo que identifica o nome (login) do usuário. | sAMAccountName |
+*-------------------------------+----------------------------------------------+---------------------*
+| ldap.user.displayName-attribute | Nome do atributo que identifica o nome de exibição do usuário. | givenName |
+*-------------------------------+----------------------------------------------+---------------------*
+| {ldap.user.mail-attribute} *  | Nome do atributo que identifica o e-mail principal do usuário. As notificações para o usuário utilizarão este e-mail, tal como entrega da senha gerada automaticamente. | - | 
+*-------------------------------+----------------------------------------------+---------------------*	
+| ldap.user.alternateMail-attribute | Nome do atributo que identifica o e-mail alternativo do usuário. Possui a mesma função do atributo {{ldap.user.mail-attribute}}, atuando como contingência. | - |
+*-------------------------------+----------------------------------------------+---------------------*
+| ldap.user.password-attribute  | Nome do atributo que identifica a senha do usuário. | userPassword |
+*-------------------------------+----------------------------------------------+---------------------*
+| {ldap.user.enabled-attribute} | Nome do atributo que identifica se o usuário está ativo ou não. | userAccountControl |
+*-------------------------------+----------------------------------------------+---------------------*
+| ldap.user.enabled-value       | Valor do atributo {{ldap.user.enabled-attribute}} para determinar que o usuário está ativo.	| 544 |
+*-------------------------------+----------------------------------------------+---------------------*
+| ldap.user.disabled-value      | Valor do atributo {{ldap.user.enabled-attribute}} para determinar que o usuário está inativo.	| 546 |
+*-------------------------------+----------------------------------------------+---------------------*
+| {ldap.user.objectClass-attribute} | Nome do atributo que identifica a categoria do usuário. | objectClass |
+*-------------------------------+----------------------------------------------+---------------------*
+| {ldap.user.object-classes}    | Valor do atributo {{ldap.user.objectClass-attribute}} que determina as categorias de um usuário no LDAP. | top,person,organizationalPerson,user |
+*-------------------------------+----------------------------------------------+---------------------*
+| ldap.user.additional-valued-attributes | Combinação <atributo=valor> utilizada na inserção de novos usuários na base LDAP. | - |
+*-------------------------------+----------------------------------------------+---------------------*	
+| ldap.user.password-charset    | Padrão encoding para armazenamento da senha do usuário, e.g., UTF-8, UTF-16, UTF-32, etc. | - |
+*-------------------------------+----------------------------------------------+---------------------*
+
+  <* parâmetro obrigatório.>
+
+  Exemplo:
+  
++--  
+store.type=ldap
+store.readonly=false
+
+ldap.server.protocol=ldaps
+ldap.server.host=ldap.domain.com
+ldap.bind.dn=cn=admin,cn=Users,dc=domain,dc=com
+ldap.bind.password=surprise
+ldap.user.search-context-dn=ou=Accounts,dc=domain,dc=com
+ldap.user.insert-pattern-dn=cn={username},ou=Accounts,dc=domain,dc=com
+ldap.user.name-attribute=sAMAccountName
+ldap.user.displayName-attribute=sn,givenName
+ldap.user.mail-attribute=userPrincipalName,mail
+ldap.user.alternateMail-attribute=personalMail
+ldap.user.password-attribute=unicodePwd
+ldap.user.objectClass-attribute=objectClass
+ldap.user.enabled-attribute=userAccountControl
+ldap.user.enabled-value=544
+ldap.user.disabled-value=546
+ldap.user.object-classes=top,person,organizationalPerson,user
+ldap.user.additional-valued-attributes=scriptPath=logon.vbs
+ldap.user.password-charset=UTF-16LE
++--
+  
+*custom
+
+  Configurações da base de dados personalizada.
+  
+*-----------------------------+----------------------------------------------+---------------------*
+|| Parâmetro	              || Descrição                                   || Valor padrão       |
+*-----------------------------+----------------------------------------------+---------------------*
+| custom.class *              | Indica a classe customizada que implementa a interface <UserManager>.\ | - |
+|                             | A classe deve estar disponível no <classpath> do Servidor de Aplicação. |  |
+*-----------------------------+----------------------------------------------+---------------------*
+	
+  <* parâmetro obrigatório.>
+
+  Exemplo:
+  
++--  
+store.type=custom
+store.readonly=false
+
+custom.class=com.domain.MyCustomUserDAO
++--
+
+Exemplos
+
+  Escrever

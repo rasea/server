@@ -1,0 +1,372 @@
+ -----
+ Configurando o ambiente de desenvolvimento
+ -----
+ Cleverson Sacramento
+ -----
+
+Objetivo
+
+  Este documento estabelece o passo-a-passo para preparação e configuração do ambiente de desenvolvimento do
+  <<Rasea>>. Para garantir a padronização dos produtos gerados pela equipe do projeto e para assegurar
+  a qualidade final do projeto, é fundamental que todos os detalhes descritos neste material sejam seguidos à risca.
+
+Público-alvo
+
+  Este material se destina a:
+
+  * Equipe do projeto Rasea;
+  
+  * Pessoas interessadas em instalar o ambiente de desenvolvimento do projeto Rasea.
+  
+Procedimento
+
+%{toc|section=3|fromDepth=2|toDepth=4}
+
+*Baixando os pacotes
+  
+  As seguintes ferramentas são necessárias para a preparação do ambiente. Utilize exatamente as versões recomentadas
+  a seguir:
+  
+  * Java SE Development Kit 5.0u22 {{{https://cds.sun.com/is-bin/INTERSHOP.enfinity/WFS/CDS-CDS_Developer-Site/en_US/-/USD/ViewProductDetail-Start?ProductRef=jdk-1.5.0_22-oth-JPR@CDS-CDS_Developer}[download]}}
+
+  * Eclipse Galileo Classic 3.5.1 {{{http://www.eclipse.org/downloads/packages/eclipse-classic-351/galileosr1}[download]}}
+  
+  * JBoss AS 4.2.3.GA {{{http://sourceforge.net/projects/jboss/files/JBoss/JBoss-4.2.3.GA/jboss-4.2.3.GA.zip/download}[download]}}
+
+  * Apache Maven 2.2.1 {{{http://www.apache.org/dyn/closer.cgi/maven/binaries/apache-maven-2.2.1-bin.zip}[download]}}
+
+  []
+
+  Após o término de todos os downloads, instale as ferramentas onde você preferir. Opcionalmente, caso não faça a mínima
+  idéia de onde instalá-las, siga esta sugestão de estrutura de pastas, que será utilizada como referência deste material.:
+  
++--
++- rasea-dev
+     +- ide/
+     |    +- eclipse-3.5.1/
+     |
+     +- workspace/
+     |    +- eclipse-3.5.1/
+     |
+     +- jdk
+     |    +- jdk-1.5.0_22/
+     |
+     +- tool/
+     |    +- maven-2.2.1/
+     |
+     +- server/
+          +- jboss-4.2.3.GA/
++--
+
+  Caso você tenha optado por uma instalação automatizada do Java Development Kit (JDK), muito comum para usuários do
+  Windows e MAC OS X, tome muito cuidado. Com uma JDK compartilhada você estará exposto a mais influências externas.
+  É extremamente recomendável que você seja um pouco egoísta neste momento e faça uma cópia exclusiva do JDK para o
+  ambiente de desenvolvimento do <<Rasea>>.
+
+*Iniciando o Eclipse
+
+  Ao abrir o Eclipse pela primeira vez, será solicitado que você escolha o espaço de trabalho. Aponte para a pasta de
+  sua escolha. Utilizamos a seguinte pasta como exemplo:
+  
++--
+/rasea-dev/workspace/eclipse-3.5.1
++--
+
+  Feito isso, estamos prontos para iniciar a instalação dos plug-ins necessários para a preparação do nosso
+  ambiente de desenvolvimento.
+
+*Instalando os plug-ins no Eclipse
+
+  A instalação de <<todos>> os plug-ins é fundamental para a correta configuração do ambiente.
+
+
+**Subeclipse Plug-in
+
+  Instale o plug-in utilizando o seguinte site:
+  
++--
+http://subclipse.tigris.org/update_1.6.x
++--
+
+  Prossiga a instalação e selecione os seguintes itens:
+  
++--
+Core SVNKit Library	
+    SVNKit Library
+
+Optional JNA Library
+    JNA Library	3.1.0
+
+Subclipse	
+    CollabNet Merge Client
+    Subclipse (Required)
+    Subclipse Integration for Mylyn 3.x (Optional)
+    Subversion Client Adapter (Required)
+    Subversion JavaHL Native Library Adapter (Required)
+    Subversion Revision Graph
+    SVNKit Client Adapter (Not required)
++--
+
+  Quando terminar, reinicie o Eclipse.
+
+
+**M2Eclipse Plug-in
+
+  Instale o plug-in utilizando o seguinte site:
+  
++--
+http://m2eclipse.sonatype.org/update/
++--
+
+  Prossiga a instalação e selecione os seguintes itens:
+  
++--
+Maven Integration	
+    Maven Embedder
+    Maven Integration for Eclipse (Required)
+    Maven POM Editor (Optional)
+    Maven POM XML Editor (Optional)
+
+Maven Optional Components
+	Maven Central repository index (Optional)
+	Maven Doxia Editors (Optional)	
+    Maven issue tracking configurator for Mylyn 3.x (Optional)
+    Maven SCM handler for Subclipse (Optional)
+    Maven SCM Integration (Optional)
+
+Maven Project Configurators	
+    Maven Integration for WTP (Optional)
++--
+
+  Quando terminar, reinicie o Eclipse.
+
+
+**JBoss Tools Plug-in
+
+  Instale o plug-in utilizando o seguinte site:
+  
++--
+http://download.jboss.org/jbosstools/updates/development/
++--
+
+  Prossiga a instalação e selecione os seguintes itens:
+  
++--
+JBoss Tools
+    Hibernate Tools
+    JBoss Archives Tools
+    JBoss ESB Tools
+    JBoss Tools RichFaces
+    JBoss WebServices Tools
+    JBossAS Tools
+    Seam Tools
+    
+JBoss Tools Integration For Maven, BIRT, TPTP
+    JBoss Maven Integration
+    JBoss Maven Seam Integration
+    TPTP Profile On JBoss Server
++--
+
+  Aproveite este momento para tomar um cafezinho, pois este processo vai demorar um pouco. Quando terminar,
+  reinicie o Eclipse.
+
+
+**PMD Plug-in
+
+  Instale o plug-in utilizando o seguinte site:
+  
++--
+http://pmd.sourceforge.net/eclipse
++--
+
+  Prossiga a instalação e selecione os seguintes itens:
+  
++--
+PMD for Eclipse 3	
+    PMD Plug-in
++--
+
+  Quando terminar, reinicie o Eclipse.
+
+
+**FindBugs Plug-in
+
+  Instale o plug-in utilizando o seguinte site:
+  
++--
+http://findbugs.cs.umd.edu/eclipse
++--
+
+  Prossiga a instalação e selecione os seguintes itens:
+  
++--
+FindBugs	
+    FindBugs Feature
++--
+
+  Quando terminar, reinicie o Eclipse.
+
+
+**ObjectAid Plug-in
+
+  Instale o plug-in utilizando o seguinte site:
+  
++--
+http://www.objectaid.com/
++--
+
+  Prossiga a instalação e selecione os seguintes itens:
+  
++--
+ObjectAid UML Explorer	
+    ObjectAid Class Diagram
++--
+
+  Quando terminar, reinicie o Eclipse.
+
+*Configurando o Maven
+
+  Edite o arquivo <m2.conf> na pasta <bin> do Maven. De acordo com o padrão de pastas sugerido, o arquivo se
+  encontra em:
+
++--
+/rasea-dev/tool/maven-2.2.1/bin/m2.conf
++--
+
+  Modifique o arquivo <m2.conf>, alterando o atributo <maven.home> e acrescentando o <java.home>:
+  
+  
+  No <<Windows>>:
+  
++--
+set maven.home default ${user.home}/.m2
+set java.home default C:/rasea-dev/jdk/jdk-1.5.0_22/
++--
+
+  No <<Linux>>:
+  
++--
+set maven.home default ${user.home}/.m2
+set java.home default /rasea-dev/jdk/jdk-1.5.0_22/
++--
+
+  No <<Mac OS>>:
+  
++--
+set maven.home default ${user.home}/.m2
+set java.home default /rasea-dev/jdk/jdk-1.5.0_22/Home/
++--
+
+*Configurando o Eclipse
+
+  Vamos agora parametrizar o Eclipse com informações à respeito das nossas ferramentas e dos nossos 
+  padrões de configuração. 
+
+
+**JRE
+
+  Acesse o menu <Window / Preferences / Java / Installed JREs>. Adicione o <Java SE Development Kit> que você
+  baixou na seção {{{Baixando_os_pacotes}Baixando os pacotes}}. De acordo com o padrão de pastas sugerido,
+  aponte para:
+  
+  
+  No <<Windows>>:
+  
++--
+C:/rasea-dev/jdk/jdk-1.5.0_22/
++--
+
+  No <<Linux>>:
+  
++--
+/rasea-dev/jdk/jdk-1.5.0_22/
++--
+
+  No <<Mac OS>>:
+  
++--
+/rasea-dev/jdk/jdk-1.5.0_22/Home/
++--
+  
+  Utilize o seguinte nome para identificar a JRE: 
+  
++--
+jdk-1.5.0_22
++--
+
+  Para evitar futuras confusões, deixe apenas essa JRE instalada. Isso nos garantirá que esta será a <<JRE padrão
+  do Eclipse>>, já que precisaremos dessa garantia para configurar as ferramentas.
+
+
+**JVM
+
+  Abra o arquivo <eclipse.ini> e acrescente a seguinte configuração. De acordo com o padrão de pastas sugerido defina:
+ 
+  No <<Windows>>:
+  
++--
+-vm
+C:/rasea-dev/jdk/jdk-1.5.0_22/bin/javaw
++--
+
+  No <<Linux>>:
+  
++--
+-vm
+/rasea-dev/jdk/jdk-1.5.0_22/bin/java
++--
+
+  No <<Mac OS>>:
+  
++--
+-vm
+/rasea-dev/jdk/jdk-1.5.0_22/Home/bin/java
++--
+
+**M2Eclipse
+
+  Acesse o menu <Window / Preferences / Maven>. Certifique-se que apenas estas opções estão marcadas:
+  
++--
+Download Artfact Sources
+Download Artfact JavaDoc
+Download repository index updates on startup
+Update Maven projects on startup
++--
+
+  Agora acesse <Window / Preferences / Maven / Installations> e adicione o Maven baixado na seção
+  {{{Baixando_os_pacotes}Baixando os pacotes}}. De acordo com o padrão de pastas sugerido,
+  aponte para:
+  
++--
+/rasea-dev/tool/maven-2.2.1/
++--
+
+  Marque o item recém acrescentado para garantir que ele será o Maven padrão utilizado pelo Eclipse.
+
+
+**JBoss AS
+
+  Acesse <Window / Show View / Other...> e selecione a opção <Servers> e clique em <Ok>. Na nova
+  aba <Servers>, clique com o botão direito e depois em <New / Server>. Instale o servidor
+  <<JBoss AS 4.2.3.GA>> baixado na seção {{{Baixando_os_pacotes}Baixando os pacotes}}. Utilize o seguinte
+  nome para identificar o servidor e o <Runtime Environment>:
+  
++--
+jboss-4.2.3.GA
++--
+
+  De acordo com o padrão de pastas sugerido, o servidor encontra-se em:
+  
++--
+/rasea-dev/server/jboss-4.2.3.GA
++--
+
+  Na aba <Servers>, dê um duplo-clique no servidor <jboss-4.2.3.GA>, uma nova tela se abrirá. Nesta tela,
+  clique na aba <Deployment> e marque a seguinte opção:
+  
++--
+Use the JBoss deploy folder
++--
+
+  Salve as modificações.

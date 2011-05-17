@@ -1,0 +1,254 @@
+/* RESET.CSS */
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,code,del,dfn,em,img,q,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td
+	{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+
+body {
+	line-height: 1.5;
+}
+
+table {
+	border-collapse: separate;
+	border-spacing: 0;
+}
+
+caption,th,td {
+	text-align: left;
+	font-weight: normal;
+}
+
+table,td,th {
+	vertical-align: middle;
+}
+
+blockquote:before,blockquote:after,q:before,q:after {
+	content: "";
+}
+
+blockquote,q {
+	quotes: "" "";
+}
+
+a img {
+	border: none;
+}
+
+/* COMPONENTES HTML */
+a:active,a:link,a:visited {
+	color: #676767;
+}
+
+a:hover {
+	color: #CD8200;
+}
+
+br {
+	clear: both;
+}
+
+h1 {
+	font-family: Arial, sans-serif;
+	color: #578BB8;
+	font-size: 1.6em;
+}
+
+html,body {
+	font-family: Tahoma, Arial;
+	background: white;
+}
+
+select {
+	font-size: 11px;
+	font-family: Tahoma, Arial;
+}
+
+input {
+	font-size: 11px;
+	font-family: Tahoma, Arial;
+}
+
+/* CAIXA */
+.dr-tbpnl-cntnt,.rich-tabpanel-content {
+	margin: 0px;
+	padding: 10px;
+}
+
+/* ALINHAMENTO DO TEXTO NO HEADER */
+.left {
+	text-align: left;
+}
+
+.center {
+	text-align: center;
+}
+
+.right {
+	text-align: right;
+}
+
+/* ESPACAMENTO ABAIXO DE CADA LINHA COM LABEL E VALUE */
+.formBox {
+	padding-bottom: 4px;
+}
+
+/* LABEL DO FORM */
+.name,.name-login {
+	text-align: left;
+	font-size: 11px;
+	font-family: Tahoma, Arial;
+	font-weight: bold;
+	width: 110px;
+	margin: 4px;
+	padding: 4px;
+}
+
+/* LABEL DO FORM DE LOGIN */
+.name-login {
+	width: 40px;
+}
+
+/* VALOR LOCALIZADO AO LADO DO LABEL */
+.value {
+	margin: 2px;
+}
+
+/* TRATAMENTO DE ERRO */
+.error {
+	margin: 4px;
+	float: left;
+}
+
+.errors {
+	color: red;
+}
+
+.errors input {
+	border-color: red;
+}
+
+.errors textarea {
+	border-color: red;
+}
+
+.required {
+	color: red;
+	font-weight: normal;
+	padding-left: 2px;
+}
+
+/* TOOL BAR */
+.toolbarTopo {
+	position: absolute;
+	top: 66px;
+	left: 0px;
+	border: 0px;
+	border-top: 1px solid #ABABAB;
+	border-bottom: 1px solid #ABABAB;
+	font-size: 13px;
+	background: url(../img/_bg_dd_menu.jpg) repeat-x center;
+	height: 26px;
+}
+
+.toolbarTitle {
+	height: 26px;
+	border: 0px;
+	border-top: 1px solid #D1D1D1;
+	border-bottom: 1px solid #545454;
+	font-size: 13px;
+	background: url(../img/_bg_toolbar_titulo.jpg) no-repeat #DFDFDF;
+}
+
+/* MENU */
+.menu_botao {
+	background: url(../img/_bg_dd_menu.jpg) repeat-x center;
+	width: 187px;
+	height: 30px;
+	vertical-align: middle;
+	text-align: left;
+	border-style: none;
+	cursor: pointer;
+	border-style: none;
+	font-size: 12px;
+	color: #444;
+	padding-left: 4px;
+}
+
+.menu_botao:hover {
+	filter: alpha(opacity :                             90 !important);
+	opacity: 0.9;
+	-moz-opacity: 0.9;
+}
+
+.menu_botao_selected {
+	background: url(../img/_bg_dd_menu_selected.jpg) repeat-x center;
+}
+
+/* PICKLIST */
+.rich-picklist-body {
+	cursor: default;
+}
+
+/* GRID */
+.dr-pnl-b div#gridButtons,.rich-panel-body div#gridButtons {
+	padding: 4px;
+	background-color: #B2B2B2;
+}
+
+.dr-pnl-b input[type="button"],.dr-pnl-b input[type="submit"],.rich-panel-body input[type="button"],.rich-panel-body input[type="submit"]
+	{
+	font-size: 10px;
+}
+
+.rich-panel {
+	border-style: none;
+	background-color: transparent;
+}
+
+/* MARGEM DO GRID */
+.rich-panel-body {
+	padding: 0px;
+	margin: 0px;
+}
+
+.dr-table-firstrow {
+	background-color: white;
+	cursor: default;
+}
+
+.dr-table-firstrow:hover {
+	background-color: #F7F7F7;
+}
+
+/* QUEBRA DE LINHA */
+.nowrap {
+	white-space: nowrap;
+}
+
+/* VERSAO */
+.version {
+	position: fixed;
+	top: 67px;
+	left: 2px;
+	font-family: Tahoma;
+	font-size: 10px;
+	font-weight: normal;
+	color: silver;
+}
+
+.layoutContent {
+	padding: 15px;
+}
+
+.layoutContentBg {
+	background-image: url(../img/bg.png);
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+}

@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:s="http://jboss.com/products/seam/taglib"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<h:form
+		rendered="#{ownerships.size gt 0 and not ('application' eq home.name) }">
+		<h:outputText
+			value="#{messages['org.rasea.toolbar.current.application.label']}" />
+
+		<h:selectOneMenu id="currentApplication" value="#{currentApplication}"
+			style="height: 18px;">
+			<s:selectItems value="#{ownerships}" var="app"
+				label="#{app.displayName}" />
+			<s:convertEntity />
+
+			<a4j:support event="onchange"
+				action="#{facesContext.viewRoot.viewId.toString()}" />
+		</h:selectOneMenu>
+	</h:form>
+</ui:composition>

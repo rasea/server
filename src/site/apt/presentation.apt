@@ -1,0 +1,53 @@
+ -----
+ Apresentação
+ -----
+ Cleverson Sacramento
+ -----
+
+Apresentação
+
+*{Introdução}
+
+  A redundância no controle de acesso às aplicações faz parte da realidade de muitas instituições.
+  Geralmente, cada sistema implantado possui um controle de acesso próprio, acarretando na falta de padronização
+  e dificuldade na manutenção. Com uma arquitetura adequada, é possível garantir a convergência do controle
+  de acesso.
+  
+  O <<Rasea>> é uma solução orientada a serviços que possibilita o controle de acesso
+  unificado, fundamentando-se em conceitos, tecnologias e padrões abertos para garantir a independência de
+  plataforma. Um dos grandes diferenciais do Rasea é a sua simplicidade, alcançada através das experiências
+  adquiridas em ambiente de produção e em pesquisas.
+
+*{Público-alvo}
+
+  O público-alvo deste projeto abrange:
+  
+  * Instituições públicas ou privadas que desenvolvem <software> para atender demandas internas ou externas;
+  
+  * Profissionais autônomos que atuam na área de Desenvolvimento de <Software>;
+  
+  * Organizações que não precisam de soluções distintas para controlar o acesso de cada um dos seus sistemas.
+
+*{Arquitetura}
+
+  O <<Rasea>> foi projetado para integrar com aplicações que utilizam qualquer linguagem de
+  programação que suporte o consumo de <WebServices>. A sua arquitetura estabelece a existência de um servidor
+  que atende aos vários consumidores dos seus serviços. Os consumidores, ou <<agentes>>, devem ser conectados às
+  aplicações. Apesar do servidor ser escrito na linguagem <Java>, as aplicações não têm
+  conhecimento disso. O que elas conhecem de fato são os serviços.
+
+[images/rasea-architecture.png] Visão geral da arquitertura Rasea
+  
+  A figura acima representa a visão geral da arquitetura do projeto.
+  Ao centro está o servidor, que disponibiliza uma interface Web gráfica para que o administrador defina
+  as regras de acesso aos sistemas, que são mantidas na base única de controle de acesso.  
+  O Rasea disponibiliza módulos de acesso ao <LDAP> (e.g., <Active Directory>) bem como o módulo de <<extensão>>,
+  que possibilita a criação de métodos personalizados de acesso à base de usuários.
+  
+  Os <<agentes>> são responsáveis por interceptar todas as tentativas de acesso às aplicações. Com base nas
+  informações do servidor, o agente decide se as requisições serão aceitas ou revogadas. Os agentes devem ser
+  compatíveis à tecnologia da aplicação (e.g., Java, .NET, PHP, etc.).
+
+*{Detalhes}
+
+  Para saber os detalhes sobre o funcionamento e utilização do Rasea, consulte a seção <<Documentação>>.
