@@ -52,7 +52,7 @@ public class ConfigurationLoader {
 		return Boolean.parseBoolean((String) fieldValue);
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private Object getEnumProperty(final Object pojo, final Field field, final Object fieldValue) throws ConfigurationException {
 		try {
 			final Class enumClass = Class.forName(field.getType().getCanonicalName());

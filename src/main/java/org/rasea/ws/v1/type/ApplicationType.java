@@ -6,7 +6,6 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.rasea.core.entity.Application;
-import org.rasea.core.entity.Role;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "name", "displayName" })
@@ -25,7 +24,7 @@ public final class ApplicationType {
 
 		return application;
 	}
-	
+
 	public static ApplicationType parse(Application application) {
 		ApplicationType type = new ApplicationType();
 		type.setName(application.getName());
@@ -33,7 +32,7 @@ public final class ApplicationType {
 
 		return type;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
