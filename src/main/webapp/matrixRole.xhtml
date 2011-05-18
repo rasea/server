@@ -33,7 +33,7 @@
 				<h:outputText value="#{messages['org.rasea.resource.label']}" />
 			</f:facet>
 
-			<rich:inplaceInput value="#{row.name}" selectOnEdit="true"
+			<rich:inplaceInput value="#{row.displayName}" selectOnEdit="true"
 				rendered="#{inplaceRendered}">
 				<a4j:support event="onviewactivated" action="#{home.updateRow(row)}"
 					ajaxSingle="true" />
@@ -46,7 +46,7 @@
 
 	<ui:define name="col">
 		<rich:column style="border-style: none;">
-			<rich:inplaceInput value="#{col.name}" selectOnEdit="true"
+			<rich:inplaceInput value="#{col.displayName}" selectOnEdit="true"
 				rendered="#{inplaceRendered}">
 				<a4j:support event="onviewactivated" action="#{home.updateCol(col)}"
 					ajaxSingle="true" />
