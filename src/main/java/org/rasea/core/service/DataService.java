@@ -117,7 +117,7 @@ public class DataService extends AbstractService {
 				this.applicationService.update(application);
 			}
 
-		} else if (application != null && !application.equals(this.defaultApplication)) {
+		} else if (!this.defaultApplication.equals(application)) {
 			application = new Application();
 			application.setName(xml.getName());
 			application.setDisplayName(xml.getDisplayName());
