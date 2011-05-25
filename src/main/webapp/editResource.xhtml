@@ -55,7 +55,7 @@
 				disabled="#{readOnly}">
 				<s:selectItems value="#{operationService.find(currentApplication)}"
 					var="operation"
-					label="#{saveDisabled ? messages[operation.name] : operation.name}" />
+					label="#{saveDisabled ? messages[operation.name] : operation.displayName}" />
 				<s:convertEntity />
 			</h:selectManyCheckbox>
 		</s:decorate>

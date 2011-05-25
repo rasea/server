@@ -32,7 +32,7 @@ import org.rasea.ws.v1.type.CredentialsType;
 import org.rasea.ws.v1.type.OperationType;
 import org.rasea.ws.v1.type.ResourceType;
 
-@WebService(name = "Maintenance_v1", targetNamespace = "http://rasea.org/ps/wsdl/Maintenance_v1", serviceName = "Maintenance_v1", portName = "MaintenancePort_v1")
+@WebService(name = "Maintenance_v1", targetNamespace = "http://rasea.org/ps/wsdl/Maintenance_v1", serviceName = "MaintenanceService_v1", portName = "MaintenancePort_v1")
 @SOAPBinding(parameterStyle = ParameterStyle.BARE, style = Style.DOCUMENT, use = Use.LITERAL)
 public class MaintenanceService extends AbstractWebService {
 

@@ -45,7 +45,7 @@
 	</ui:define>
 
 	<ui:define name="col">
-		<rich:column style="border-style: none;">
+		<s:div>
 			<rich:inplaceInput value="#{col.displayName}" selectOnEdit="true"
 				rendered="#{inplaceRendered}">
 				<a4j:support event="onviewactivated" action="#{home.updateCol(col)}"
@@ -54,7 +54,7 @@
 
 			<h:outputText value="#{messages[col.displayName]}"
 				rendered="#{!inplaceRendered}" />
-		</rich:column>
+		</s:div>
 	</ui:define>
 
 	<ui:define name="cell">

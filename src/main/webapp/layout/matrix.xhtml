@@ -45,7 +45,7 @@
 							<ui:insert name="row" />
 
 							<rich:columns value="#{home.columns}" var="col" index="x"
-								style="text-align: center; width: 80px;" rendered="#{sortCells}"
+								style="text-align: center; width: 120px;" rendered="#{sortCells}"
 								sortBy="#{home.cells[y * home.columns.size() + x]}">
 								<ui:param name="index" value="#{y * home.columns.size() + x}" />
 								<ui:param name="cell" value="#{home.cells[index]}" />

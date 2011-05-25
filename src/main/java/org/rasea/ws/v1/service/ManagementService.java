@@ -28,7 +28,7 @@ import org.rasea.ws.v1.request.UserRequest;
 import org.rasea.ws.v1.request.UserRoleRequest;
 import org.rasea.ws.v1.type.CredentialsType;
 
-@WebService(name = "Management_v1", targetNamespace = "http://rasea.org/ps/wsdl/Management_v1", serviceName = "Management_v1", portName = "ManagementPort_v1")
+@WebService(name = "Management_v1", targetNamespace = "http://rasea.org/ps/wsdl/Management_v1", serviceName = "ManagementService_v1", portName = "ManagementPort_v1")
 @SOAPBinding(parameterStyle = ParameterStyle.BARE, style = Style.DOCUMENT, use = Use.LITERAL)
 public class ManagementService extends AbstractWebService {
 
