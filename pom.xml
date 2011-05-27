@@ -60,15 +60,17 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-annotations</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager
-			</artifactId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.mail</groupId>
@@ -173,12 +175,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.rasea</groupId>
-			<artifactId>rasea-agent-seam</artifactId>
-			<version>0.3.0.RC2</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.rasea</groupId>
 			<artifactId>rasea-extensions</artifactId>
 			<version>0.1.0.GA</version>
 			<scope>compile</scope>
@@ -187,7 +183,7 @@
 	<parent>
 		<groupId>org.jboss.seam</groupId>
 		<artifactId>parent</artifactId>
-		<version>2.2.0.GA</version>
+		<version>2.2.2.Final</version>
 	</parent>
 	<properties>
 		<upload.url>scp://shell.sourceforge.net/home/frs/project/r/ra/rasea</upload.url>
@@ -440,9 +436,7 @@
 						<reports>
 							<report>project-team</report>
 							<report>license</report>
-							<!--
-							<report>mailing-list</report>
-							-->
+							<!-- <report>mailing-list</report> -->
 							<report>scm</report>
 						</reports>
 					</reportSet>
@@ -556,6 +550,18 @@
 		</snapshotRepository>
 	</distributionManagement>
 	<repositories>
+		<repository>
+			<id>nexus.jboss.org</id>
+			<name>JBoss Maven Repository</name>
+			<!-- <url>http://repository.jboss.org/nexus/content/groups/public</url> -->
+			<url>http://repository.jboss.org/nexus/content/repositories/releases</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
 		<repository>
 			<id>repository.jboss.org</id>
 			<name>JBoss Maven Repository</name>
