@@ -10,6 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.rasea.extensions.entity.User;
 
+/**
+ * 
+ */
 public class ApplicationTest {
 
 	private void assertNullTransientProperties(final Application application) {
