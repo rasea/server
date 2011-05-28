@@ -6,15 +6,15 @@
 
 Baixando os arquivos necessários
 
-  Para instalar o servidor Rasea é preciso baixar o servidor JBoss AS 4.3.2 e o Java, caso você ainda
-  não tenha.
+  Para instalar o servidor Rasea é preciso baixar o servidor JBoss AS em umas das versões: 4.3.2, 5.0.1 ou 5.1.0. É preciso também do Java, caso
+  você ainda não tenha.
   
-  Caso você queira instalar o Rasea no Java 6, baixe os seguintes
+  Para instalar o Rasea no Java 6, baixe os seguintes
   pacotes:
   
   * Java SE Development Kit 6.0u18 {{{http://www.java.com/download}[download]}}
 
-  * JBoss AS 4.2.3.GA (Java6) {{{http://sourceforge.net/projects/jboss/files/JBoss/JBoss-4.2.3.GA/jboss-4.2.3.GA-jdk6.zip/download}[download]}}
+  * JBoss AS 5.1.0.GA (Java6) {{{http://sourceforge.net/projects/jboss/files/JBoss/JBoss-5.1.0.GA/jboss-5.1.0.GA-jdk6.zip/download}[download]}}
   
   []
 
@@ -22,14 +22,14 @@ Baixando os arquivos necessários
 
   * Java SE Development Kit 5.0u22 {{{https://cds.sun.com/is-bin/INTERSHOP.enfinity/WFS/CDS-CDS_Developer-Site/en_US/-/USD/ViewProductDetail-Start?ProductRef=jdk-1.5.0_22-oth-JPR@CDS-CDS_Developer}[download]}}
 
-  * JBoss AS 4.2.3.GA {{{http://sourceforge.net/projects/jboss/files/JBoss/JBoss-4.2.3.GA/jboss-4.2.3.GA.zip/download}[download]}}
+  * JBoss AS 5.1.0.GA {{{http://sourceforge.net/projects/jboss/files/JBoss/JBoss-5.1.0.GA/jboss-5.1.0.GA.zip/download}[download]}}
   
   []
 
   Após baixar os pacotes, instale o Java (caso você não possua) e descompacte o JBoss AS na pasta que você
   preferir.
   
-  Agora baixe o pacote do Rasea {{{http://download.rasea.org/}aqui}} e descompacte-o na pasta que você preferir.
+  Agora baixe o pacote do Rasea {{{http://download.rasea.org/rasea-server/}aqui}} e descompacte-o na pasta que você preferir.
 
 
 Implantando o Rasea no servidor

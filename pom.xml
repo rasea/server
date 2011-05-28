@@ -8,9 +8,20 @@
 	<!-- The Basics -->
 	<groupId>org.rasea</groupId>
 	<artifactId>rasea-server</artifactId>
-	<version>0.4.0.GA-SNAPSHOT</version>
+	<version>0.4.0.Beta1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.jboss.seam</groupId>
+				<artifactId>parent</artifactId>
+				<version>2.2.2.Final</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -23,98 +34,33 @@
 			<artifactId>jboss-seam-mail</artifactId>
 			<exclusions>
 				<exclusion>
-					<groupId>xstream</groupId>
-					<artifactId>xstream</artifactId>
-				</exclusion>
-				<exclusion>
 					<groupId>xpp3</groupId>
 					<artifactId>xpp3_min</artifactId>
 				</exclusion>
 				<exclusion>
-					<groupId>org.jboss.seam</groupId>
-					<artifactId>jboss-seam</artifactId>
+					<artifactId>xstream</artifactId>
+					<groupId>com.thoughtworks.xstream</groupId>
 				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.seam</groupId>
 			<artifactId>jboss-seam-debug</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.jboss.seam</groupId>
-					<artifactId>jboss-seam</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.seam</groupId>
 			<artifactId>jboss-seam-ui</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.jboss.seam</groupId>
-					<artifactId>jboss-seam</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>org.jboss.seam</groupId>
-			<artifactId>jboss-seam</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>org.hibernate</groupId> -->
-		<!-- <artifactId>hibernate-annotations</artifactId> -->
-		<!-- <scope>provided</scope> -->
-		<!-- </dependency> -->
-		<!-- <exclusions> -->
-		<!-- <exclusion> -->
-		<!-- <artifactId>hibernate-core</artifactId> -->
-		<!-- <groupId>org.hibernate</groupId> -->
-		<!-- </exclusion> -->
-		<!-- <exclusion> -->
-		<!-- <artifactId>hibernate-commons-annotations</artifactId> -->
-		<!-- <groupId>org.hibernate</groupId> -->
-		<!-- </exclusion> -->
-		<!-- </exclusions> -->
-		<!-- <dependency> -->
-		<!-- <groupId>org.hibernate</groupId> -->
-		<!-- <artifactId>hibernate-core</artifactId> -->
-		<!-- <version>3.3.2.GA</version> -->
-		<!-- <scope>compile</scope> -->
-		<!-- </dependency> -->
-
-
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<!-- <version>3.4.0.GA</version> -->
 			<scope>provided</scope>
 		</dependency>
-
-		<!-- <dependency> -->
-		<!-- <groupId>org.hibernate</groupId> -->
-		<!-- <artifactId>hibernate-annotations</artifactId> -->
-		<!-- <version>3.4.0.GA</version> -->
-		<!-- <scope>compile</scope> -->
-		<!-- </dependency> -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<!-- <version>3.0.0.GA</version> -->
 			<scope>provided</scope>
 		</dependency>
-
-		<!-- <exclusions> -->
-		<!-- <exclusion> -->
-		<!-- <artifactId>hibernate-core</artifactId> -->
-		<!-- <groupId>org.hibernate</groupId> -->
-		<!-- </exclusion> -->
-		<!-- <exclusion> -->
-		<!-- <artifactId>hibernate-commons-annotations</artifactId> -->
-		<!-- <groupId>org.hibernate</groupId> -->
-		<!-- </exclusion> -->
-		<!-- </exclusions> -->
-		<!-- </dependency> -->
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
@@ -223,11 +169,6 @@
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
-	<parent>
-		<groupId>org.jboss.seam</groupId>
-		<artifactId>parent</artifactId>
-		<version>2.2.2.Final</version>
-	</parent>
 	<properties>
 		<upload.url>scp://shell.sourceforge.net/home/frs/project/r/ra/rasea</upload.url>
 		<htdocs.url>scp://shell.sourceforge.net/home/groups/r/ra/rasea/htdocs</htdocs.url>
@@ -269,20 +210,13 @@
 					<source>1.6</source>
 				</configuration>
 			</plugin>
-			<!-- <plugin> -->
-			<!-- <groupId>org.apache.maven.plugins</groupId> -->
-			<!-- <artifactId>maven-source-plugin</artifactId> -->
-			<!-- <version>2.1.1</version> -->
-			<!-- <executions> -->
-			<!-- <execution> -->
-			<!-- <id>attach-sources</id> -->
-			<!-- <phase>package</phase> -->
-			<!-- <goals> -->
-			<!-- <goal>jar-no-fork</goal> -->
-			<!-- </goals> -->
-			<!-- </execution> -->
-			<!-- </executions> -->
-			<!-- </plugin> -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
@@ -310,7 +244,6 @@
 				<version>1.3</version>
 				<executions>
 					<execution>
-						<id>book</id>
 						<phase>pre-site</phase>
 						<configuration>
 							<tasks>
@@ -371,7 +304,6 @@
 				<version>1.1</version>
 				<executions>
 					<execution>
-						<id>pdf</id>
 						<phase>site</phase>
 						<goals>
 							<goal>pdf</goal>
@@ -436,15 +368,23 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.2-beta-5</version>
-				<configuration>
-					<finalName>${project.artifactId}-${project.version}</finalName>
-					<outputDirectory>${project.build.directory}/assembly</outputDirectory>
-					<descriptors>
-						<descriptor>${basedir}/src/main/assembly/src.xml</descriptor>
-						<descriptor>${basedir}/src/main/assembly/bin.xml</descriptor>
-					</descriptors>
-				</configuration>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<configuration>
+							<finalName>${project.artifactId}-${project.version}</finalName>
+							<outputDirectory>${project.build.directory}/assembly</outputDirectory>
+							<descriptors>
+								<descriptor>${basedir}/src/main/assembly/src.xml</descriptor>
+								<descriptor>${basedir}/src/main/assembly/bin.xml</descriptor>
+							</descriptors>
+						</configuration>
+						<goals>
+							<goal>assembly</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -461,7 +401,7 @@
 				<artifactId>maven-release-plugin</artifactId>
 				<version>2.1</version>
 				<configuration>
-					<goals>site-deploy assembly:assembly wagon:upload</goals>
+					<goals>site-deploy wagon:upload</goals>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -606,17 +546,6 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
-		<!-- <repository> -->
-		<!-- <id>repository.jboss.org</id> -->
-		<!-- <name>JBoss Maven Repository</name> -->
-		<!-- <url>http://repository.jboss.org/maven2</url> -->
-		<!-- <snapshots> -->
-		<!-- <enabled>false</enabled> -->
-		<!-- </snapshots> -->
-		<!-- <releases> -->
-		<!-- <enabled>true</enabled> -->
-		<!-- </releases> -->
-		<!-- </repository> -->
 		<repository>
 			<id>prime-repo</id>
 			<name>Prime Technology Maven Repository</name>

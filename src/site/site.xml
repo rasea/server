@@ -60,6 +60,7 @@
 		</menu>
 
 		<menu name="Documentação">
+			<item name="Instalação" href="reference/reference-installation.html" />
 			<item name="Referência (índice)" href="reference/index.html" />
 			<item name="Screenshots" href="screenshot.html" />
 		</menu>

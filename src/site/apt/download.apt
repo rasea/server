@@ -12,20 +12,20 @@ Download
 
   Os arquivos do Rasea estão disponíveis para download no site do projeto no SourceForge.net. Para acessá-los diretamente, clique {{{http://download.rasea.org}aqui}}.
 
-~~ *---------------------------+-----------+-------------------+------------*-----------------------+----------+---------------+
-~~ || Pacote                   || Versão   || Categoria        || Data      || Licença              || Binário || Código-fonte |
-~~ *---------------------------+-----------+-------------------+------------*-----------------------+----------+---------------+
-~~ | rasea-extensions          | 0.0.1.RC1 | Release Candidate | 30/12/2009 | {{{http://www.gnu.org/licenses/lgpl-3.0-standalone.html}LGPL}} | {{{https://sourceforge.net/projects/rasea/files/rasea-extensions/0.0.1.RC1/rasea-extensions-0.0.1.RC1-bin.zip/download}rasea-extensions-0.0.1.RC1-bin.zip}} | {{{https://sourceforge.net/projects/rasea/files/rasea-extensions/0.0.1.RC1/rasea-extensions-0.0.1.RC1-src.zip/download}rasea-extensions-0.0.1.RC1-src.zip}} |
-~~ *---------------------------+-----------+-------------------+------------*-----------------------+----------+---------------+
-~~ | rasea-agent-seam          | 0.3.0.RC1 | Release Candidate | 30/12/2009 | {{{http://www.gnu.org/licenses/lgpl-3.0-standalone.html}LGPL}} | {{{https://sourceforge.net/projects/rasea/files/rasea-agent-seam/0.3.0.RC1/rasea-agent-seam-0.3.0.RC1-bin.zip/download}rasea-agent-seam-0.3.0.RC1-bin.zip}} | {{{https://sourceforge.net/projects/rasea/files/rasea-agent-seam/0.3.0.RC1/rasea-agent-seam-0.3.0.RC1-src.zip/download}rasea-agent-seam-0.3.0.RC1-src.zip}} |
-~~ *---------------------------+-----------+-------------------+------------*-----------------------+----------+---------------+
+~~ *---------------------------+-------------+-------------------+------------*-----------------------+----------+---------------+
+~~ || Pacote                   || Versão     || Categoria        || Data      || Licença              || Binário || Código-fonte |
+~~ *---------------------------+-------------+-------------------+------------*-----------------------+----------+---------------+
+~~ | rasea-extensions          | 0.0.1.RC1   | Release Candidate | 30/12/2009 | {{{http://www.gnu.org/licenses/lgpl-3.0-standalone.html}LGPL}} | {{{https://sourceforge.net/projects/rasea/files/rasea-extensions/0.0.1.RC1/rasea-extensions-0.0.1.RC1-bin.zip/download}rasea-extensions-0.0.1.RC1-bin.zip}} | {{{https://sourceforge.net/projects/rasea/files/rasea-extensions/0.0.1.RC1/rasea-extensions-0.0.1.RC1-src.zip/download}rasea-extensions-0.0.1.RC1-src.zip}} |
+~~ *---------------------------+-------------+-------------------+------------*-----------------------+----------+---------------+
+~~ | rasea-agent-seam          | 0.3.0.RC1   | Release Candidate | 30/12/2009 | {{{http://www.gnu.org/licenses/lgpl-3.0-standalone.html}LGPL}} | {{{https://sourceforge.net/projects/rasea/files/rasea-agent-seam/0.3.0.RC1/rasea-agent-seam-0.3.0.RC1-bin.zip/download}rasea-agent-seam-0.3.0.RC1-bin.zip}} | {{{https://sourceforge.net/projects/rasea/files/rasea-agent-seam/0.3.0.RC1/rasea-agent-seam-0.3.0.RC1-src.zip/download}rasea-agent-seam-0.3.0.RC1-src.zip}} |
+~~ *---------------------------+-------------+-------------------+------------*-----------------------+----------+---------------+
 
 ~~ Para outras versões, acesse {{{http://download.rasea.org}aqui}}.
 
 
 *{Repositório Subversion}
 
-  Veja os detalhes para obter o código-fonte {{{https://sourceforge.net/scm/?type=svn&group_id=246496}aqui}}
+  Veja os detalhes para obter o código-fonte {{{https://github/rasea}aqui}}
  
   
 *{Repositório Maven}
