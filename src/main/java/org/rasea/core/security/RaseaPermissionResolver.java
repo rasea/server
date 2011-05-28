@@ -15,7 +15,6 @@ import org.jboss.seam.annotations.Observer;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.log.Log;
 import org.jboss.seam.security.Credentials;
-import org.jboss.seam.security.management.IdentityManager;
 import org.jboss.seam.security.permission.PermissionResolver;
 import org.rasea.core.entity.Application;
 import org.rasea.core.entity.Permission;
@@ -63,10 +62,10 @@ public class RaseaPermissionResolver implements PermissionResolver {
 				operation = permission.getOperation().getName();
 
 				cache.add(new PermissionCache(resource, operation));
-				log.info("application #0: allow operation #1 on #2 to #3", application.getName(), permission
-						.getOperation().getName(), permission.getResource().getName(), user.getName());
+				log.info("application #0: allow operation #1 on #2 to #3", application.getName(), permission.getOperation().getName(), permission
+						.getResource().getName(), user.getName());
 			}
-			
+
 			cache.add(new PermissionCache(USER_PERMISSION_NAME, PERMISSION_UPDATE));
 
 		} catch (RequiredException cause) {
