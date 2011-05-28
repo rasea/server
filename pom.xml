@@ -170,8 +170,8 @@
 		</dependency>
 	</dependencies>
 	<properties>
-		<upload.url>scp://shell.sourceforge.net/home/frs/project/r/ra/rasea</upload.url>
-		<htdocs.url>scp://shell.sourceforge.net/home/groups/r/ra/rasea/htdocs</htdocs.url>
+		<upload.url>sftp://web.sourceforge.net/home/frs/project/r/ra/rasea</upload.url>
+		<htdocs.url>sftp://web.sourceforge.net/home/groups/r/ra/rasea/htdocs</htdocs.url>
 		<repo.url>${htdocs.url}/maven2</repo.url>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
