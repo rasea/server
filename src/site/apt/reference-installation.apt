@@ -16,16 +16,6 @@ Baixando os arquivos necessários
 
   * JBoss AS 5.1.0.GA (Java6) {{{http://sourceforge.net/projects/jboss/files/JBoss/JBoss-5.1.0.GA/jboss-5.1.0.GA-jdk6.zip/download}[download]}}
   
-  []
-
-  Caso você queira utilizar o Rasea com o Java 5, serão necessários os seguintes pacotes:
-
-  * Java SE Development Kit 5.0u22 {{{https://cds.sun.com/is-bin/INTERSHOP.enfinity/WFS/CDS-CDS_Developer-Site/en_US/-/USD/ViewProductDetail-Start?ProductRef=jdk-1.5.0_22-oth-JPR@CDS-CDS_Developer}[download]}}
-
-  * JBoss AS 5.1.0.GA {{{http://sourceforge.net/projects/jboss/files/JBoss/JBoss-5.1.0.GA/jboss-5.1.0.GA.zip/download}[download]}}
-  
-  []
-
   Após baixar os pacotes, instale o Java (caso você não possua) e descompacte o JBoss AS na pasta que você
   preferir.
   

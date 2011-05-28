@@ -480,7 +480,7 @@
 			<name>Cleverson Sacramento</name>
 			<email>cleverson.sacramento@gmail.com
 			</email>
-			<url>https://sourceforge.net/users/cleverson_zyc
+			<url>http://cleversonsacramento.wordpress.com
 			</url>
 			<roles>
 				<role>Líder</role>
@@ -503,11 +503,22 @@
 			<name>Robson Ataíde</name>
 			<email>robson.ataide@gmail.com
 			</email>
-			<url>https://sourceforge.net/users/robsonataide
+			<url>http://robsonataide.wordpress.com
 			</url>
 			<roles>
 				<role>Projetista Web</role>
 				<role>Projetista de Interface</role>
+			</roles>
+		</developer>
+		<developer>
+			<name>Wilson Guimarães</name>
+			<email>wegneto@gmail.com
+			</email>
+			<url>http://twitter.com/wegneto
+			</url>
+			<roles>
+				<role>Arquiteto</role>
+				<role>Desenvolvedor</role>
 			</roles>
 		</developer>
 	</developers>

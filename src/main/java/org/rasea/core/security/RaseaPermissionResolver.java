@@ -1,6 +1,8 @@
 package org.rasea.core.security;
 
 import static org.jboss.seam.ScopeType.SESSION;
+import static org.jboss.seam.security.management.IdentityManager.PERMISSION_UPDATE;
+import static org.jboss.seam.security.management.IdentityManager.USER_PERMISSION_NAME;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,7 @@ import org.jboss.seam.annotations.Observer;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.log.Log;
 import org.jboss.seam.security.Credentials;
+import org.jboss.seam.security.management.IdentityManager;
 import org.jboss.seam.security.permission.PermissionResolver;
 import org.rasea.core.entity.Application;
 import org.rasea.core.entity.Permission;
@@ -63,6 +66,8 @@ public class RaseaPermissionResolver implements PermissionResolver {
 				log.info("application #0: allow operation #1 on #2 to #3", application.getName(), permission
 						.getOperation().getName(), permission.getResource().getName(), user.getName());
 			}
+			
+			cache.add(new PermissionCache(USER_PERMISSION_NAME, PERMISSION_UPDATE));
 
 		} catch (RequiredException cause) {
 			throw new RuntimeException(cause);

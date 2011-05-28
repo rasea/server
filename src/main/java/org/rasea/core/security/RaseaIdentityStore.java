@@ -10,8 +10,6 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.security.management.IdentityStore;
-import org.rasea.core.exception.RequiredException;
-import org.rasea.core.exception.StoreException;
 import org.rasea.core.service.UserService;
 
 @Name("raseaIdentityStore")
@@ -26,21 +24,19 @@ public class RaseaIdentityStore implements IdentityStore {
 	}
 
 	public boolean authenticate(final String username, final String password) {
+		boolean result = false;
+
 		try {
-			return userService.authenticate(username, password);
-		} catch (RequiredException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (StoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			result = userService.authenticate(username, password);
+		} catch (Exception cause) {
+			throw new RuntimeException(cause);
 		}
-		return false;
+
+		return result;
 	}
 
 	@Override
 	public boolean supportsFeature(Feature feature) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -76,7 +72,17 @@ public class RaseaIdentityStore implements IdentityStore {
 
 	@Override
 	public boolean changePassword(String name, String password) {
-		return false;
+		boolean result = false;
+
+		try {
+			userService.changePassword(name, password);
+			result = true;
+
+		} catch (Exception cause) {
+			throw new RuntimeException(cause);
+		}
+
+		return result;
 	}
 
 	@Override

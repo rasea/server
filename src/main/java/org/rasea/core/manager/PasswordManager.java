@@ -68,10 +68,10 @@ public class PasswordManager extends AbstractManager {
 					message.addRecipient(Message.RecipientType.TO, toAddress);
 				}
 
-				final Address from = new InternetAddress(this.settings.getAdmin().getEmail(), "Administrador de Segurança");
+				final Address from = new InternetAddress(this.settings.getAdmin().getEmail(), "Administrador de Seguran\u00E7a");
 
 				message.setFrom(from);
-				message.setSubject("Alteração de dados");
+				message.setSubject("Altera\u00E7\u00E3o de dados");
 				message.setContent(this.getContent(user), "text/plain");
 				Transport.send(message);
 
