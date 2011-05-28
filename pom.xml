@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://maven.apache.org/POM/4.0.0"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
 	<!-- The Basics -->
 	<groupId>org.rasea</groupId>
 	<artifactId>rasea-server</artifactId>
-	<version>0.4.0.Beta1-SNAPSHOT</version>
+	<version>0.4.0.Beta1</version>
 	<packaging>war</packaging>
 
 	<dependencyManagement>
@@ -347,9 +345,7 @@
 									<fileset dir="${site.base}/apidocs" />
 								</move>
 
-								<move
-									file="${project.build.directory}/generated-site/xhtml/reference/reference.xhtml"
-									tofile="${html_single.base}/index.html" />
+								<move file="${project.build.directory}/generated-site/xhtml/reference/reference.xhtml" tofile="${html_single.base}/index.html" />
 								<move file="${site.base}/maven-pdf-plugin.pdf" tofile="${pdf.base}/rasea-reference.pdf" />
 
 								<copy todir="${reference.base}/">
