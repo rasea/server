@@ -24,13 +24,13 @@
 					rendered="#{empty headerRendered ? true : headerRendered}" />
 			</f:facet>
 			<s:link view="#{empty home?'/':home.editView}" rendered="#{empty id}">
-				<s:graphicImage value="img/_ico_edit.png" style="border:0px;" />
+				<s:graphicImage value="/img/_ico_edit.png" style="border:0px;" />
 				<f:param name="id" value="#{entity.id}" />
 				<ui:insert name="param" />
 			</s:link>
 			<s:link view="#{empty home?'/':home.editView}"
 				rendered="#{not empty id}">
-				<s:graphicImage value="img/_ico_edit.png" style="border:0px;" />
+				<s:graphicImage value="/img/_ico_edit.png" style="border:0px;" />
 				<f:param name="id" value="#{id}" />
 				<ui:insert name="param" />
 			</s:link>

@@ -1,5 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://maven.apache.org/POM/4.0.0"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
 
 	<!-- The Basics -->
@@ -7,6 +10,7 @@
 	<artifactId>rasea-server</artifactId>
 	<version>0.4.0.GA-SNAPSHOT</version>
 	<packaging>war</packaging>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -57,21 +61,60 @@
 			<artifactId>jboss-seam</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-			<scope>provided</scope>
-		</dependency>
+		<!-- <dependency> -->
+		<!-- <groupId>org.hibernate</groupId> -->
+		<!-- <artifactId>hibernate-annotations</artifactId> -->
+		<!-- <scope>provided</scope> -->
+		<!-- </dependency> -->
+		<!-- <exclusions> -->
+		<!-- <exclusion> -->
+		<!-- <artifactId>hibernate-core</artifactId> -->
+		<!-- <groupId>org.hibernate</groupId> -->
+		<!-- </exclusion> -->
+		<!-- <exclusion> -->
+		<!-- <artifactId>hibernate-commons-annotations</artifactId> -->
+		<!-- <groupId>org.hibernate</groupId> -->
+		<!-- </exclusion> -->
+		<!-- </exclusions> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.hibernate</groupId> -->
+		<!-- <artifactId>hibernate-core</artifactId> -->
+		<!-- <version>3.3.2.GA</version> -->
+		<!-- <scope>compile</scope> -->
+		<!-- </dependency> -->
+
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
+			<!-- <version>3.4.0.GA</version> -->
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- <dependency> -->
+		<!-- <groupId>org.hibernate</groupId> -->
+		<!-- <artifactId>hibernate-annotations</artifactId> -->
+		<!-- <version>3.4.0.GA</version> -->
+		<!-- <scope>compile</scope> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
+			<!-- <version>3.0.0.GA</version> -->
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- <exclusions> -->
+		<!-- <exclusion> -->
+		<!-- <artifactId>hibernate-core</artifactId> -->
+		<!-- <groupId>org.hibernate</groupId> -->
+		<!-- </exclusion> -->
+		<!-- <exclusion> -->
+		<!-- <artifactId>hibernate-commons-annotations</artifactId> -->
+		<!-- <groupId>org.hibernate</groupId> -->
+		<!-- </exclusion> -->
+		<!-- </exclusions> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
@@ -226,20 +269,20 @@
 					<source>1.6</source>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.1.1</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<phase>package</phase>
-						<goals>
-							<goal>jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+			<!-- <plugin> -->
+			<!-- <groupId>org.apache.maven.plugins</groupId> -->
+			<!-- <artifactId>maven-source-plugin</artifactId> -->
+			<!-- <version>2.1.1</version> -->
+			<!-- <executions> -->
+			<!-- <execution> -->
+			<!-- <id>attach-sources</id> -->
+			<!-- <phase>package</phase> -->
+			<!-- <goals> -->
+			<!-- <goal>jar-no-fork</goal> -->
+			<!-- </goals> -->
+			<!-- </execution> -->
+			<!-- </executions> -->
+			<!-- </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
@@ -372,7 +415,9 @@
 									<fileset dir="${site.base}/apidocs" />
 								</move>
 
-								<move file="${project.build.directory}/generated-site/xhtml/reference/reference.xhtml" tofile="${html_single.base}/index.html" />
+								<move
+									file="${project.build.directory}/generated-site/xhtml/reference/reference.xhtml"
+									tofile="${html_single.base}/index.html" />
 								<move file="${site.base}/maven-pdf-plugin.pdf" tofile="${pdf.base}/rasea-reference.pdf" />
 
 								<copy todir="${reference.base}/">
@@ -553,7 +598,6 @@
 		<repository>
 			<id>nexus.jboss.org</id>
 			<name>JBoss Maven Repository</name>
-			<!-- <url>http://repository.jboss.org/nexus/content/groups/public</url> -->
 			<url>http://repository.jboss.org/nexus/content/repositories/releases</url>
 			<snapshots>
 				<enabled>false</enabled>
@@ -562,17 +606,17 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
-		<repository>
-			<id>repository.jboss.org</id>
-			<name>JBoss Maven Repository</name>
-			<url>http://repository.jboss.org/maven2</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</repository>
+		<!-- <repository> -->
+		<!-- <id>repository.jboss.org</id> -->
+		<!-- <name>JBoss Maven Repository</name> -->
+		<!-- <url>http://repository.jboss.org/maven2</url> -->
+		<!-- <snapshots> -->
+		<!-- <enabled>false</enabled> -->
+		<!-- </snapshots> -->
+		<!-- <releases> -->
+		<!-- <enabled>true</enabled> -->
+		<!-- </releases> -->
+		<!-- </repository> -->
 		<repository>
 			<id>prime-repo</id>
 			<name>Prime Technology Maven Repository</name>

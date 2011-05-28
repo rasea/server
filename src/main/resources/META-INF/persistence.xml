@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
 	<persistence-unit name="rasea" transaction-type="RESOURCE_LOCAL">
-		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+<!-- 		<provider>org.hibernate.ejb.HibernatePersistence</provider> -->
 
-		<!--
-		<jar-file>rasea-extensions-0.0.1.RC2-SNAPSHOT.jar</jar-file>
+		<non-jta-data-source>java:/DefaultDS</non-jta-data-source>
+		
+		<class>org.rasea.core.entity.Application</class>
+		<class>org.rasea.core.entity.Authorization</class>
+		<class>org.rasea.core.entity.AuthorizationPk</class>
+		<class>org.rasea.core.entity.Member</class>
+		<class>org.rasea.core.entity.MemberPk</class>
+		<class>org.rasea.core.entity.Operation</class>
+		<class>org.rasea.core.entity.Owner</class>
+		<class>org.rasea.core.entity.OwnerPk</class>
+		<class>org.rasea.core.entity.Permission</class>
+		<class>org.rasea.core.entity.PermissionPk</class>
+		<class>org.rasea.core.entity.Resource</class>
+		<class>org.rasea.core.entity.Role</class>
 		<class>org.rasea.extensions.entity.User</class>
+	
+		<!--
+		<jar-file>rasea-extensions-0.1.0.GA.jar</jar-file>
 		-->
 		
 		<properties>

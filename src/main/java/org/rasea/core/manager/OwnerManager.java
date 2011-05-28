@@ -39,7 +39,7 @@ public class OwnerManager extends AbstractManager {
 	public List<User> find(final Application application) {
 		final StringBuffer ejbql = new StringBuffer(120);
 
-		ejbql.append(" select new User(lower(o.username)) ");
+		ejbql.append(" select new org.rasea.extensions.entity.User(lower(o.username)) ");
 		ejbql.append("   from Owner o ");
 		ejbql.append("  where o.application.id = :applicationId ");
 		ejbql.append("  order by o.username ");
