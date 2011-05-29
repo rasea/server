@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 
@@ -168,8 +169,10 @@
 		</dependency>
 	</dependencies>
 	<properties>
-		<upload.url>sftp://web.sourceforge.net/home/frs/project/r/ra/rasea</upload.url>
-		<htdocs.url>sftp://web.sourceforge.net/home/groups/r/ra/rasea/htdocs</htdocs.url>
+		<upload.url>sftp://web.sourceforge.net/home/pfs/project/r/ra/rasea</upload.url>
+		<htdocs.url>sftp://web.sourceforge.net/home/project-web/rasea/htdocs</htdocs.url>
+		<!-- <upload.url>scp://shell.sourceforge.net/home/pfs/project/r/ra/rasea</upload.url> -->
+		<!-- <htdocs.url>scp://shell.sourceforge.net/home/project-web/rasea/htdocs</htdocs.url> -->
 		<repo.url>${htdocs.url}/maven2</repo.url>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -326,28 +329,24 @@
 							<tasks>
 								<property name="site.base" value="${project.build.directory}/site" />
 								<property name="doc.base" value="${site.base}/docs/${project.version}" />
-
 								<delete>
 									<fileset dir="${site.base}">
 										<include name="reference-*.*" />
 										<include name="tutorial-*.*" />
 									</fileset>
 								</delete>
-
 								<property name="reference.base" value="${doc.base}/reference/pt_BR" />
 								<property name="pdf.base" value="${reference.base}/pdf" />
 								<property name="html_single.base" value="${reference.base}/html_single" />
-
 								<mkdir dir="${pdf.base}" />
 								<mkdir dir="${html_single.base}" />
-
 								<move todir="${doc.base}/api">
 									<fileset dir="${site.base}/apidocs" />
 								</move>
-
-								<move file="${project.build.directory}/generated-site/xhtml/reference/reference.xhtml" tofile="${html_single.base}/index.html" />
+								<move
+									file="${project.build.directory}/generated-site/xhtml/reference/reference.xhtml"
+									tofile="${html_single.base}/index.html" />
 								<move file="${site.base}/maven-pdf-plugin.pdf" tofile="${pdf.base}/rasea-reference.pdf" />
-
 								<copy todir="${reference.base}/">
 									<fileset dir="${basedir}/src/site/resources/">
 										<include name="images/rasea-*.*" />
@@ -385,7 +384,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>wagon-maven-plugin</artifactId>
-				<version>1.0-beta-1</version>
+				<version>1.0-beta-3</version>
 				<configuration>
 					<serverId>repo.rasea.org</serverId>
 					<url>${upload.url}</url>
@@ -397,10 +396,17 @@
 				<artifactId>maven-release-plugin</artifactId>
 				<version>2.1</version>
 				<configuration>
-					<goals>site-deploy wagon:upload</goals>
+					<goals>package wagon:upload site site:deploy</goals>
 				</configuration>
 			</plugin>
 		</plugins>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh</artifactId>
+				<version>1.0-beta-7</version>
+			</extension>
+		</extensions>
 	</build>
 	<reporting>
 		<plugins>
