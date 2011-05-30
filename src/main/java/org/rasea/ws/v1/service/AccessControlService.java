@@ -20,6 +20,10 @@
  */
 package org.rasea.ws.v1.service;
 
+import static javax.jws.soap.SOAPBinding.ParameterStyle.BARE;
+import static javax.jws.soap.SOAPBinding.Style.DOCUMENT;
+import static javax.jws.soap.SOAPBinding.Use.LITERAL;
+
 import java.util.List;
 
 import javax.jws.WebMethod;
@@ -27,9 +31,6 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
-import javax.jws.soap.SOAPBinding.ParameterStyle;
-import javax.jws.soap.SOAPBinding.Style;
-import javax.jws.soap.SOAPBinding.Use;
 
 import org.rasea.core.entity.Application;
 import org.rasea.core.entity.Permission;
@@ -64,7 +65,7 @@ import org.rasea.ws.v1.type.UserType;
  * @since 2009-11-07 <br>
  */
 @WebService(name = "AccessControl_v1", targetNamespace = "http://rasea.org/ps/wsdl/AccessControl_v1", serviceName = "AccessControlService_v1", portName = "AccessControlPort_v1")
-@SOAPBinding(parameterStyle = ParameterStyle.BARE, style = Style.DOCUMENT, use = Use.LITERAL)
+@SOAPBinding(parameterStyle = BARE, style = DOCUMENT, use = LITERAL)
 public class AccessControlService extends AbstractWebService {
 
 	/**
@@ -77,8 +78,8 @@ public class AccessControlService extends AbstractWebService {
 	 */
 	@WebMethod
 	@WebResult(name = "roles")
-	public RolesResponse assignedRoles(final UserNameRequest param, @WebParam(header = true) final CredentialsType credentials)
-			throws WebServiceException {
+	public RolesResponse assignedRoles(final UserNameRequest param,
+			@WebParam(header = true) final CredentialsType credentials) throws WebServiceException {
 
 		this.checkAuthentication(credentials);
 		if (!credentials.getUsername().equals(param.getApplicationName())) {
@@ -111,8 +112,8 @@ public class AccessControlService extends AbstractWebService {
 	 */
 	@WebMethod
 	@WebResult(name = "users")
-	public UsersResponse assignedUsers(final RoleNameRequest param, @WebParam(header = true) final CredentialsType credentials)
-			throws WebServiceException {
+	public UsersResponse assignedUsers(final RoleNameRequest param,
+			@WebParam(header = true) final CredentialsType credentials) throws WebServiceException {
 
 		this.checkAuthentication(credentials);
 		this.checkPermission(credentials, "role", Constants.DEFAULT_OPERATION_SHOW);
@@ -134,9 +135,8 @@ public class AccessControlService extends AbstractWebService {
 	}
 
 	/**
-	 * Autentica o usuário no diretório de usuários. Este procedimento não
-	 * mantém nenhum estado ou sessão no servidor RASEA para o usuário
-	 * autenticado.
+	 * Autentica o usuário no diretório de usuários. Este procedimento não mantém nenhum estado ou sessão no servidor
+	 * RASEA para o usuário autenticado.
 	 * 
 	 * @param credentials
 	 * @return boolean
@@ -168,8 +168,8 @@ public class AccessControlService extends AbstractWebService {
 	 */
 	@WebMethod
 	@WebResult(name = "changed")
-	public boolean changePassword(final NewPasswordRequest param, @WebParam(header = true) final CredentialsType credentials)
-			throws WebServiceException {
+	public boolean changePassword(final NewPasswordRequest param,
+			@WebParam(header = true) final CredentialsType credentials) throws WebServiceException {
 
 		this.checkAuthentication(credentials);
 		if (!credentials.getUsername().equals(param.getUsername())) {
@@ -196,8 +196,8 @@ public class AccessControlService extends AbstractWebService {
 	 */
 	@WebMethod
 	@WebResult(name = "roles")
-	public RolesResponse listRoles(final ApplicationNameRequest param, @WebParam(header = true) final CredentialsType credentials)
-			throws WebServiceException {
+	public RolesResponse listRoles(final ApplicationNameRequest param,
+			@WebParam(header = true) final CredentialsType credentials) throws WebServiceException {
 
 		this.checkAuthentication(credentials);
 		this.checkPermission(credentials, "role", Constants.DEFAULT_OPERATION_SHOW);
@@ -225,7 +225,8 @@ public class AccessControlService extends AbstractWebService {
 	 */
 	@WebMethod
 	@WebResult(name = "users")
-	public UsersResponse listUsers(final EmptyRequest param, @WebParam(header = true) final CredentialsType credentials) throws WebServiceException {
+	public UsersResponse listUsers(final EmptyRequest param, @WebParam(header = true) final CredentialsType credentials)
+			throws WebServiceException {
 
 		this.checkAuthentication(credentials);
 		this.checkPermission(credentials, "user", Constants.DEFAULT_OPERATION_SHOW);
@@ -275,7 +276,8 @@ public class AccessControlService extends AbstractWebService {
 	 */
 	@WebMethod
 	@WebResult(name = "role")
-	public RoleType roleDetail(final RoleNameRequest param, @WebParam(header = true) final CredentialsType credentials) throws WebServiceException {
+	public RoleType roleDetail(final RoleNameRequest param, @WebParam(header = true) final CredentialsType credentials)
+			throws WebServiceException {
 
 		this.checkAuthentication(credentials);
 		this.checkPermission(credentials, "role", Constants.DEFAULT_OPERATION_SHOW);
@@ -302,8 +304,8 @@ public class AccessControlService extends AbstractWebService {
 	 */
 	@WebMethod
 	@WebResult(name = "operations")
-	public OperationsResponse roleOperationsOnResource(final ResourceRoleRequest param, @WebParam(header = true) final CredentialsType credentials)
-			throws WebServiceException {
+	public OperationsResponse roleOperationsOnResource(final ResourceRoleRequest param,
+			@WebParam(header = true) final CredentialsType credentials) throws WebServiceException {
 
 		// TODO Implementar método preocupando-se com a segurança.
 		return null;
@@ -319,8 +321,8 @@ public class AccessControlService extends AbstractWebService {
 	 */
 	@WebMethod
 	@WebResult(name = "permissions")
-	public PermissionsResponse rolePermissions(final RoleNameRequest param, @WebParam(header = true) final CredentialsType credentials)
-			throws WebServiceException {
+	public PermissionsResponse rolePermissions(final RoleNameRequest param,
+			@WebParam(header = true) final CredentialsType credentials) throws WebServiceException {
 
 		this.checkAuthentication(credentials);
 		this.checkPermission(credentials, "authorization", Constants.DEFAULT_OPERATION_SHOW);
@@ -342,8 +344,7 @@ public class AccessControlService extends AbstractWebService {
 	}
 
 	/**
-	 * Retorna os papéis que não estão associados a um usuário para uma dada
-	 * aplicação.
+	 * Retorna os papéis que não estão associados a um usuário para uma dada aplicação.
 	 * 
 	 * @param application
 	 * @param username
@@ -352,8 +353,8 @@ public class AccessControlService extends AbstractWebService {
 	 */
 	@WebMethod
 	@WebResult(name = "roles")
-	public RolesResponse unassignedRoles(final UserNameRequest param, @WebParam(header = true) final CredentialsType credentials)
-			throws WebServiceException {
+	public RolesResponse unassignedRoles(final UserNameRequest param,
+			@WebParam(header = true) final CredentialsType credentials) throws WebServiceException {
 
 		// TODO Implementar método preocupando-se com a segurança.
 		return null;
@@ -368,8 +369,8 @@ public class AccessControlService extends AbstractWebService {
 	 */
 	@WebMethod
 	@WebResult(name = "user")
-	public UserType userDetail(final SimpleUserNameRequest param, @WebParam(header = true) final CredentialsType credentials)
-			throws WebServiceException {
+	public UserType userDetail(final SimpleUserNameRequest param,
+			@WebParam(header = true) final CredentialsType credentials) throws WebServiceException {
 
 		this.checkAuthentication(credentials);
 		if (!credentials.getUsername().equals(param.getUsername())) {
@@ -399,16 +400,15 @@ public class AccessControlService extends AbstractWebService {
 	 */
 	@WebMethod
 	@WebResult(name = "operations")
-	public OperationsResponse userOperationsOnResource(final UserResourceRequest param, @WebParam(header = true) final CredentialsType credentials)
-			throws WebServiceException {
+	public OperationsResponse userOperationsOnResource(final UserResourceRequest param,
+			@WebParam(header = true) final CredentialsType credentials) throws WebServiceException {
 
 		// TODO Implementar método preocupando-se com a segurança.
 		return null;
 	}
 
 	/**
-	 * Retorna um conjunto de autorizações de um usuário para uma dada
-	 * aplicação.
+	 * Retorna um conjunto de autorizações de um usuário para uma dada aplicação.
 	 * 
 	 * @param application
 	 * @param username
@@ -417,8 +417,8 @@ public class AccessControlService extends AbstractWebService {
 	 */
 	@WebMethod
 	@WebResult(name = "permissions")
-	public PermissionsResponse userPermissions(final UserNameRequest param, @WebParam(header = true) final CredentialsType credentials)
-			throws WebServiceException {
+	public PermissionsResponse userPermissions(final UserNameRequest param,
+			@WebParam(header = true) final CredentialsType credentials) throws WebServiceException {
 
 		this.checkAuthentication(credentials);
 		if (!credentials.getUsername().equals(param.getUsername())) {

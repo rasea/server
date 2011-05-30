@@ -50,7 +50,8 @@ public abstract class AbstractWebService {
 
 	protected void checkAuthentication(final CredentialsType credentials) throws WebServiceException {
 		try {
-			final boolean authenticated = this.getUserService().authenticate(credentials.getUsername(), credentials.getPassword());
+			final boolean authenticated = this.getUserService().authenticate(credentials.getUsername(),
+					credentials.getPassword());
 
 			if (!authenticated) {
 				throw ExceptionFactory.createAuthenticationFailed(credentials.getUsername());
@@ -61,8 +62,8 @@ public abstract class AbstractWebService {
 		}
 	}
 
-	protected void checkPermission(final CredentialsType credentials, final String resourceName, final String operationName)
-			throws WebServiceException {
+	protected void checkPermission(final CredentialsType credentials, final String resourceName,
+			final String operationName) throws WebServiceException {
 		try {
 			final String username = credentials.getUsername();
 
@@ -73,7 +74,8 @@ public abstract class AbstractWebService {
 			final Permission permission = new Permission(resource, operation);
 
 			if (!permissions.contains(permission)) {
-				throw ExceptionFactory.createPermissionDenied(username, application.getName(), resourceName, operationName);
+				throw ExceptionFactory.createPermissionDenied(username, application.getName(), resourceName,
+						operationName);
 			}
 
 		} catch (final Exception cause) {
@@ -81,7 +83,8 @@ public abstract class AbstractWebService {
 		}
 	}
 
-	protected org.rasea.core.entity.Application getApplication(final String application) throws WebServiceException, RequiredException {
+	protected org.rasea.core.entity.Application getApplication(final String application) throws WebServiceException,
+			RequiredException {
 		final org.rasea.core.entity.Application app = this.getApplicationService().find(application);
 
 		if (app == null) {
@@ -111,8 +114,8 @@ public abstract class AbstractWebService {
 		return (MemberService) Component.getInstance(MemberService.class, true);
 	}
 
-	protected org.rasea.core.entity.Operation getOperation(final org.rasea.core.entity.Application aplication, final String operation)
-			throws WebServiceException, RequiredException {
+	protected org.rasea.core.entity.Operation getOperation(final org.rasea.core.entity.Application aplication,
+			final String operation) throws WebServiceException, RequiredException {
 		final org.rasea.core.entity.Operation op = this.getOperationService().find(aplication, operation);
 
 		if (op == null) {
@@ -134,8 +137,8 @@ public abstract class AbstractWebService {
 		return (PermissionService) Component.getInstance(PermissionService.class, true);
 	}
 
-	protected org.rasea.core.entity.Resource getResource(final org.rasea.core.entity.Application aplication, final String resource)
-			throws WebServiceException, RequiredException {
+	protected org.rasea.core.entity.Resource getResource(final org.rasea.core.entity.Application aplication,
+			final String resource) throws WebServiceException, RequiredException {
 		final org.rasea.core.entity.Resource res = this.getResourceService().find(aplication, resource);
 
 		if (res == null) {
@@ -149,8 +152,8 @@ public abstract class AbstractWebService {
 		return (ResourceService) Component.getInstance(ResourceService.class, true);
 	}
 
-	protected org.rasea.core.entity.Role getRole(final org.rasea.core.entity.Application aplication, final String role) throws WebServiceException,
-			RequiredException {
+	protected org.rasea.core.entity.Role getRole(final org.rasea.core.entity.Application aplication, final String role)
+			throws WebServiceException, RequiredException {
 		final org.rasea.core.entity.Role serRole = this.getRoleService().find(aplication, role);
 
 		if (serRole == null) {
@@ -164,7 +167,8 @@ public abstract class AbstractWebService {
 		return (RoleService) Component.getInstance(RoleService.class, true);
 	}
 
-	protected org.rasea.extensions.entity.User getUser(final String username) throws WebServiceException, RequiredException, StoreException {
+	protected org.rasea.extensions.entity.User getUser(final String username) throws WebServiceException,
+			RequiredException, StoreException {
 		final org.rasea.extensions.entity.User usr = this.getUserService().load(username);
 
 		if (usr == null) {
