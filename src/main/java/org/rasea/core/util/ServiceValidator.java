@@ -1,3 +1,23 @@
+/*
+ * Rasea Server
+ * 
+ * Copyright (c) 2008, Rasea <http://rasea.org>. All rights reserved.
+ *
+ * Rasea Server is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, see <http://www.gnu.org/licenses/>
+ * or write to the Free Software Foundation, Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA  02110-1301, USA.
+ */
 package org.rasea.core.util;
 
 import java.io.Serializable;
@@ -44,90 +64,68 @@ public class ServiceValidator implements Serializable {
 	@In
 	private UserService userService;
 
-	public void validateDuplicateName(final Application application)
-			throws DuplicatedException, RequiredException {
+	public void validateDuplicateName(final Application application) throws DuplicatedException, RequiredException {
 		this.validateRequired("application", application);
 
-		final Application applicationAux = this.applicationService
-				.find(application.getName());
+		final Application applicationAux = this.applicationService.find(application.getName());
 
-		if (applicationAux != null
-				&& applicationAux.getName().equalsIgnoreCase(
-						application.getName())
+		if (applicationAux != null && applicationAux.getName().equalsIgnoreCase(application.getName())
 				&& !applicationAux.getId().equals(application.getId())) {
 
 			throw new DuplicatedException("name", application.getName());
 		}
 	}
 
-	public void validateDuplicateName(final Operation operation)
-			throws DuplicatedException, RequiredException {
+	public void validateDuplicateName(final Operation operation) throws DuplicatedException, RequiredException {
 		this.validateRequired("operation", operation);
 
-		final Operation operationAux = this.operationService.find(operation
-				.getApplication(), operation.getName());
+		final Operation operationAux = this.operationService.find(operation.getApplication(), operation.getName());
 
-		if (operationAux != null
-				&& operationAux.getName().equalsIgnoreCase(operation.getName())
-				&& operationAux.getApplication().equals(
-						operation.getApplication())
-				&& !operationAux.getId().equals(operation.getId())) {
+		if (operationAux != null && operationAux.getName().equalsIgnoreCase(operation.getName())
+				&& operationAux.getApplication().equals(operation.getApplication()) && !operationAux.getId().equals(operation.getId())) {
 			throw new DuplicatedException("name", operation.getName());
 		}
 	}
 
-	public void validateDuplicateName(final Resource resource)
-			throws DuplicatedException, RequiredException {
+	public void validateDuplicateName(final Resource resource) throws DuplicatedException, RequiredException {
 		this.validateRequired("resource", resource);
 
-		final Resource resourceAux = this.resourceService.find(resource
-				.getApplication(), resource.getName());
+		final Resource resourceAux = this.resourceService.find(resource.getApplication(), resource.getName());
 
-		if (resourceAux != null
-				&& resourceAux.getName().equalsIgnoreCase(resource.getName())
-				&& resourceAux.getApplication().equals(
-						resource.getApplication())
-				&& !resourceAux.getId().equals(resource.getId())) {
+		if (resourceAux != null && resourceAux.getName().equalsIgnoreCase(resource.getName())
+				&& resourceAux.getApplication().equals(resource.getApplication()) && !resourceAux.getId().equals(resource.getId())) {
 			throw new DuplicatedException("name", resource.getName());
 		}
 	}
 
-	public void validateDuplicateName(final Role role)
-			throws DuplicatedException, RequiredException {
+	public void validateDuplicateName(final Role role) throws DuplicatedException, RequiredException {
 		this.validateRequired("role", role);
 
-		final Role roleAux = this.roleService.find(role.getApplication(), role
-				.getName());
+		final Role roleAux = this.roleService.find(role.getApplication(), role.getName());
 
-		if (roleAux != null
-				&& roleAux.getName().equalsIgnoreCase(role.getName())
-				&& roleAux.getApplication().equals(role.getApplication())
+		if (roleAux != null && roleAux.getName().equalsIgnoreCase(role.getName()) && roleAux.getApplication().equals(role.getApplication())
 				&& !roleAux.getId().equals(role.getId())) {
 			throw new DuplicatedException("name", role.getName());
 		}
 	}
 
-	public void validateDuplicateName(final User user)
-			throws DuplicatedException, RequiredException, StoreException {
+	public void validateDuplicateName(final User user) throws DuplicatedException, RequiredException, StoreException {
 		this.validateRequired("user", user);
 
 		final User userAux = this.userService.load(user.getName());
 
-		if (userAux != null
-				&& userAux.getName().equalsIgnoreCase(user.getName())) {
+		if (userAux != null && userAux.getName().equalsIgnoreCase(user.getName())) {
 			throw new DuplicatedException("username", user.getName());
 		}
 	}
 
-	public void validateRequired(final String property, final Object value)
-			throws RequiredException {
+	public void validateRequired(final String property, final Object value) throws RequiredException {
 		if (value == null) {
 			throw new RequiredException(property);
 		}
 	}
 
-	public void validateRequired(final String property, final String value)
-			throws RequiredException {
+	public void validateRequired(final String property, final String value) throws RequiredException {
 		if (Strings.isEmpty(value)) {
 			throw new RequiredException(property);
 		}

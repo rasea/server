@@ -1,3 +1,23 @@
+/*
+ * Rasea Server
+ * 
+ * Copyright (c) 2008, Rasea <http://rasea.org>. All rights reserved.
+ *
+ * Rasea Server is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, see <http://www.gnu.org/licenses/>
+ * or write to the Free Software Foundation, Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA  02110-1301, USA.
+ */
 package org.rasea.core.entity;
 
 import java.io.Serializable;
@@ -15,20 +35,20 @@ import org.hibernate.annotations.OnDeleteAction;
 @Embeddable
 public class MemberPk implements Serializable { // NOPMD by cleverson on
 	// 05/12/09 15:22
-	
+
 	private static final long serialVersionUID = -18840240135129128L;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "ROLE_ID", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@ForeignKey(name = "FK_MEMBER_ROLE")
 	@Index(name = "IDX_MEMBER_ROLE")
 	private Role role;
-	
+
 	@Index(name = "IDX_MEMBER_USERNAME")
 	@Column(name = "USERNAME", nullable = false)
 	private String username;
-	
+
 	@Override
 	public boolean equals(final Object obj) { // NOPMD by cleverson on 05/12/09
 		// 15:22
@@ -58,15 +78,15 @@ public class MemberPk implements Serializable { // NOPMD by cleverson on
 		}
 		return true;
 	}
-	
+
 	public Role getRole() {
 		return this.role;
 	}
-	
+
 	public String getUsername() {
 		return this.username;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -75,11 +95,11 @@ public class MemberPk implements Serializable { // NOPMD by cleverson on
 		result = prime * result + (this.username == null ? 0 : this.username.hashCode());
 		return result;
 	}
-	
+
 	public void setRole(final Role role) {
 		this.role = role;
 	}
-	
+
 	public void setUsername(final String username) {
 		this.username = username;
 	}

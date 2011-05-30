@@ -1,3 +1,23 @@
+/*
+ * Rasea Server
+ * 
+ * Copyright (c) 2008, Rasea <http://rasea.org>. All rights reserved.
+ *
+ * Rasea Server is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, see <http://www.gnu.org/licenses/>
+ * or write to the Free Software Foundation, Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA  02110-1301, USA.
+ */
 package org.rasea.core.service;
 
 import java.util.List;
@@ -123,41 +143,41 @@ public class ApplicationService extends AbstractService {
 		return this.applicationManager.load(id);
 	}
 
-	//	
+	//
 	// @Transactional(TransactionPropagationType.REQUIRED)
 	// private void replicate(final Application application) throws
 	// RequiredException,
 	// DuplicatedException {
 	// String name;
 	// String displayName;
-	//		
+	//
 	// Operation auxOperation;
 	// for (final Operation operation :
 	// this.operationService.find(this.defaultApplication)) {
 	// name = SeamResourceBundle.getBundle().getString(operation.getName());
-	//			
+	//
 	// auxOperation = operation.clone();
 	// auxOperation.setId(null);
 	// auxOperation.setApplication(application);
 	// auxOperation.setName(name);
-	//			
+	//
 	// this.operationService.insert(auxOperation);
 	// }
-	//		
+	//
 	// Role auxRole;
 	// for (final Role role : this.roleService.find(this.defaultApplication)) {
 	// try {
 	// displayName =
 	// SeamResourceBundle.getBundle().getString(role.getDescription());
-	//				
+	//
 	// auxRole = role.clone();
 	// auxRole.setId(null);
 	// auxRole.setApplication(application);
 	// auxRole.setDescription(displayName);
 	// auxRole.setMembers(null);
-	//				
+	//
 	// this.roleService.insert(auxRole);
-	//				
+	//
 	// } catch (final MissingResourceException cause) {
 	// auxRole = null;
 	// }

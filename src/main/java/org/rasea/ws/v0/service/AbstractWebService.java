@@ -1,3 +1,23 @@
+/*
+ * Rasea Server
+ * 
+ * Copyright (c) 2008, Rasea <http://rasea.org>. All rights reserved.
+ *
+ * Rasea Server is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, see <http://www.gnu.org/licenses/>
+ * or write to the Free Software Foundation, Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA  02110-1301, USA.
+ */
 package org.rasea.ws.v0.service;
 
 import java.util.List;
@@ -27,15 +47,12 @@ import org.rasea.ws.v0.type.RaseaServiceHeader;
 
 public abstract class AbstractWebService {
 
-	protected void checkAuthentication(final RaseaServiceHeader header)
-			throws WebServiceException {
+	protected void checkAuthentication(final RaseaServiceHeader header) throws WebServiceException {
 		try {
-			final boolean authenticated = this.getUserService().authenticate(
-					header.getUsername(), header.getPassword());
+			final boolean authenticated = this.getUserService().authenticate(header.getUsername(), header.getPassword());
 
 			if (!authenticated) {
-				throw ExceptionFactory.createAuthenticationFailed(header
-						.getUsername());
+				throw ExceptionFactory.createAuthenticationFailed(header.getUsername());
 			}
 
 		} catch (final Exception cause) {
@@ -43,22 +60,18 @@ public abstract class AbstractWebService {
 		}
 	}
 
-	protected void checkPermission(final RaseaServiceHeader header,
-			final String resource, final String operation)
-			throws WebServiceException {
+	protected void checkPermission(final RaseaServiceHeader header, final String resource, final String operation) throws WebServiceException {
 		try {
 			final String username = header.getUsername();
 
 			final Application app = this.getDefaultApplication();
-			final List<Permission> perms = this.getPermissionService().find(
-					app, new User(username));
+			final List<Permission> perms = this.getPermissionService().find(app, new User(username));
 			final Resource res = this.getResource(app, resource);
 			final Operation op = this.getOperation(app, operation);
 			final Permission perm = new Permission(res, op);
 
 			if (!perms.contains(perm)) {
-				throw ExceptionFactory.createPermissionDenied(username, app
-						.getName(), resource, operation);
+				throw ExceptionFactory.createPermissionDenied(username, app.getName(), resource, operation);
 			}
 
 		} catch (final Exception cause) {
@@ -66,11 +79,8 @@ public abstract class AbstractWebService {
 		}
 	}
 
-	protected org.rasea.core.entity.Application getApplication(
-			final String application) throws WebServiceException,
-			RequiredException {
-		final org.rasea.core.entity.Application app = this
-				.getApplicationService().find(application);
+	protected org.rasea.core.entity.Application getApplication(final String application) throws WebServiceException, RequiredException {
+		final org.rasea.core.entity.Application app = this.getApplicationService().find(application);
 
 		if (app == null) {
 			throw ExceptionFactory.createNotFound("application", application);
@@ -80,13 +90,11 @@ public abstract class AbstractWebService {
 	}
 
 	protected ApplicationService getApplicationService() {
-		return (ApplicationService) Component.getInstance(
-				ApplicationService.class, true);
+		return (ApplicationService) Component.getInstance(ApplicationService.class, true);
 	}
 
 	protected AuthorizationService getAuthorizationService() {
-		return (AuthorizationService) Component.getInstance(
-				AuthorizationService.class, true);
+		return (AuthorizationService) Component.getInstance(AuthorizationService.class, true);
 	}
 
 	protected Application getDefaultApplication() {
@@ -97,12 +105,9 @@ public abstract class AbstractWebService {
 		return (MemberService) Component.getInstance(MemberService.class, true);
 	}
 
-	protected org.rasea.core.entity.Operation getOperation(
-			final org.rasea.core.entity.Application aplication,
-			final String operation) throws WebServiceException,
-			RequiredException {
-		final org.rasea.core.entity.Operation op = this.getOperationService()
-				.find(aplication, operation);
+	protected org.rasea.core.entity.Operation getOperation(final org.rasea.core.entity.Application aplication, final String operation)
+			throws WebServiceException, RequiredException {
+		final org.rasea.core.entity.Operation op = this.getOperationService().find(aplication, operation);
 
 		if (op == null) {
 			throw ExceptionFactory.createNotFound("operation", operation);
@@ -112,8 +117,7 @@ public abstract class AbstractWebService {
 	}
 
 	protected OperationService getOperationService() {
-		return (OperationService) Component.getInstance(OperationService.class,
-				true);
+		return (OperationService) Component.getInstance(OperationService.class, true);
 	}
 
 	protected OwnerService getOwnerService() {
@@ -121,16 +125,12 @@ public abstract class AbstractWebService {
 	}
 
 	protected PermissionService getPermissionService() {
-		return (PermissionService) Component.getInstance(
-				PermissionService.class, true);
+		return (PermissionService) Component.getInstance(PermissionService.class, true);
 	}
 
-	protected org.rasea.core.entity.Resource getResource(
-			final org.rasea.core.entity.Application aplication,
-			final String resource) throws WebServiceException,
-			RequiredException {
-		final org.rasea.core.entity.Resource res = this.getResourceService()
-				.find(aplication, resource);
+	protected org.rasea.core.entity.Resource getResource(final org.rasea.core.entity.Application aplication, final String resource)
+			throws WebServiceException, RequiredException {
+		final org.rasea.core.entity.Resource res = this.getResourceService().find(aplication, resource);
 
 		if (res == null) {
 			throw ExceptionFactory.createNotFound("resource", resource);
@@ -140,15 +140,12 @@ public abstract class AbstractWebService {
 	}
 
 	protected ResourceService getResourceService() {
-		return (ResourceService) Component.getInstance(ResourceService.class,
-				true);
+		return (ResourceService) Component.getInstance(ResourceService.class, true);
 	}
 
-	protected org.rasea.core.entity.Role getRole(
-			final org.rasea.core.entity.Application aplication,
-			final String role) throws WebServiceException, RequiredException {
-		final org.rasea.core.entity.Role serRole = this.getRoleService().find(
-				aplication, role);
+	protected org.rasea.core.entity.Role getRole(final org.rasea.core.entity.Application aplication, final String role) throws WebServiceException,
+			RequiredException {
+		final org.rasea.core.entity.Role serRole = this.getRoleService().find(aplication, role);
 
 		if (serRole == null) {
 			throw ExceptionFactory.createNotFound("role", role);
@@ -161,10 +158,8 @@ public abstract class AbstractWebService {
 		return (RoleService) Component.getInstance(RoleService.class, true);
 	}
 
-	protected org.rasea.extensions.entity.User getUser(final String username)
-			throws WebServiceException, RequiredException, StoreException {
-		final org.rasea.extensions.entity.User usr = this.getUserService().load(
-				username);
+	protected org.rasea.extensions.entity.User getUser(final String username) throws WebServiceException, RequiredException, StoreException {
+		final org.rasea.extensions.entity.User usr = this.getUserService().load(username);
 
 		if (usr == null) {
 			throw ExceptionFactory.createNotFound("username", username);
@@ -176,8 +171,7 @@ public abstract class AbstractWebService {
 		return (UserService) Component.getInstance(UserService.class, true);
 	}
 
-	protected void handleException(final Exception cause)
-			throws WebServiceException {
+	protected void handleException(final Exception cause) throws WebServiceException {
 		if (cause instanceof RequiredException) {
 			throw ExceptionFactory.create((RequiredException) cause);
 

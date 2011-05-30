@@ -1,5 +1,24 @@
+/*
+ * Rasea Server
+ * 
+ * Copyright (c) 2008, Rasea <http://rasea.org>. All rights reserved.
+ *
+ * Rasea Server is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, see <http://www.gnu.org/licenses/>
+ * or write to the Free Software Foundation, Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA  02110-1301, USA.
+ */
 package org.rasea.core.exception;
-
 
 /**
  * Classe base das exceções geradas pelas classes de negocio e view helpers. Não
@@ -9,14 +28,14 @@ package org.rasea.core.exception;
  * @author abraao.isvi
  */
 public abstract class AbstractApplicationException extends Exception {
-	
+
 	private static final long serialVersionUID = 3841786348242982957L;
-	
+
 	/**
 	 * Parâmetros para a mensagem.
 	 */
 	private String[] params;
-	
+
 	/**
 	 * Cria uma exceção com base em uma mensagem.
 	 * 
@@ -26,7 +45,7 @@ public abstract class AbstractApplicationException extends Exception {
 	public AbstractApplicationException(final String message) {
 		super(message);
 	}
-	
+
 	/**
 	 * Cria uma exceção com base em uma mensagem parametrizada.
 	 * 
@@ -39,7 +58,7 @@ public abstract class AbstractApplicationException extends Exception {
 		super(message);
 		this.params = params.clone();
 	}
-	
+
 	/**
 	 * Cria uma exceção com base em uma mensagem e uma causa.
 	 * 
@@ -51,7 +70,7 @@ public abstract class AbstractApplicationException extends Exception {
 	public AbstractApplicationException(final String message, final Throwable cause) {
 		super(message, cause);
 	}
-	
+
 	/**
 	 * Obtém os parâmetros da mensagem.
 	 * 
@@ -64,6 +83,6 @@ public abstract class AbstractApplicationException extends Exception {
 		}
 		return params;
 	}
-	
+
 	public abstract Severity getSeverity();
 }

@@ -1,3 +1,23 @@
+/*
+ * Rasea Server
+ * 
+ * Copyright (c) 2008, Rasea <http://rasea.org>. All rights reserved.
+ *
+ * Rasea Server is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, see <http://www.gnu.org/licenses/>
+ * or write to the Free Software Foundation, Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA  02110-1301, USA.
+ */
 package org.rasea.ws.v1.exception;
 
 import org.rasea.core.exception.DuplicatedException;
@@ -77,21 +97,19 @@ public final class ExceptionFactory {
 		fault.setErrorCode(ErrorCode.PERMISSION_DENIED);
 		fault.setSource(String.format("%s,%s", authenticatedUser, username));
 
-		return new WebServiceException(String.format(
-				"authenticated user %s cant access this service to request info about another user %s",
+		return new WebServiceException(String.format("authenticated user %s cant access this service to request info about another user %s",
 				authenticatedUser, username), fault);
 
 	}
 
-	public static WebServiceException createPermissionDenied(final String username, final String application,
-			final String resource, final String operation) {
+	public static WebServiceException createPermissionDenied(final String username, final String application, final String resource,
+			final String operation) {
 
 		final ServiceFault fault = new ServiceFault();
 		fault.setErrorCode(ErrorCode.PERMISSION_DENIED);
 		fault.setSource(String.format("%s,%s,%s,%s", username, application, resource, operation));
 
-		return new WebServiceException(String.format("permission denied [%s,%s,%s] to %s", application, resource,
-				operation, username), fault);
+		return new WebServiceException(String.format("permission denied [%s,%s,%s] to %s", application, resource, operation, username), fault);
 	}
 
 	public static WebServiceException createUnknown(final Exception cause) {

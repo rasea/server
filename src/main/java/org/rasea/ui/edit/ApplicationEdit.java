@@ -1,3 +1,23 @@
+/*
+ * Rasea Server
+ * 
+ * Copyright (c) 2008, Rasea <http://rasea.org>. All rights reserved.
+ *
+ * Rasea Server is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, see <http://www.gnu.org/licenses/>
+ * or write to the Free Software Foundation, Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA  02110-1301, USA.
+ */
 package org.rasea.ui.edit;
 
 import java.util.ArrayList;
@@ -52,9 +72,8 @@ public class ApplicationEdit extends AbstractEdit<Application> {
 
 	@Override
 	public void checkUpdatePermission() {
-		if (!(Identity.instance().hasPermission(this.getName(),
-				this.getUpdateOperation()) || Identity.instance()
-				.hasPermission("owner", this.getUpdateOperation()))) {
+		if (!(Identity.instance().hasPermission(this.getName(), this.getUpdateOperation()) || Identity.instance().hasPermission("owner",
+				this.getUpdateOperation()))) {
 			super.checkUpdatePermission();
 		}
 	}
@@ -64,8 +83,7 @@ public class ApplicationEdit extends AbstractEdit<Application> {
 		final Application instance = super.createInstance();
 
 		try {
-			final User owner = this.userService.load(this.credentials
-					.getUsername());
+			final User owner = this.userService.load(this.credentials.getUsername());
 			final List<User> owners = new ArrayList<User>();
 			owners.add(owner);
 			instance.setOwners(owners);
@@ -92,14 +110,12 @@ public class ApplicationEdit extends AbstractEdit<Application> {
 
 	@Override
 	protected String handlePersist() throws AbstractApplicationException {
-		if (Identity.instance().hasPermission(this.getName(),
-				this.getCreateOperation())) {
+		if (Identity.instance().hasPermission(this.getName(), this.getCreateOperation())) {
 			this.applicationService.insert(this.getInstance());
 			this.currentApplication = this.getInstance();
 		}
 
-		if (Identity.instance().hasPermission("owner",
-				this.getUpdateOperation())) {
+		if (Identity.instance().hasPermission("owner", this.getUpdateOperation())) {
 			this.ownerService.update(this.getInstance());
 		}
 
@@ -121,13 +137,11 @@ public class ApplicationEdit extends AbstractEdit<Application> {
 
 	@Override
 	protected String handleUpdate() throws AbstractApplicationException {
-		if (Identity.instance().hasPermission(this.getName(),
-				this.getUpdateOperation())) {
+		if (Identity.instance().hasPermission(this.getName(), this.getUpdateOperation())) {
 			this.applicationService.update(this.getInstance());
 		}
 
-		if (Identity.instance().hasPermission("owner",
-				this.getUpdateOperation())) {
+		if (Identity.instance().hasPermission("owner", this.getUpdateOperation())) {
 			this.ownerService.update(this.getInstance());
 		}
 
@@ -137,8 +151,7 @@ public class ApplicationEdit extends AbstractEdit<Application> {
 
 	@Override
 	public Application loadInstance() throws Exception {
-		final Application application = this.applicationService
-				.load((Long) this.getId());
+		final Application application = this.applicationService.load((Long) this.getId());
 		final List<User> owners = this.ownerService.find(application);
 		application.setOwners(owners);
 

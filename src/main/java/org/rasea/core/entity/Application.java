@@ -1,3 +1,23 @@
+/*
+ * Rasea Server
+ * 
+ * Copyright (c) 2008, Rasea <http://rasea.org>. All rights reserved.
+ *
+ * Rasea Server is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, see <http://www.gnu.org/licenses/>
+ * or write to the Free Software Foundation, Inc., 51 Franklin Street,
+ * Fifth Floor, Boston, MA  02110-1301, USA.
+ */
 package org.rasea.core.entity;
 
 import java.io.Serializable;
@@ -26,8 +46,7 @@ import org.rasea.extensions.entity.User;
 @Entity
 @Table(name = "R_APPLICATION")
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "application", propOrder = { "name", "displayName",
-		"resources", "operations", "permissions", "roles", "authorizations" })
+@XmlType(name = "application", propOrder = { "name", "displayName", "resources", "operations", "permissions", "roles", "authorizations" })
 public final class Application implements Serializable {
 
 	private static final long serialVersionUID = 4822220253268613599L;
@@ -142,18 +161,18 @@ public final class Application implements Serializable {
 	// @Override
 	// public Application clone() {
 	// Application applicarion = null;
-	//		
+	//
 	// try {
 	// applicarion = (Application) super.clone();
 	// applicarion.setId(this.id);
 	// applicarion.setName(this.name);
 	// applicarion.setDisplayName(this.displayName);
-	//			
+	//
 	// } catch (final CloneNotSupportedException e) {
 	// // TODO Auto-generated catch block
 	// e.printStackTrace();
 	// }
-	//		
+	//
 	// return applicarion;
 	// }
 
