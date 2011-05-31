@@ -24,6 +24,7 @@ import static org.jboss.seam.ScopeType.SESSION;
 import static org.jboss.seam.security.management.IdentityManager.PERMISSION_UPDATE;
 import static org.jboss.seam.security.management.IdentityManager.USER_PERMISSION_NAME;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -47,7 +48,9 @@ import org.rasea.extensions.entity.User;
 
 @Name("raseaPermissionStore")
 @Scope(SESSION)
-public class RaseaPermissionResolver implements PermissionResolver {
+public class RaseaPermissionResolver implements PermissionResolver, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@In
 	private PermissionService permissionService;
@@ -82,8 +85,8 @@ public class RaseaPermissionResolver implements PermissionResolver {
 				operation = permission.getOperation().getName();
 
 				cache.add(new PermissionCache(resource, operation));
-				log.info("application #0: allow operation #1 on #2 to #3", application.getName(), permission.getOperation().getName(), permission
-						.getResource().getName(), user.getName());
+				log.info("application #0: allow operation #1 on #2 to #3", application.getName(), permission
+						.getOperation().getName(), permission.getResource().getName(), user.getName());
 			}
 
 			cache.add(new PermissionCache(USER_PERMISSION_NAME, PERMISSION_UPDATE));

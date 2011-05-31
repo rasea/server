@@ -20,7 +20,11 @@
  */
 package org.rasea.core.security;
 
-public class PermissionCache {
+import java.io.Serializable;
+
+public class PermissionCache implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private final String resource;
 
