@@ -9,7 +9,6 @@
 			<includes>
 				<include>${basedir}/README*</include>
 				<include>${basedir}/LICENSE*</include>
-				<include>${basedir}/NOTICE*</include>
 			</includes>
 		</fileSet>
 		<fileSet>
@@ -30,11 +29,10 @@
 			</includes>
 		</fileSet>
 		<fileSet>
-			<directory>${basedir}/conf</directory>
+			<directory>${basedir}/src/conf</directory>
 			<outputDirectory>/conf</outputDirectory>
 			<includes>
-				<include>${project.artifactId}.properties</include>
-				<include>rasea-agent.properties</include>
+				<include>*.properties</include>
 			</includes>
 		</fileSet>
 	</fileSets>
