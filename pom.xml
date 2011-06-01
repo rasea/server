@@ -43,8 +43,8 @@
 				<groupId>org.jboss.seam</groupId>
 				<artifactId>parent</artifactId>
 				<version>2.2.2.Final</version>
-				<type>pom</type>
 				<scope>import</scope>
+				<type>pom</type>
 			</dependency>
 			<dependency>
 				<groupId>javax.xml.stream</groupId>
@@ -133,12 +133,12 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<scope>provided</scope>
+			<scope>${profile.scope}</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<scope>provided</scope>
+			<scope>${profile.scope}</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.mail</groupId>
@@ -165,12 +165,12 @@
 		<dependency>
 			<groupId>javax.faces</groupId>
 			<artifactId>jsf-api</artifactId>
-			<scope>provided</scope>
+			<scope>${profile.scope}</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.faces</groupId>
 			<artifactId>jsf-impl</artifactId>
-			<scope>provided</scope>
+			<scope>${profile.scope}</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.facelets</groupId>
@@ -179,12 +179,12 @@
 		<dependency>
 			<groupId>javax.ejb</groupId>
 			<artifactId>ejb-api</artifactId>
-			<scope>provided</scope>
+			<scope>${profile.scope}</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.persistence</groupId>
 			<artifactId>persistence-api</artifactId>
-			<scope>provided</scope>
+			<scope>${profile.scope}</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.primefaces</groupId>
@@ -209,12 +209,12 @@
 		<dependency>
 			<groupId>javax.xml.stream</groupId>
 			<artifactId>stax-api</artifactId>
-			<scope>provided</scope>
+			<scope>${profile.scope}</scope>
 		</dependency>
 		<dependency>
 			<groupId>hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
-			<scope>provided</scope>
+			<scope>${profile.scope}</scope>
 		</dependency>
 		<dependency>
 			<groupId>commons-beanutils</groupId>
@@ -228,12 +228,12 @@
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
-			<scope>provided</scope>
+			<scope>${profile.scope}</scope>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<scope>provided</scope>
+			<scope>${profile.scope}</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.rasea</groupId>
@@ -292,55 +292,40 @@
 					<goals>package wagon:upload</goals>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>maven-jetty-plugin</artifactId>
+			</plugin>
 		</plugins>
 	</build>
 
 	<profiles>
 		<profile>
+			<id>jboss</id>
+
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+
+			<properties>
+				<profile.scope>provided</profile.scope>
+			</properties>
+		</profile>
+
+		<profile>
 			<id>tomcat</id>
 
-			<dependencies>
-				<dependency>
-					<groupId>org.hibernate</groupId>
-					<artifactId>hibernate-entitymanager</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>org.hibernate</groupId>
-					<artifactId>hibernate-validator</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>javax.faces</groupId>
-					<artifactId>jsf-api</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>javax.faces</groupId>
-					<artifactId>jsf-impl</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>javax.ejb</groupId>
-					<artifactId>ejb-api</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>javax.persistence</groupId>
-					<artifactId>persistence-api</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>javax.xml.stream</groupId>
-					<artifactId>stax-api</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>hsqldb</groupId>
-					<artifactId>hsqldb</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</dependency>
-				<dependency>
-					<groupId>log4j</groupId>
-					<artifactId>log4j</artifactId>
-				</dependency>
-			</dependencies>
+			<properties>
+				<profile.scope>compile</profile.scope>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>jetty</id>
+
+			<properties>
+				<profile.scope>compile</profile.scope>
+			</properties>
 		</profile>
 	</profiles>
 
