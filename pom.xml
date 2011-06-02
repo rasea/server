@@ -335,19 +335,6 @@
 		<developerConnection>scm:git:git@github.com:rasea/server.git</developerConnection>
 	</scm>
 
-	<distributionManagement>
-		<repository>
-			<id>sourceforge.rasea.org</id>
-			<url>${repo.url}</url>
-			<uniqueVersion>false</uniqueVersion>
-		</repository>
-		<snapshotRepository>
-			<id>sourceforge.rasea.org</id>
-			<url>${repo.url}</url>
-			<uniqueVersion>false</uniqueVersion>
-		</snapshotRepository>
-	</distributionManagement>
-
 	<repositories>
 		<repository>
 			<id>repo.rasea.org</id>
