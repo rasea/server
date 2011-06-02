@@ -1,6 +1,0 @@
-div.jquery-ajax-loader {
-	background: #333 url(../img/jquery.ajaxLoader.gif) no-repeat 50% 50%;
-	filter: alpha(opacity :     30 !important);
-	opacity: 0.3;
-	-moz-opacity: 0.3
-}
