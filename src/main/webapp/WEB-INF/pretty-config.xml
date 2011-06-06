@@ -1,0 +1,41 @@
+<!--
+ Rasea Server
+ 
+ Copyright (c) 2008, Rasea <http://rasea.org>. All rights reserved.
+
+ Rasea Server is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 3 of the License.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library; if not, see <http://gnu.org/licenses>
+ or write to the Free Software Foundation, Inc., 51 Franklin Street,
+ Fifth Floor, Boston, MA  02110-1301, USA.
+-->
+<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.2.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.2.0 http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.2.0.xsd">
+
+	<rewrite match="^/(.*)/$" substitute="/$1" redirect="301" />
+
+	<url-mapping id="home">
+		<pattern value="/" />
+		<view-id value="/home.jsf" />
+	</url-mapping>
+
+	<url-mapping id="user-home">
+		<pattern value="/user/#{id}" />
+		<view-id value="/user-public.jsf" />
+	</url-mapping>
+
+	<url-mapping id="application-home">
+		<pattern value="/app/#{id}" />
+		<view-id value="/application-home.jsf" />
+	</url-mapping>
+</pretty-config>

@@ -37,7 +37,88 @@
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>br.gov.frameworkdemoiselle</groupId>
+				<artifactId>demoiselle-parent</artifactId>
+				<version>2.1.0</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle</groupId>
+			<artifactId>demoiselle-core</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>jsr250-api</artifactId>
+					<groupId>javax.annotation</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>br.gov.frameworkdemoiselle</groupId>
+			<artifactId>demoiselle-jsf</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>jstl</artifactId>
+					<groupId>javax.servlet</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.rasea</groupId>
+			<artifactId>rasea-extensions</artifactId>
+			<version>0.1.0.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>com.ocpsoft</groupId>
+			<artifactId>prettyfaces-jsf2</artifactId>
+			<version>3.2.0</version>
+		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.tuckey</groupId> -->
+<!-- 			<artifactId>urlrewritefilter</artifactId> -->
+<!-- 			<version>3.2.0</version> -->
+<!-- 		</dependency> -->
+<!--
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-server</artifactId>
+			<version>1.7</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.grizzly</groupId>
+			<artifactId>grizzly-servlet-webserver</artifactId>
+			<version>1.9.18-i</version>
+		</dependency>
+-->
+		<dependency>
+			<groupId>org.jboss.weld</groupId>
+			<artifactId>weld-core</artifactId>
+			<version>1.1.1.Final</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>jsr250-api</artifactId>
+					<groupId>javax.annotation</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.weld.servlet</groupId>
+			<artifactId>weld-servlet-core</artifactId>
+			<version>1.1.1.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.4.2</version>
+		</dependency>
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -128,6 +209,11 @@
 			<id>repo.rasea.org</id>
 			<name>Rasea Maven Repository</name>
 			<url>http://repo.rasea.org/maven2/</url>
+		</repository>
+		<repository>
+			<id>demoiselle.sourceforge.net</id>
+			<name>Demoiselle Maven Repository</name>
+			<url>http://demoiselle.sourceforge.net/repository/release/</url>
 		</repository>
 	</repositories>
 </project>
