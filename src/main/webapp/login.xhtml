@@ -24,8 +24,20 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/templates/main.xhtml">
 
+	<ui:param name="loginProcess" value="true" />
+
 	<ui:define name="body">
-		application public
+		<h:form id="login">
+			<h:outputLabel value="login ou e-mail" for="login" />
+			<h:inputText id="login" value="#{credentials.username}" />
+
+			<br />
+
+			<h:outputLabel value="senha" for="password" />
+			<h:inputText id="password" value="#{credentials.password}" />
+
+			<h:commandButton value="logar" action="#{securityContext.login}" />
+		</h:form>
 	</ui:define>
 
 </ui:composition>
