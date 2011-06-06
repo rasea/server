@@ -2,12 +2,23 @@ package org.rasea.ui.controller;
 
 import java.io.Serializable;
 
+import javax.inject.Inject;
+
+import org.rasea.core.security.Credentials;
+
+import br.gov.frameworkdemoiselle.security.SecurityContext;
 import br.gov.frameworkdemoiselle.stereotype.ViewController;
 
 @ViewController
 public class SignUpController implements Serializable {
 
 	private static final long serialVersionUID = -2528453695349940601L;
+
+	@Inject
+	private SecurityContext context;
+
+	@Inject
+	private Credentials credentials;
 
 	//	@NotNull
 	private String username;
@@ -22,8 +33,10 @@ public class SignUpController implements Serializable {
 	//	@NotNull
 	private String confirmPassword;
 
-	public String create() {
-		return "pretty:index";
+	public void createAccount() {
+		credentials.setUsername(username);
+		credentials.setPassword(password);
+		context.login();
 	}
 
 	public String getUsername() {
