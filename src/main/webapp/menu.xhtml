@@ -22,17 +22,16 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-	
-	<h:form id="notLoggedIn" rendered="#{!securityContext.loggedIn}">
-		<h:commandButton id="index" value="home" action="pretty:index" />
-		<h:commandButton id="login" value="logar" action="pretty:login"
-			rendered="#{!loginProcess}" />
-	</h:form>
 
-	<h:form id="loggedIn" rendered="#{securityContext.loggedIn}">
-		<h:commandButton id="index" value="home" action="pretty:index" />
-		<h:commandButton id="logout" value="deslogar"
-			action="#{securityContext.logout}" />
-	</h:form>
+	<h:button id="munuindex" value="home" outcome="pretty:index" />
+
+	<h:button id="munusignin" value="login" outcome="pretty:login"
+		rendered="#{!securityContext.loggedIn and !siginProcess}" />
+
+	<h:button id="munusignup" value="cadastre-se" outcome="pretty:signup"
+		rendered="#{!securityContext.loggedIn and !signupProcess}" />
+
+	<h:button id="munulogout" value="logout" outcome="pretty:logout"
+		rendered="#{securityContext.loggedIn}" />
 
 </ui:composition>

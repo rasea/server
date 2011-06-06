@@ -2,9 +2,11 @@ package org.rasea.core.security;
 
 import java.io.Serializable;
 
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 @Named
+@SessionScoped
 public class Credentials implements Serializable {
 
 	private static final long serialVersionUID = 633687017842755204L;

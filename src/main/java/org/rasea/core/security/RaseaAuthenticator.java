@@ -21,6 +21,7 @@
 package org.rasea.core.security;
 
 import javax.enterprise.inject.Alternative;
+import javax.inject.Inject;
 
 import br.gov.frameworkdemoiselle.security.Authenticator;
 import br.gov.frameworkdemoiselle.security.User;
@@ -29,6 +30,9 @@ import br.gov.frameworkdemoiselle.security.User;
 public class RaseaAuthenticator implements Authenticator {
 
 	private static final long serialVersionUID = -6728424241183581910L;
+
+	@Inject
+	private Credentials credentials;
 
 	@Override
 	public boolean authenticate() {
@@ -51,7 +55,7 @@ public class RaseaAuthenticator implements Authenticator {
 
 			@Override
 			public String getId() {
-				return "zyc";
+				return credentials.getUsername();
 			}
 
 			@Override

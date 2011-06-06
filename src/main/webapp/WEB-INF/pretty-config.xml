@@ -31,7 +31,17 @@
 
 	<url-mapping id="login">
 		<pattern value="/login" />
-		<view-id value="/login.jsf" />
+		<view-id value="/signin.jsf" />
+	</url-mapping>
+
+	<url-mapping id="logout">
+		<pattern value="/logout" />
+		<view-id value="/logout.jsf" />
+	</url-mapping>
+
+	<url-mapping id="signup">
+		<pattern value="/signup" />
+		<view-id value="/signup.jsf" />
 	</url-mapping>
 
 	<url-mapping id="user-public-home">
