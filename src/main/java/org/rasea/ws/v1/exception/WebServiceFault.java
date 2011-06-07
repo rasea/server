@@ -20,45 +20,30 @@
  */
 package org.rasea.ws.v1.exception;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.ws.WebFault;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "errorCode", "source", "additionalInfo" })
-public class ServiceFault {
+import org.jboss.seam.annotations.ApplicationException;
 
-	private int errorCode;
+@WebFault(name = "WebServiceFault", targetNamespace = "http://rasea.org/http://rasea.org/ps/wsdl/WebServiceException_v1")
+@ApplicationException(rollback = true, end = false)
+public class WebServiceFault extends Exception {
 
-	private String source;
+	private static final long serialVersionUID = 3220644093150893803L;
 
-	private String additionalInfo;
+	private final WebServiceFaultBean faultInfo;
 
-	public ServiceFault() {
+	public WebServiceFault(String message, WebServiceFaultBean faultInfo) {
+		super(message);
+		this.faultInfo = faultInfo;
 	}
 
-	public String getAdditionalInfo() {
-		return this.additionalInfo;
+	public WebServiceFault(String message, WebServiceFaultBean faultInfo, Throwable cause) {
+		super(message, cause);
+		this.faultInfo = faultInfo;
 	}
 
-	public int getErrorCode() {
-		return this.errorCode;
-	}
-
-	public String getSource() {
-		return this.source;
-	}
-
-	public void setAdditionalInfo(final String value) {
-		this.additionalInfo = value;
-	}
-
-	public void setErrorCode(final int value) {
-		this.errorCode = value;
-	}
-
-	public void setSource(final String value) {
-		this.source = value;
+	public WebServiceFaultBean getFaultInfo() {
+		return this.faultInfo;
 	}
 
 }

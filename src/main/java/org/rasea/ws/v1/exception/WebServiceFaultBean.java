@@ -20,25 +20,45 @@
  */
 package org.rasea.ws.v1.exception;
 
-import javax.xml.ws.WebFault;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlType;
 
-import org.jboss.seam.annotations.ApplicationException;
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(propOrder = { "errorCode", "source", "additionalInfo" })
+public class WebServiceFaultBean {
 
-@WebFault(name = "serviceFault")
-@ApplicationException(rollback = true, end = false)
-public class WebServiceException extends Exception {
+	private int errorCode;
 
-	private static final long serialVersionUID = 3220644093150893803L;
+	private String source;
 
-	private final ServiceFault faultInfo;
+	private String additionalInfo;
 
-	public WebServiceException(final String message, final ServiceFault faultInfo) {
-		super(message);
-		this.faultInfo = faultInfo;
+	public WebServiceFaultBean() {
 	}
 
-	public ServiceFault getFaultInfo() {
-		return this.faultInfo;
+	public String getAdditionalInfo() {
+		return this.additionalInfo;
+	}
+
+	public int getErrorCode() {
+		return this.errorCode;
+	}
+
+	public String getSource() {
+		return this.source;
+	}
+
+	public void setAdditionalInfo(String value) {
+		this.additionalInfo = value;
+	}
+
+	public void setErrorCode(int value) {
+		this.errorCode = value;
+	}
+
+	public void setSource(String value) {
+		this.source = value;
 	}
 
 }
