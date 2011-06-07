@@ -39,7 +39,7 @@ import org.rasea.core.exception.RequiredException;
 import org.rasea.core.util.Constants;
 import org.rasea.extensions.entity.User;
 import org.rasea.ws.v1.exception.ExceptionFactory;
-import org.rasea.ws.v1.exception.WebServiceException;
+import org.rasea.ws.v1.exception.WebServiceFault;
 import org.rasea.ws.v1.request.AuthorizationRequest;
 import org.rasea.ws.v1.request.GrantPermissionRequest;
 import org.rasea.ws.v1.request.RoleNameRequest;
@@ -55,7 +55,7 @@ public class ManagementService extends AbstractWebService {
 
 	@WebMethod
 	public void addRole(final RoleRequest param, @WebParam(header = true) final CredentialsType credentials)
-			throws WebServiceException {
+			throws WebServiceFault {
 		try {
 			this.checkAuthentication(credentials);
 			this.checkPermission(credentials, "role", Constants.DEFAULT_OPERATION_INSERT);
@@ -73,7 +73,7 @@ public class ManagementService extends AbstractWebService {
 
 	@WebMethod
 	public void addUser(final UserRequest param, @WebParam(header = true) final CredentialsType credentials)
-			throws WebServiceException {
+			throws WebServiceFault {
 		try {
 			this.checkAuthentication(credentials);
 			this.checkPermission(credentials, "user", Constants.DEFAULT_OPERATION_INSERT);
@@ -90,7 +90,7 @@ public class ManagementService extends AbstractWebService {
 
 	@WebMethod
 	public void assignUser(final UserRoleRequest param, @WebParam(header = true) final CredentialsType credentials)
-			throws WebServiceException {
+			throws WebServiceFault {
 		try {
 			this.checkAuthentication(credentials);
 			this.checkPermission(credentials, "member", Constants.DEFAULT_OPERATION_UPDATE);
@@ -108,7 +108,7 @@ public class ManagementService extends AbstractWebService {
 
 	@WebMethod
 	public void deassignUser(final UserRoleRequest param, @WebParam(header = true) final CredentialsType credentials)
-			throws WebServiceException {
+			throws WebServiceFault {
 		try {
 			this.checkAuthentication(credentials);
 			this.checkPermission(credentials, "member", Constants.DEFAULT_OPERATION_UPDATE);
@@ -126,7 +126,7 @@ public class ManagementService extends AbstractWebService {
 
 	@WebMethod
 	public void deleteRole(final RoleNameRequest param, @WebParam(header = true) final CredentialsType credentials)
-			throws WebServiceException {
+			throws WebServiceFault {
 		try {
 			this.checkAuthentication(credentials);
 			this.checkPermission(credentials, "role", Constants.DEFAULT_OPERATION_DELETE);
@@ -143,7 +143,7 @@ public class ManagementService extends AbstractWebService {
 
 	@WebMethod
 	public void deleteUser(final SimpleUserNameRequest param, @WebParam(header = true) final CredentialsType credentials)
-			throws WebServiceException {
+			throws WebServiceFault {
 		try {
 			this.checkAuthentication(credentials);
 			this.checkPermission(credentials, "user", Constants.DEFAULT_OPERATION_DELETE);
@@ -158,35 +158,35 @@ public class ManagementService extends AbstractWebService {
 
 	@WebMethod
 	public void disableRole(final RoleNameRequest param, @WebParam(header = true) final CredentialsType credentials)
-			throws WebServiceException {
+			throws WebServiceFault {
 		// TODO Auto-generated method stub
 
 	}
 
 	@WebMethod
 	public void disableUser(final SimpleUserNameRequest param,
-			@WebParam(header = true) final CredentialsType credentials) throws WebServiceException {
+			@WebParam(header = true) final CredentialsType credentials) throws WebServiceFault {
 		// TODO Auto-generated method stub
 
 	}
 
 	@WebMethod
 	public void enableRole(final RoleNameRequest param, @WebParam(header = true) final CredentialsType credentials)
-			throws WebServiceException {
+			throws WebServiceFault {
 		// TODO Auto-generated method stub
 
 	}
 
 	@WebMethod
 	public void enableUser(final SimpleUserNameRequest param, @WebParam(header = true) final CredentialsType credentials)
-			throws WebServiceException {
+			throws WebServiceFault {
 		// TODO Auto-generated method stub
 
 	}
 
 	@WebMethod
 	public void grantPermission(final GrantPermissionRequest param,
-			@WebParam(header = true) final CredentialsType credentials) throws WebServiceException {
+			@WebParam(header = true) final CredentialsType credentials) throws WebServiceFault {
 		try {
 			this.checkAuthentication(credentials);
 			this.checkPermission(credentials, "authorization", Constants.DEFAULT_OPERATION_UPDATE);
@@ -207,7 +207,7 @@ public class ManagementService extends AbstractWebService {
 
 	@WebMethod
 	public void revokePermission(final AuthorizationRequest param,
-			@WebParam(header = true) final CredentialsType credentials) throws WebServiceException {
+			@WebParam(header = true) final CredentialsType credentials) throws WebServiceFault {
 		try {
 			this.checkAuthentication(credentials);
 			this.checkPermission(credentials, "authorization", Constants.DEFAULT_OPERATION_UPDATE);
