@@ -3,13 +3,18 @@ package org.rasea.ui.controller;
 import java.io.Serializable;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
+import org.rasea.core.domain.User;
 import org.rasea.core.security.Credentials;
+import org.rasea.core.service.UserService;
 
+import br.gov.frameworkdemoiselle.annotation.ViewScoped;
 import br.gov.frameworkdemoiselle.security.SecurityContext;
-import br.gov.frameworkdemoiselle.stereotype.ViewController;
+import br.gov.frameworkdemoiselle.transaction.Transactional;
 
-@ViewController
+@Named
+@ViewScoped
 public class SignUpController implements Serializable {
 
 	private static final long serialVersionUID = -2528453695349940601L;
@@ -19,6 +24,9 @@ public class SignUpController implements Serializable {
 
 	@Inject
 	private Credentials credentials;
+
+	@Inject
+	private UserService service;
 
 	//	@NotNull
 	private String username;
@@ -33,7 +41,14 @@ public class SignUpController implements Serializable {
 	//	@NotNull
 	private String confirmPassword;
 
+	@Transactional
 	public void createAccount() {
+		User user = new User();
+		user.setId(username);
+		user.setEmail(email);
+		user.setPassword(password);
+		service.insert(user);
+
 		credentials.setUsername(username);
 		credentials.setPassword(password);
 		context.login();
