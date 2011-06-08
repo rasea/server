@@ -29,20 +29,23 @@
 	<ui:define name="body">
 		<h:form id="signup">
 			<h:outputLabel value="login" for="username" />
-			<h:inputText id="username" value="#{signUpController.username}" />
+			<h:inputText id="username" value="#{signUpController.username}"
+				autocomplete="true" />
 			<br />
 
 			<h:outputLabel value="e-mail" for="email" />
-			<h:inputSecret id="email" value="#{signUpController.email}" />
+			<h:inputText id="email" value="#{signUpController.email}"
+				autocomplete="true" />
 			<br />
 
 			<h:outputLabel value="senha" for="password" />
-			<h:inputSecret id="password" value="#{signUpController.password}" />
+			<h:inputSecret id="password" value="#{signUpController.password}"
+				autocomplete="true" />
 			<br />
 
 			<h:outputLabel value="confirme a senha" for="confirmPassword" />
 			<h:inputSecret id="confirmPassword"
-				value="#{signUpController.confirmPassword}" />
+				value="#{signUpController.confirmPassword}" autocomplete="true" />
 			<br />
 
 			<h:commandButton value="criar conta"

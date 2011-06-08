@@ -34,9 +34,17 @@
 		<view-id value="/signin.jsf" />
 	</url-mapping>
 
+<!-- 	<url-mapping id="logout"> -->
+<!-- 		<pattern value="/logout" /> -->
+<!-- 		<view-id value="/logout.jsf" /> -->
+<!-- 	</url-mapping> -->
+
 	<url-mapping id="logout">
 		<pattern value="/logout" />
 		<view-id value="/logout.jsf" />
+<!-- 		<action>#{signInController.logout}</action> -->
+		<action>#{securityContext.logout}</action>
+<!-- 		<action>#{x.x}</action> -->
 	</url-mapping>
 
 	<url-mapping id="signup">
@@ -46,7 +54,7 @@
 
 	<url-mapping id="user-public-home">
 		<pattern value="/user/#{id}" />
-		<view-id value="/user-public-home.jsf" />
+		<view-id value="/user-profile.jsf" />
 	</url-mapping>
 
 	<url-mapping id="application-dashboard">
