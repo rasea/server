@@ -44,7 +44,7 @@ public class SignUpController implements Serializable {
 	@Transactional
 	public void createAccount() {
 		User user = new User();
-		user.setId(username);
+		user.setLogin(username);
 		user.setEmail(email);
 		user.setPassword(password);
 		service.createAccount(user);

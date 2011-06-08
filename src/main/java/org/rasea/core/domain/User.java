@@ -24,7 +24,7 @@ public class User implements Serializable {
 	@Id
 	@Length(max = 255)
 	@Column(nullable = false, insertable = true)
-	private String id;
+	private String login;
 
 	/**
 	 * Nome completo do usuário para exibição.
@@ -61,12 +61,12 @@ public class User implements Serializable {
 	@Column(nullable = true, insertable = false, updatable = false)
 	private Date activation;
 
-	public String getId() {
-		return id;
+	public String getLogin() {
+		return login;
 	}
-
-	public void setId(String id) {
-		this.id = id;
+	
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
 	public String getName() {

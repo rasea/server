@@ -41,11 +41,11 @@ public class UserManager implements Serializable {
 	/**
 	 * Retorna o usuário com base no seu id
 	 * 
-	 * @param email
+	 * @param login
 	 * @return
 	 */
 	@Transactional
-	public User findById(String email) {
+	public User findByLogin(String login) {
 		return null;
 	}
 }
