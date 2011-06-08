@@ -3,13 +3,15 @@ package org.rasea.ui.controller;
 import java.io.Serializable;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.rasea.core.security.Credentials;
 
+import br.gov.frameworkdemoiselle.annotation.ViewScoped;
 import br.gov.frameworkdemoiselle.security.SecurityContext;
-import br.gov.frameworkdemoiselle.stereotype.ViewController;
 
-@ViewController
+@Named
+@ViewScoped
 public class SignInController implements Serializable {
 
 	private static final long serialVersionUID = 6714304822734340771L;
@@ -32,11 +34,8 @@ public class SignInController implements Serializable {
 		credentials.setUsername(loginOrEmail);
 		credentials.setPassword(password);
 		context.login();
-	}
 
-	public String getLogout() {
-		context.logout();
-		return null;
+//		return "pretty:index";
 	}
 
 	public String getLoginOrEmail() {

@@ -35,7 +35,7 @@ public class RaseaAuthorizator implements Authorizator {
 	}
 
 	@Override
-	public boolean hasPermission(Object resource, String operation) {
+	public boolean hasPermission(String resource, String operation) {
 		return true;
 	}
 }
