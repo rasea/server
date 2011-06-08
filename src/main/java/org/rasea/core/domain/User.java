@@ -18,28 +18,46 @@ public class User implements Serializable {
 
 	private static final long serialVersionUID = -5630651623043896485L;
 
+	/**
+	 * Identificação do usuário representada pelo seu username (login).
+	 */
 	@Id
 	@Length(max = 255)
 	@Column(nullable = false, insertable = true)
 	private String id;
 
+	/**
+	 * Nome completo do usuário para exibição.
+	 */
 	@Length(max = 255)
 	@Column(nullable = true, insertable = false)
 	private String name;
 
+	/**
+	 * Endereço eletrônico do usuário. Não é permitido o cadastro de e-mails duplicados.
+	 */
 	@Email
 	@Length(max = 255)
 	@Column(nullable = false, unique = true, insertable = true)
 	@Index(name = "idx_user_email")
 	private String email;
 
+	/**
+	 * Senha do usuário para acessar sua aplicação e o Rasea.
+	 */
 	@Length(max = 100)
 	@Column(nullable = false, insertable = true, updatable = false)
 	private String password;
 
+	/**
+	 * Data de criação da conta.
+	 */
 	@Column(nullable = false, insertable = true, updatable = false)
 	private Date creation;
 
+	/**
+	 * Data de ativação da conta.
+	 */
 	@Column(nullable = true, insertable = false, updatable = false)
 	private Date activation;
 
