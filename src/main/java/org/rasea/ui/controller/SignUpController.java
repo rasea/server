@@ -47,11 +47,13 @@ public class SignUpController implements Serializable {
 		user.setId(username);
 		user.setEmail(email);
 		user.setPassword(password);
-		service.insert(user);
+		service.createAccount(user);
 
 		credentials.setUsername(username);
 		credentials.setPassword(password);
 		context.login();
+
+		//		return "pretty:index";
 	}
 
 	public String getUsername() {

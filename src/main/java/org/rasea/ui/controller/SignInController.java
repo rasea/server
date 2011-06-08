@@ -34,11 +34,8 @@ public class SignInController implements Serializable {
 		credentials.setUsername(loginOrEmail);
 		credentials.setPassword(password);
 		context.login();
-	}
 
-	public String getLogout() {
-		context.logout();
-		return null;
+//		return "pretty:index";
 	}
 
 	public String getLoginOrEmail() {

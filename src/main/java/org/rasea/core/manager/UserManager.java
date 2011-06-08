@@ -17,7 +17,7 @@ public class UserManager implements Serializable {
 	private Session session;
 
 	@Transactional
-	public void insert(User user) {
+	public void createAccount(User user) {
 		session.persist(user);
 	}
 }

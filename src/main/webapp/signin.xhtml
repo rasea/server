@@ -24,18 +24,19 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/templates/main.xhtml">
 
-	<ui:param name="loginProcess" value="true" />
+	<ui:param name="signinProcess" value="true" />
 
 	<ui:define name="body">
 		<h:form id="signin">
-			<h:outputLabel value="login ou e-mail" for="loginOrEmail" />
-			<h:inputText id="loginOrEmail"
-				value="#{signInController.loginOrEmail}" />
+			<h:outputLabel value="login ou e-mail" for="email" />
+			<h:inputText id="email" value="#{signInController.loginOrEmail}"
+				autocomplete="true" />
 
 			<br />
 
 			<h:outputLabel value="senha" for="password" />
-			<h:inputSecret id="password" value="#{signInController.password}" />
+			<h:inputSecret id="password" value="#{signInController.password}"
+				autocomplete="true" />
 
 			<h:commandButton id="signin" value="logar"
 				action="#{signInController.login}" />

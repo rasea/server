@@ -1,14 +1,15 @@
 package org.rasea.core.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Index;
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
@@ -19,20 +20,28 @@ public class User implements Serializable {
 
 	@Id
 	@Length(max = 255)
+	@Column(nullable = false, insertable = true)
 	private String id;
 
 	@Length(max = 255)
+	@Column(nullable = true, insertable = false)
 	private String name;
 
-	@NotNull
+	@Email
 	@Length(max = 255)
-	@Column(unique = true)
+	@Column(nullable = false, unique = true, insertable = true)
 	@Index(name = "idx_user_email")
 	private String email;
 
 	@Length(max = 100)
-	@Column(nullable = false, updatable = false)
+	@Column(nullable = false, insertable = true, updatable = false)
 	private String password;
+
+	@Column(nullable = false, insertable = true, updatable = false)
+	private Date creation;
+
+	@Column(nullable = true, insertable = false, updatable = false)
+	private Date activation;
 
 	public String getId() {
 		return id;
@@ -64,5 +73,21 @@ public class User implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Date getCreation() {
+		return creation;
+	}
+
+	public void setCreation(Date creation) {
+		this.creation = creation;
+	}
+
+	public Date getActivation() {
+		return activation;
+	}
+
+	public void setActivation(Date activation) {
+		this.activation = activation;
 	}
 }
