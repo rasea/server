@@ -11,7 +11,6 @@ import org.rasea.core.service.UserService;
 
 import br.gov.frameworkdemoiselle.annotation.ViewScoped;
 import br.gov.frameworkdemoiselle.security.SecurityContext;
-import br.gov.frameworkdemoiselle.transaction.Transactional;
 
 @Named
 @ViewScoped
@@ -28,20 +27,20 @@ public class SignUpController implements Serializable {
 	@Inject
 	private UserService service;
 
-	//	@NotNull
+	// @NotNull
 	private String username;
 
-	//	@Email
-	//	@NotNull
+	// @Email
+	// @NotNull
 	private String email;
 
-	//	@NotNull
+	// @NotNull
 	private String password;
 
-	//	@NotNull
+	// @NotNull
 	private String confirmPassword;
 
-	@Transactional
+	// @Transactional
 	public void createAccount() {
 		User user = new User();
 		user.setLogin(username);
@@ -53,7 +52,7 @@ public class SignUpController implements Serializable {
 		credentials.setPassword(password);
 		context.login();
 
-		//		return "pretty:index";
+		// return "pretty:index";
 	}
 
 	public String getUsername() {

@@ -24,6 +24,6 @@
 	<alternatives>
 		<class>org.rasea.core.security.RaseaAuthenticator</class>
 		<class>org.rasea.core.security.RaseaAuthorizator</class>
-		<class>org.rasea.core.transaction.RaseaTransaction</class>
+<!--		<class>org.rasea.core.transaction.RaseaTransaction</class>-->
 	</alternatives>
 </beans>

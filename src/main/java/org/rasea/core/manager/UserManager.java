@@ -4,17 +4,16 @@ import java.io.Serializable;
 
 import javax.inject.Inject;
 
-import org.hibernate.Session;
 import org.rasea.core.domain.User;
 
-import br.gov.frameworkdemoiselle.transaction.Transactional;
+import com.amazonaws.services.simpledb.AmazonSimpleDB;
 
 public class UserManager implements Serializable {
 
 	private static final long serialVersionUID = 2097626878174583664L;
 
 	@Inject
-	private Session session;
+	private AmazonSimpleDB db;
 
 	/**
 	 * Cria a conta do usuário persistindo o id, name, email, password e activation que já estão preenchidos no objeto
@@ -22,9 +21,8 @@ public class UserManager implements Serializable {
 	 * 
 	 * @param user
 	 */
-	@Transactional
+	// @Transactional
 	public void createAccount(User user) {
-		session.persist(user);
 	}
 
 	/**
@@ -33,7 +31,7 @@ public class UserManager implements Serializable {
 	 * @param email
 	 * @return
 	 */
-	@Transactional
+	// @Transactional
 	public User findByEmail(String email) {
 		return null;
 	}
@@ -44,7 +42,7 @@ public class UserManager implements Serializable {
 	 * @param login
 	 * @return
 	 */
-	@Transactional
+	// @Transactional
 	public User findByLogin(String login) {
 		return null;
 	}

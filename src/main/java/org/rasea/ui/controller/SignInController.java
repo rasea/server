@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
 
 import org.rasea.core.security.Credentials;
 
@@ -22,20 +23,25 @@ public class SignInController implements Serializable {
 	@Inject
 	private Credentials credentials;
 
-	//	@NotNull
+	@NotNull
 	private String loginOrEmail;
 
-	//	@NotNull
+	@NotNull
 	private String password;
 
 	public void login() {
+
 		// TODO Caso seja passado o e-mail, deve-se obter o usuário pelo e-mail e
 		// passar o seu login para autenticação.
 		credentials.setUsername(loginOrEmail);
 		credentials.setPassword(password);
 		context.login();
 
-//		return "pretty:index";
+		// return "pretty:index";
+	}
+
+	private boolean isEmail() {
+		return false;
 	}
 
 	public String getLoginOrEmail() {
