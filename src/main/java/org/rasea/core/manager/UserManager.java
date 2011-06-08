@@ -16,8 +16,36 @@ public class UserManager implements Serializable {
 	@Inject
 	private Session session;
 
+	/**
+	 * Cria a conta do usuário persistindo o id, name, email, password e activation que já estão preenchidos no objeto
+	 * passado por parâmetro.
+	 * 
+	 * @param user
+	 */
 	@Transactional
 	public void createAccount(User user) {
 		session.persist(user);
+	}
+
+	/**
+	 * Retorna o usuário com base no seu e-mail.
+	 * 
+	 * @param email
+	 * @return
+	 */
+	@Transactional
+	public User findByEmail(String email) {
+		return null;
+	}
+
+	/**
+	 * Retorna o usuário com base no seu id
+	 * 
+	 * @param email
+	 * @return
+	 */
+	@Transactional
+	public User findById(String email) {
+		return null;
 	}
 }
