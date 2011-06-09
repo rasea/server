@@ -36,6 +36,7 @@ public class UserManagerTest {
 	public void accountCreatedSuccessfully() {
 		User user = getNewFakeUserInstance();
 
+//		String activationCode = manager.createAccount(user);
 		manager.createAccount(user);
 		User persisted = manager.findByLogin(user.getLogin());
 
@@ -188,9 +189,7 @@ public class UserManagerTest {
 		User user = getNewFakeUserInstance();
 
 		User persisted = manager.findByLogin(user.getLogin());
-		assertNotNull(persisted);
-
-		manager.deleteAccount(user);
+		assertNull(persisted);
 	}
 
 	@Test
@@ -201,5 +200,13 @@ public class UserManagerTest {
 		User persisted = manager.findByEmail(user.getEmail());
 		assertNotNull(persisted);
 		manager.deleteAccount(user);
+	}
+
+	@Test
+	public void notFindingInexistentUserByEmail() {
+		User user = getNewFakeUserInstance();
+
+		User persisted = manager.findByEmail(user.getEmail());
+		assertNull(persisted);
 	}
 }
