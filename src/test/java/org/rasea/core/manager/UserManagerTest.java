@@ -4,8 +4,6 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 
-import java.util.Date;
-
 import javax.inject.Inject;
 
 import org.junit.Test;
@@ -26,7 +24,6 @@ public class UserManagerTest {
 		user.setName("Fake Name");
 		user.setEmail("fakemail@fakemail.com");
 		user.setPassword("fakepass");
-		user.setCreation(new Date());
 		return user;
 	}
 
@@ -42,10 +39,8 @@ public class UserManagerTest {
 		assertEquals(user.getName(), persisted.getName());
 		assertEquals(user.getEmail(), persisted.getEmail());
 		assertEquals(user.getPassword(), persisted.getPassword());
-		
-		// TODO: habilitar esses testes depois
-//		assertEquals(user.getCreation(), persisted.getCreation());
-//		assertNull(persisted.getActivation());
+		assertNotNull(persisted.getCreation());
+		assertNull(persisted.getActivation());
 
 		manager.deleteAccount(user);
 	}
@@ -97,4 +92,5 @@ public class UserManagerTest {
 		assertEquals(user.getName(), persisted.getName());
 		manager.deleteAccount(user);
 	}
+	
 }
