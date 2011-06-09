@@ -42,8 +42,9 @@ public class SimpleDBProducer implements Serializable {
 
 	private void validateNotNull(String keyValue, String variableName) {
 		if (Strings.isEmpty(keyValue)) {
+			
 			String message = "A variável de ambiente " + variableName
-					+ " deve ser definida no sistema. No Linux, edite o arquivo ~/.profile e inclua a isto: export "
+					+ " precisa ser definida. No Linux, inclua isto no arquivo ~/.profile do usuário: export "
 					+ variableName + "=<valor>";
 
 			logger.error(message);

@@ -2,6 +2,8 @@ package org.rasea.core.util;
 
 import java.io.Serializable;
 
+import javax.enterprise.context.ApplicationScoped;
+
 /**
  * Retrieves Amazon WS Access Key ID and Secret Access Key from system variables.
  * <br>
@@ -9,6 +11,7 @@ import java.io.Serializable;
  * 
  * @see http://aws.amazon.com/security-credentials
  */
+@ApplicationScoped
 public class AmazonAccountUtil implements Serializable {
 
 	private static final long serialVersionUID = -986995975452932253L;
