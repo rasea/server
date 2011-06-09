@@ -52,7 +52,7 @@ public class UserManager implements Serializable {
 	 * 
 	 * @param user
 	 */
-	public void createAccount(User user) {
+	public String createAccount(User user) {
 
 		List<ReplaceableAttribute> attrs = new ArrayList<ReplaceableAttribute>();
 		attrs.add(new ReplaceableAttribute("name", user.getName(), true));
@@ -64,6 +64,8 @@ public class UserManager implements Serializable {
 		attrs.add(new ReplaceableAttribute("creation", creationDateString, true));
 		
 		sdb.putAttributes(new PutAttributesRequest(DOMAIN, user.getLogin(), attrs));
+		
+		return null;
 	}
 
 	/**
