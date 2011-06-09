@@ -108,4 +108,11 @@ public class User implements Serializable {
 	public void setActivation(Date activation) {
 		this.activation = activation;
 	}
+
+	@Override
+	public String toString() {
+		return "User [login=" + login + ", name=" + name + ", email=" + email + ", password=" + password
+				+ ", creation=" + creation + ", activation=" + activation + "]";
+	}
+	
 }
