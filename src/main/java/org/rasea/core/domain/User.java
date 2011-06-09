@@ -3,6 +3,8 @@ package org.rasea.core.domain;
 import java.io.Serializable;
 import java.util.Date;
 
+// TODO: criar anotação específica para o SimpleDB: nome do domínio (~column family)
+//@Domain(name = "Users")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = -5630651623043896485L;
@@ -10,6 +12,8 @@ public class User implements Serializable {
 	/**
 	 * Identificação do usuário representada pelo seu username (login).
 	 */
+	// TODO: criar anotação específica para o SimpleDB: nome do item (~row key)
+	//@ItemName
 	private String login;
 
 	/**
