@@ -5,9 +5,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import org.rasea.core.domain.User;
+
+import br.gov.frameworkdemoiselle.util.Beans;
 
 import com.amazonaws.services.simpledb.AmazonSimpleDB;
 import com.amazonaws.services.simpledb.model.Attribute;
@@ -24,13 +24,13 @@ public class UserManager implements Serializable {
 
 	private static final long serialVersionUID = 2097626878174583664L;
 
-	@Inject
 	private AmazonSimpleDB sdb;
 
 	// TODO: isso aqui poderia ser definido em uma anotação na classe bean, ex: @Domain("Users")
 	public final String DOMAIN = "Users";
 
 	public UserManager() throws IOException {
+		sdb = Beans.getReference(AmazonSimpleDB.class);
 		// TODO: isso aqui teria que ficar em algum inicializador para todos os domínios da aplicação
 		sdb.createDomain(new CreateDomainRequest(DOMAIN));
 	}
