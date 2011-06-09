@@ -30,22 +30,22 @@ public class UserManager implements Serializable {
 	//@Inject
 	private AmazonSimpleDB sdb;
 	
-	// TODO: isso aqui poderia ser definido em uma anotaÃ§Ã£o na classe bean, ex: @Domain("Users")
+	// TODO: isso aqui poderia ser definido em uma anotação na classe bean, ex: @Domain("Users")
 	public final String DOMAIN = "Users";
 	
 	public UserManager() throws IOException {
 		
-		// TODO: isso aqui alguma fÃ¡brica deverÃ¡ prover e manter em escopo de aplicaÃ§Ã£o
+		// TODO: isso aqui alguma fábrica deverá prover e manter em escopo de aplicação
 		sdb = new AmazonSimpleDBClient(new PropertiesCredentials(
 				UserManager.class.getResourceAsStream("AwsCredentials.properties")));
 		
-		// TODO: isso aqui teria que ficar em algum inicializador para todos os domÃ­nios da aplicaÃ§Ã£o
+		// TODO: isso aqui teria que ficar em algum inicializador para todos os domínios da aplicação
         sdb.createDomain(new CreateDomainRequest(DOMAIN));
 	}
 
 	/**
-	 * Cria a conta do usuÃ¡rio persistindo o id, name, email, password e activation que jÃ¡ estÃ£o preenchidos no objeto
-	 * passado por parÃ¢metro.
+	 * Cria a conta do usuário persistindo o id, name, email, password e activation que já estão preenchidos no objeto
+	 * passado por parâmetro.
 	 * 
 	 * @param user
 	 */
@@ -63,7 +63,7 @@ public class UserManager implements Serializable {
 	}
 
 	/**
-	 * Retorna o usuÃ¡rio com base no seu login.
+	 * Retorna o usuário com base no seu login.
 	 * 
 	 * @param login
 	 * @return User
@@ -96,7 +96,7 @@ public class UserManager implements Serializable {
 	}
 	
 	/**
-	 * Retorna o usuÃ¡rio com base no seu e-mail.
+	 * Retorna o usuário com base no seu e-mail.
 	 * 
 	 * @param email
 	 * @return
@@ -127,7 +127,7 @@ public class UserManager implements Serializable {
 					}
                 }
                 
-                // FIXME: em princÃ­pio o campo "email" serÃ¡ Ãºnico no domÃ­nio...
+                // FIXME: em princípio o campo "email" será único no domínio...
                 break;
             }
         }
