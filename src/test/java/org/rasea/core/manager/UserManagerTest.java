@@ -3,6 +3,7 @@ package org.rasea.core.manager;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.fail;
 
 import java.util.Date;
 
@@ -49,6 +50,116 @@ public class UserManagerTest {
 	}
 
 	@Test
+	public void mustFailOnTryingToCreateAccountWithNullLogin() {
+		User user = getNewFakeUserInstance();
+		user.setLogin(null);
+
+		try {
+			manager.createAccount(user);
+
+			manager.deleteAccount(user);
+			fail("Não deveria inserir usuário com login nulo!");
+
+		} catch (Exception cause) {
+			// TODO Se chegar aqui está tudo certo!
+		}
+	}
+
+	@Test
+	public void mustFailOnTryingToCreateAccountWithNullEmail() {
+		User user = getNewFakeUserInstance();
+		user.setEmail(null);
+
+		try {
+			manager.createAccount(user);
+
+			manager.deleteAccount(user);
+			fail("Não deveria inserir usuário com e-mail nulo!");
+
+		} catch (Exception cause) {
+			// TODO Se chegar aqui está tudo certo!
+		}
+	}
+
+	@Test
+	public void mustFailOnTryingToCreateAccountWithNullPassword() {
+		User user = getNewFakeUserInstance();
+		user.setPassword(null);
+
+		try {
+			manager.createAccount(user);
+
+			manager.deleteAccount(user);
+			fail("Não deveria inserir usuário com password nulo!");
+
+		} catch (Exception cause) {
+			// TODO Se chegar aqui está tudo certo!
+		}
+	}
+
+	@Test
+	public void mustFailOnTryingToCreateAccountWithNullCreationDate() {
+		User user = getNewFakeUserInstance();
+		user.setCreation(null);
+
+		try {
+			manager.createAccount(user);
+
+			manager.deleteAccount(user);
+			fail("Não deveria inserir usuário com data de criação nula!");
+
+		} catch (Exception cause) {
+			// TODO Se chegar aqui está tudo certo!
+		}
+	}
+
+	@Test
+	public void mustFailOnTryingToCreateAccountWithDuplicatedEmail() {
+		User user;
+
+		user = getNewFakeUserInstance();
+		manager.createAccount(user);
+
+		user = getNewFakeUserInstance();
+		user.setLogin(user.getLogin() + "2");
+
+		try {
+			manager.createAccount(user);
+
+			manager.deleteAccount(user);
+			fail("Não deveria inserir com e-mail duplicado!");
+
+		} catch (Exception cause) {
+			// TODO Se chegar aqui está tudo certo!
+		}
+
+		manager.deleteAccount(user);
+	}
+
+	@Test
+	public void mustFailOnTryingToCreateAccountWithDuplicatedLogin() {
+		User user;
+
+		user = getNewFakeUserInstance();
+		manager.createAccount(user);
+
+		user = getNewFakeUserInstance();
+		user.setEmail(user.getEmail() + "2");
+
+		try {
+			manager.createAccount(user);
+
+			manager.deleteAccount(user);
+			fail("Não deveria inserir com login duplicado!");
+
+		} catch (Exception cause) {
+			// TODO Se chegar aqui está tudo certo!
+		}
+
+		manager.deleteAccount(user);
+	}
+
+	@Test
 	public void accountDeletedSuccessfully() {
 		User user = getNewFakeUserInstance();
 
@@ -71,14 +182,14 @@ public class UserManagerTest {
 		assertNotNull(persisted);
 		manager.deleteAccount(user);
 	}
-	
+
 	@Test
 	public void notFindingInexistentUserByLogin() {
 		User user = getNewFakeUserInstance();
-		
-		User  persisted = manager.findByLogin(user.getLogin());
+
+		User persisted = manager.findByLogin(user.getLogin());
 		assertNotNull(persisted);
-		
+
 		manager.deleteAccount(user);
 	}
 
