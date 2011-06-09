@@ -35,10 +35,10 @@ public class UserManagerTest {
 	public void accountCreatedSuccessfully() {
 		User user = getNewFakeUserInstance();
 
-		//		String activationCode = manager.createAccount(user);
-		manager.createAccount(user);
+		String activationCode = manager.createAccount(user);
 		User persisted = manager.findByLogin(user.getLogin());
 
+		assertNotNull(activationCode);
 		assertNotNull(persisted);
 		assertEquals(user.getLogin(), persisted.getLogin());
 		assertEquals(user.getEmail(), persisted.getEmail());
@@ -153,6 +153,18 @@ public class UserManagerTest {
 		manager.deleteAccount(user);
 	}
 
+	@Test
+	public void mustFailOnTryingToActivateAlreadyActiveAccount() {
+	}
+	
+	@Test
+	public void mustFailOnTryingToActivateAccountWithInvalidActivationCode() {
+	}
+
+	@Test
+	public void mustFailOnTryingToActivateInexistentAccount() {
+	}
+	
 	@Test
 	public void accountDeletedSuccessfully() {
 		User user = getNewFakeUserInstance();
