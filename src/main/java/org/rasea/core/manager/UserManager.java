@@ -2,7 +2,10 @@ package org.rasea.core.manager;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.rasea.core.domain.User;
@@ -20,6 +23,7 @@ import com.amazonaws.services.simpledb.model.PutAttributesRequest;
 import com.amazonaws.services.simpledb.model.ReplaceableAttribute;
 import com.amazonaws.services.simpledb.model.SelectRequest;
 import com.amazonaws.services.simpledb.model.SelectResult;
+import com.amazonaws.util.DateUtils;
 
 public class UserManager implements Serializable {
 
@@ -30,6 +34,9 @@ public class UserManager implements Serializable {
 	// TODO: isso aqui poderia ser definido em uma anotação na classe bean, ex: @Domain("Users")
 	public final String DOMAIN = "Users";
 
+	// FIXME: variável não pode ser estática (vide documentação do DateUtils)
+	public final DateUtils DATE_UTILS = new DateUtils();
+	
 	public UserManager() throws IOException {
 		
 		// FIXME: subterfúgio para resolver o problema abaixo (NPE)
@@ -51,12 +58,11 @@ public class UserManager implements Serializable {
 		attrs.add(new ReplaceableAttribute("name", user.getName(), true));
 		attrs.add(new ReplaceableAttribute("email", user.getEmail(), true));
 		attrs.add(new ReplaceableAttribute("password", user.getPassword(), true));
-
-		// TODO: ver como fazer para persistir tipo de dados Date (non-String em geral)
 		
-		// TODO: fazer para o restante dos campos do bean User 
-		// ...
-
+		Date creationDate = Calendar.getInstance().getTime();
+		String creationDateString = DATE_UTILS.formatIso8601Date(creationDate);
+		attrs.add(new ReplaceableAttribute("creation", creationDateString, true));
+		
 		sdb.putAttributes(new PutAttributesRequest(DOMAIN, user.getLogin(), attrs));
 	}
 
@@ -124,13 +130,25 @@ public class UserManager implements Serializable {
 				user.setEmail(value);
 			} else if ("password".equals(name)) {
 				user.setPassword(value);
+			} else if ("creation".equals(name)) {
+				user.setCreation(parseDateValue(value));
+			} else if ("activation".equals(name)) {
+				user.setActivation(parseDateValue(value));
 			}
-			
-			// TODO: fazer para o restante dos campos do bean User 
-			// ...
 		}
 		
 		return user;
+	}
+	
+	private Date parseDateValue(final String value) {
+		Date date = null;
+		if (value != null && !"".equals(value)) {
+			try {
+				date = DATE_UTILS.parseIso8601Date(value);
+			} catch (ParseException e) {
+			}
+		}
+		return date;
 	}
 	
 	public void deleteAccount(User user) {

@@ -57,10 +57,10 @@ public class UserManagerTest {
 		try {
 			manager.createAccount(user);
 			manager.deleteAccount(user);
-			fail("Não deveria inserir usuário com login nulo!");
+			fail("NÃ£o deveria inserir usuÃ¡rio com login nulo!");
 
 		} catch (Exception cause) {
-			// TODO Se chegar aqui está tudo certo!
+			// TODO Se chegar aqui estÃ¡ tudo certo!
 		}
 	}
 
@@ -72,10 +72,10 @@ public class UserManagerTest {
 		try {
 			manager.createAccount(user);
 			manager.deleteAccount(user);
-			fail("Não deveria inserir usuário com e-mail nulo!");
+			fail("NÃ£o deveria inserir usuÃ¡rio com e-mail nulo!");
 
 		} catch (Exception cause) {
-			// TODO Se chegar aqui está tudo certo!
+			// TODO Se chegar aqui estÃ¡ tudo certo!
 		}
 	}
 
@@ -87,10 +87,10 @@ public class UserManagerTest {
 		try {
 			manager.createAccount(user);
 			manager.deleteAccount(user);
-			fail("Não deveria inserir usuário com password nulo!");
+			fail("NÃ£o deveria inserir usuÃ¡rio com password nulo!");
 
 		} catch (Exception cause) {
-			// TODO Se chegar aqui está tudo certo!
+			// TODO Se chegar aqui estÃ¡ tudo certo!
 		}
 	}
 
@@ -102,10 +102,10 @@ public class UserManagerTest {
 		try {
 			manager.createAccount(user);
 			manager.deleteAccount(user);
-			fail("Não deveria inserir usuário com data de criação nula!");
+			fail("NÃ£o deveria inserir usuÃ¡rio com data de criaÃ§Ã£o nula!");
 
 		} catch (Exception cause) {
-			// TODO Se chegar aqui está tudo certo!
+			// TODO Se chegar aqui estÃ¡ tudo certo!
 		}
 	}
 
@@ -122,10 +122,10 @@ public class UserManagerTest {
 		try {
 			manager.createAccount(user);
 			manager.deleteAccount(user);
-			fail("Não deveria inserir com e-mail duplicado!");
+			fail("NÃ£o deveria inserir com e-mail duplicado!");
 
 		} catch (Exception cause) {
-			// TODO Se chegar aqui está tudo certo!
+			// TODO Se chegar aqui estÃ¡ tudo certo!
 		}
 
 		manager.deleteAccount(user);
@@ -144,10 +144,10 @@ public class UserManagerTest {
 		try {
 			manager.createAccount(user);
 			manager.deleteAccount(user);
-			fail("Não deveria inserir com login duplicado!");
+			fail("NÃ£o deveria inserir com login duplicado!");
 
 		} catch (Exception cause) {
-			// TODO Se chegar aqui está tudo certo!
+			// TODO Se chegar aqui estÃ¡ tudo certo!
 		}
 
 		manager.deleteAccount(user);
