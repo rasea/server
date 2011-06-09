@@ -153,10 +153,17 @@ public class UserManagerTest {
 		manager.deleteAccount(user);
 	}
 
-	@Test
-	public void mustFailOnTryingToActivateAlreadyActiveAccount() {
-	}
-	
+	//	@Test
+	//	public void mustFailOnTryingToActivateAlreadyActiveAccount() {
+	//		User user;
+	//
+	//		user = getNewFakeUserInstance();
+	//		String activationCode = manager.createAccount(user);
+	//		manager.ac
+	//		
+	//		
+	//	}
+
 	@Test
 	public void mustFailOnTryingToActivateAccountWithInvalidActivationCode() {
 	}
@@ -164,7 +171,7 @@ public class UserManagerTest {
 	@Test
 	public void mustFailOnTryingToActivateInexistentAccount() {
 	}
-	
+
 	@Test
 	public void accountDeletedSuccessfully() {
 		User user = getNewFakeUserInstance();
