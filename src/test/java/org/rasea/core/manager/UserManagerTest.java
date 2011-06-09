@@ -57,7 +57,7 @@ public class UserManagerTest {
 		try {
 			manager.createAccount(user);
 			manager.deleteAccount(user);
-			fail("NÃ£o deveria inserir usuÃ¡rio com login nulo!");
+			fail("NÃ£o deveria inserir usuÃ¡rio com login nulo");
 
 		} catch (Exception cause) {
 			// TODO Se chegar aqui estÃ¡ tudo certo!
@@ -72,7 +72,7 @@ public class UserManagerTest {
 		try {
 			manager.createAccount(user);
 			manager.deleteAccount(user);
-			fail("NÃ£o deveria inserir usuÃ¡rio com e-mail nulo!");
+			fail("NÃ£o deveria inserir usuÃ¡rio com e-mail nulo");
 
 		} catch (Exception cause) {
 			// TODO Se chegar aqui estÃ¡ tudo certo!
@@ -87,7 +87,7 @@ public class UserManagerTest {
 		try {
 			manager.createAccount(user);
 			manager.deleteAccount(user);
-			fail("NÃ£o deveria inserir usuÃ¡rio com password nulo!");
+			fail("NÃ£o deveria inserir usuÃ¡rio com password nulo");
 
 		} catch (Exception cause) {
 			// TODO Se chegar aqui estÃ¡ tudo certo!
@@ -102,7 +102,7 @@ public class UserManagerTest {
 		try {
 			manager.createAccount(user);
 			manager.deleteAccount(user);
-			fail("NÃ£o deveria inserir usuÃ¡rio com data de criaÃ§Ã£o nula!");
+			fail("NÃ£o deveria inserir usuÃ¡rio com data de criaÃ§Ã£o nula");
 
 		} catch (Exception cause) {
 			// TODO Se chegar aqui estÃ¡ tudo certo!
@@ -122,7 +122,7 @@ public class UserManagerTest {
 		try {
 			manager.createAccount(user);
 			manager.deleteAccount(user);
-			fail("NÃ£o deveria inserir com e-mail duplicado!");
+			fail("NÃ£o deveria inserir com e-mail duplicado");
 
 		} catch (Exception cause) {
 			// TODO Se chegar aqui estÃ¡ tudo certo!
@@ -144,7 +144,7 @@ public class UserManagerTest {
 		try {
 			manager.createAccount(user);
 			manager.deleteAccount(user);
-			fail("NÃ£o deveria inserir com login duplicado!");
+			fail("NÃ£o deveria inserir com login duplicado");
 
 		} catch (Exception cause) {
 			// TODO Se chegar aqui estÃ¡ tudo certo!
@@ -153,23 +153,80 @@ public class UserManagerTest {
 		manager.deleteAccount(user);
 	}
 
-	//	@Test
-	//	public void mustFailOnTryingToActivateAlreadyActiveAccount() {
-	//		User user;
-	//
-	//		user = getNewFakeUserInstance();
-	//		String activationCode = manager.createAccount(user);
-	//		manager.ac
-	//		
-	//		
-	//	}
+	@Test
+	public void accountActivatedSuccessfully() {
+		User user = getNewFakeUserInstance();
+		String activationCode = manager.createAccount(user);
+
+		manager.activateAccount(user, activationCode);
+		assertNotNull(user.getActivation());
+
+		User persisted = manager.findByLogin(user.getLogin());
+		assertNotNull(persisted.getActivation());
+
+		manager.deleteAccount(user);
+	}
+
+	@Test
+	public void mustFailOnTryingToActivateAlreadyActiveAccountWithValidActivationCode() {
+		User user = getNewFakeUserInstance();
+		String activationCode = manager.createAccount(user);
+		manager.activateAccount(user, activationCode);
+
+		try {
+			manager.activateAccount(user, activationCode);
+			fail("Deveria dar erro ao tentar ativar uma conta já ativa");
+
+		} catch (Exception cause) {
+			// Tem que entrar aqui 
+		}
+	}
+
+	@Test
+	public void mustFailOnTryingToActivateAlreadyActiveAccountWithInvalidActivationCode() {
+		User user = getNewFakeUserInstance();
+		String activationCode = manager.createAccount(user);
+		manager.activateAccount(user, activationCode);
+
+		try {
+			manager.activateAccount(user, "fakeactivationcode");
+			fail("Deveria dar erro ao tentar ativar uma conta já ativa");
+
+		} catch (Exception cause) {
+			// Tem que entrar aqui 
+		}
+
+		manager.deleteAccount(user);
+	}
 
 	@Test
 	public void mustFailOnTryingToActivateAccountWithInvalidActivationCode() {
+		User user = getNewFakeUserInstance();
+		String activationCode = manager.createAccount(user);
+		manager.activateAccount(user, activationCode);
+
+		try {
+			manager.activateAccount(user, "fakeactivationcode");
+			fail("Deveria dar erro ao tentar ativar uma conta com o código de ativação errado");
+
+		} catch (Exception cause) {
+			// Tem que entrar aqui 
+		}
+
+		manager.deleteAccount(user);
 	}
 
 	@Test
 	public void mustFailOnTryingToActivateInexistentAccount() {
+		User user = getNewFakeUserInstance();
+
+		try {
+			manager.activateAccount(user, "fakeactivationcode");
+			fail("Deveria dar erro ao tentar ativar uma conta que não existe");
+
+		} catch (Exception cause) {
+			// Tem que entrar aqui 
+		}
 	}
 
 	@Test
