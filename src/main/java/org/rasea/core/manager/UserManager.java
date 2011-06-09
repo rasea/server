@@ -37,7 +37,7 @@ public class UserManager implements Serializable {
 		
 		// TODO: isso aqui alguma fábrica deverá prover e manter em escopo de aplicação
 		sdb = new AmazonSimpleDBClient(new PropertiesCredentials(
-				UserManager.class.getResourceAsStream("/AwsCredentials.properties")));
+				UserManager.class.getResourceAsStream("AwsCredentials.properties")));
 		
 		// TODO: isso aqui teria que ficar em algum inicializador para todos os domínios da aplicação
         sdb.createDomain(new CreateDomainRequest(DOMAIN));
@@ -133,6 +133,25 @@ public class UserManager implements Serializable {
         }
         
         return user;
+	}
+
+	public static void main(String[] args) throws Exception {
+		UserManager manager = new UserManager();
+		
+		User user = new User();
+		user.setLogin("john");
+		user.setName("John Doe");
+		user.setEmail("john@doe.com");
+		user.setPassword("pass");
+		
+		System.out.println("Creating account: " + user);
+		manager.createAccount(user);
+		
+		User user2 = manager.findByLogin("john");
+		System.out.println("Found by login: " + user2);
+		
+		User user3 = manager.findByEmail("john@doe.com");
+		System.out.println("Found by email: " + user3);
 	}
 	
 }
