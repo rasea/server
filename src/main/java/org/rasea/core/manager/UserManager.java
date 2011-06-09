@@ -12,6 +12,7 @@ import br.gov.frameworkdemoiselle.util.Beans;
 import com.amazonaws.services.simpledb.AmazonSimpleDB;
 import com.amazonaws.services.simpledb.model.Attribute;
 import com.amazonaws.services.simpledb.model.CreateDomainRequest;
+import com.amazonaws.services.simpledb.model.DeleteAttributesRequest;
 import com.amazonaws.services.simpledb.model.GetAttributesRequest;
 import com.amazonaws.services.simpledb.model.GetAttributesResult;
 import com.amazonaws.services.simpledb.model.Item;
@@ -30,7 +31,10 @@ public class UserManager implements Serializable {
 	public final String DOMAIN = "Users";
 
 	public UserManager() throws IOException {
+		
+		// FIXME: subterfúgio para resolver o problema abaixo (NPE)
 		sdb = Beans.getReference(AmazonSimpleDB.class);
+		
 		// TODO: isso aqui teria que ficar em algum inicializador para todos os domínios da aplicação
 		sdb.createDomain(new CreateDomainRequest(DOMAIN));
 	}
@@ -45,8 +49,11 @@ public class UserManager implements Serializable {
 
 		List<ReplaceableAttribute> attrs = new ArrayList<ReplaceableAttribute>();
 		attrs.add(new ReplaceableAttribute("name", user.getName(), true));
+		attrs.add(new ReplaceableAttribute("email", user.getEmail(), true));
 		attrs.add(new ReplaceableAttribute("password", user.getPassword(), true));
 
+		// TODO: ver como fazer para persistir tipo de dados Date (non-String em geral)
+		
 		// TODO: fazer para o restante dos campos do bean User 
 		// ...
 
@@ -66,20 +73,7 @@ public class UserManager implements Serializable {
 		if (result != null) {
 			user = new User();
 			user.setLogin(login);
-
-			List<Attribute> attributes = result.getAttributes();
-			if (attributes != null && !attributes.isEmpty()) {
-				for (Attribute attr : attributes) {
-					final String name = attr.getName();
-					final String value = attr.getValue();
-
-					if ("name".equals(name)) {
-						user.setName(value);
-					} else if ("password".equals(name)) {
-						user.setPassword(value);
-					}
-				}
-			}
+			user = fillUserAttributes(user, result.getAttributes());
 		}
 
 		return user;
@@ -94,29 +88,20 @@ public class UserManager implements Serializable {
 	public User findByEmail(String email) {
 		User user = null;
 
+		// FIXME: essa expressão SQL-like não tá funfando!
 		final String expr = "select * from `" + DOMAIN + "` where email = '" + email + "'";
 
 		SelectRequest request = new SelectRequest(expr);
 		SelectResult result = sdb.select(request);
 
 		if (result != null) {
-			user = new User();
-
 			for (Item item : result.getItems()) {
+				user = new User();
+				
 				user.setLogin(item.getName());
-
-				for (Attribute attr : item.getAttributes()) {
-					final String name = attr.getName();
-					final String value = attr.getValue();
-
-					if ("name".equals(name)) {
-						user.setName(value);
-					} else if ("password".equals(name)) {
-						user.setPassword(value);
-					}
-				}
-
-				// FIXME: em princípio o campo "email" será único no domínio...
+				user = fillUserAttributes(user, item.getAttributes());
+				
+				// TODO: o campo "email" será único no domínio, ver como informar no SimpleDB
 				break;
 			}
 		}
@@ -124,26 +109,31 @@ public class UserManager implements Serializable {
 		return user;
 	}
 
-	public static void main(String[] args) throws Exception {
-		UserManager manager = new UserManager();
-
-		User user = new User();
-		user.setLogin("john");
-		user.setName("John Doe");
-		user.setEmail("john@doe.com");
-		user.setPassword("pass");
-
-		System.out.println("Creating account: " + user);
-		manager.createAccount(user);
-
-		User user2 = manager.findByLogin("john");
-		System.out.println("Found by login: " + user2);
-
-		User user3 = manager.findByEmail("john@doe.com");
-		System.out.println("Found by email: " + user3);
+	private User fillUserAttributes(User user, List<Attribute> attributes) {
+		
+		if (attributes == null || attributes.isEmpty())
+			return null;
+			
+		for (Attribute attr : attributes) {
+			final String name = attr.getName();
+			final String value = attr.getValue();
+			
+			if ("name".equals(name)) {
+				user.setName(value);
+			} else if ("email".equals(name)) {
+				user.setEmail(value);
+			} else if ("password".equals(name)) {
+				user.setPassword(value);
+			}
+			
+			// TODO: fazer para o restante dos campos do bean User 
+			// ...
+		}
+		
+		return user;
 	}
-
+	
 	public void deleteAccount(User user) {
-
+		sdb.deleteAttributes(new DeleteAttributesRequest(DOMAIN, user.getLogin()));
 	}
 }
