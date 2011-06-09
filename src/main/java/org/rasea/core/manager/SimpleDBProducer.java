@@ -7,7 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 
-import org.rasea.core.util.AmazonUtil;
+import org.rasea.core.util.AmazonAccountUtil;
 import org.slf4j.Logger;
 
 import br.gov.frameworkdemoiselle.util.Strings;
@@ -25,18 +25,18 @@ public class SimpleDBProducer implements Serializable {
 	private Logger logger;
 
 	@Inject
-	private AmazonUtil util;
+	private AmazonAccountUtil util;
 
 	@Produces
 	@ApplicationScoped
 	public AmazonSimpleDB create() throws IOException {
-		String accessKey = util.getAccessKey();
-		String secretKey = util.getSecretKey();
+		final String accessKey = util.getAccessKey();
+		final String secretKey = util.getSecretKey();
 
-		validateNotNull(accessKey, util.getAccessKeyVariableName());
-		validateNotNull(secretKey, util.getSecretKeyVariableName());
+		validateNotNull(accessKey, AmazonAccountUtil.ACCESS_KEY_VARIABLE_NAME);
+		validateNotNull(secretKey, AmazonAccountUtil.SECRET_KEY_VARIABLE_NAME);
 
-		AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
+		final AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
 		return new AmazonSimpleDBClient(credentials);
 	}
 

@@ -10,10 +10,10 @@ import org.junit.runner.RunWith;
 import br.gov.frameworkdemoiselle.util.DemoiselleRunner;
 
 @RunWith(DemoiselleRunner.class)
-public class AmazonUtilTest {
+public class AmazonAccountUtilTest {
 
 	@Inject
-	private AmazonUtil util;
+	private AmazonAccountUtil util;
 
 	@Test
 	public void accessKeyEnvironmentVariableWasDefinedInSystem() {
