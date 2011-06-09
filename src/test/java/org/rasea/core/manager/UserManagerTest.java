@@ -23,10 +23,9 @@ public class UserManagerTest {
 
 	private User getNewFakeUserInstance() {
 		User user = new User();
-
 		user.setLogin("fakelogin");
-		user.setEmail("fakeemail@fakeemail.com");
-		user.setPassword("fakepassword");
+		user.setEmail("fakemail@fakemail.com");
+		user.setPassword("fakepass");
 		user.setCreation(new Date());
 
 		return user;
@@ -36,7 +35,7 @@ public class UserManagerTest {
 	public void accountCreatedSuccessfully() {
 		User user = getNewFakeUserInstance();
 
-//		String activationCode = manager.createAccount(user);
+		//		String activationCode = manager.createAccount(user);
 		manager.createAccount(user);
 		User persisted = manager.findByLogin(user.getLogin());
 
@@ -57,7 +56,6 @@ public class UserManagerTest {
 
 		try {
 			manager.createAccount(user);
-
 			manager.deleteAccount(user);
 			fail("Não deveria inserir usuário com login nulo!");
 
@@ -73,7 +71,6 @@ public class UserManagerTest {
 
 		try {
 			manager.createAccount(user);
-
 			manager.deleteAccount(user);
 			fail("Não deveria inserir usuário com e-mail nulo!");
 
@@ -89,7 +86,6 @@ public class UserManagerTest {
 
 		try {
 			manager.createAccount(user);
-
 			manager.deleteAccount(user);
 			fail("Não deveria inserir usuário com password nulo!");
 
@@ -105,7 +101,6 @@ public class UserManagerTest {
 
 		try {
 			manager.createAccount(user);
-
 			manager.deleteAccount(user);
 			fail("Não deveria inserir usuário com data de criação nula!");
 
@@ -126,7 +121,6 @@ public class UserManagerTest {
 
 		try {
 			manager.createAccount(user);
-
 			manager.deleteAccount(user);
 			fail("Não deveria inserir com e-mail duplicado!");
 
@@ -149,7 +143,6 @@ public class UserManagerTest {
 
 		try {
 			manager.createAccount(user);
-
 			manager.deleteAccount(user);
 			fail("Não deveria inserir com login duplicado!");
 
@@ -181,6 +174,8 @@ public class UserManagerTest {
 		manager.createAccount(user);
 		User persisted = manager.findByLogin(user.getLogin());
 		assertNotNull(persisted);
+		assertEquals(user.getLogin(), persisted.getLogin());
+		assertEquals(user.getName(), persisted.getName());
 		manager.deleteAccount(user);
 	}
 
@@ -199,6 +194,8 @@ public class UserManagerTest {
 		manager.createAccount(user);
 		User persisted = manager.findByEmail(user.getEmail());
 		assertNotNull(persisted);
+		assertEquals(user.getLogin(), persisted.getLogin());
+		assertEquals(user.getName(), persisted.getName());
 		manager.deleteAccount(user);
 	}
 
