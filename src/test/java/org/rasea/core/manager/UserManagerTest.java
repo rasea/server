@@ -122,7 +122,7 @@ public class UserManagerTest {
 		try {
 			manager.createAccount(user);
 			manager.deleteAccount(user);
-			fail("NÃ£o deveria inserir com e-mail duplicado");
+			fail("Não deveria inserir com e-mail duplicado!");
 
 		} catch (Exception cause) {
 			// TODO Se chegar aqui estÃ¡ tudo certo!
@@ -144,7 +144,7 @@ public class UserManagerTest {
 		try {
 			manager.createAccount(user);
 			manager.deleteAccount(user);
-			fail("NÃ£o deveria inserir com login duplicado");
+			fail("Não deveria inserir com login duplicado!");
 
 		} catch (Exception cause) {
 			// TODO Se chegar aqui estÃ¡ tudo certo!

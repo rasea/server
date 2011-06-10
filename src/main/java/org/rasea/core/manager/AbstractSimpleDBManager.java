@@ -2,6 +2,7 @@ package org.rasea.core.manager;
 
 import static java.lang.String.format;
 
+import java.lang.reflect.ParameterizedType;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -19,10 +20,25 @@ public abstract class AbstractSimpleDBManager<T> {
 
 	private AmazonSimpleDB simpleDB;
 
-	private String domain;
+	protected Class<T> clz;
+	
+	private final String domainName;
 
-	// FIXME: variável não pode ser estática (vide documentação do DateUtils)
-	public final DateUtils dateUtils = new DateUtils();
+	protected final DateUtils dateUtils = new DateUtils();
+
+	@SuppressWarnings("unchecked")
+	public AbstractSimpleDBManager() {
+		clz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+		
+		Domain domain = clz.getAnnotation(Domain.class);
+		if (domain != null) {
+			domainName = domain.value();
+		} else {
+			String message = format("A classe %s deve ser anotada com @%s",
+					getClass().getCanonicalName(), Domain.class.getSimpleName());
+			throw new RuntimeException(message);
+		}
+	}
 
 	@PostConstruct
 	@SuppressWarnings("unused")
@@ -32,29 +48,15 @@ public abstract class AbstractSimpleDBManager<T> {
 	protected AmazonSimpleDB getSimpleDB() {
 		if (simpleDB == null) {
 			simpleDB = Beans.getReference(AmazonSimpleDB.class);
-
+			
 			CreateDomainRequest request = new CreateDomainRequest(getDomainName());
 			simpleDB.createDomain(request);
 		}
-
 		return simpleDB;
 	}
 
 	protected String getDomainName() {
-		if (domain == null) {
-			Domain annotation = getClass().getAnnotation(Domain.class);
-
-			if (annotation != null) {
-				domain = annotation.value();
-
-			} else {
-				String message = format("A classe %s deve ser anotada com @%s", getClass().getCanonicalName(),
-						Domain.class.getSimpleName());
-				throw new RuntimeException(message);
-			}
-		}
-
-		return domain;
+		return domainName;
 	}
 	
 	protected Date parseDateValue(final String value) {
