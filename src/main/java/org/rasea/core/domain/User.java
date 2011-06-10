@@ -6,7 +6,7 @@ import java.util.Date;
 import org.rasea.core.annotation.Domain;
 import org.rasea.core.annotation.ItemName;
 
-@Domain("Users")
+@Domain(name = "Users")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = -5630651623043896485L;

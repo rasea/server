@@ -20,7 +20,7 @@ public abstract class AbstractSimpleDBManager<T> {
 
 	private AmazonSimpleDB simpleDB;
 
-	protected Class<T> clz;
+	private Class<T> clz;
 	
 	private final String domainName;
 
@@ -32,7 +32,7 @@ public abstract class AbstractSimpleDBManager<T> {
 		
 		Domain domain = clz.getAnnotation(Domain.class);
 		if (domain != null) {
-			domainName = domain.value();
+			domainName = domain.name();
 		} else {
 			String message = format("A classe %s deve ser anotada com @%s",
 					getClass().getCanonicalName(), Domain.class.getSimpleName());

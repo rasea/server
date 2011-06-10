@@ -12,9 +12,7 @@ import java.lang.annotation.Target;
  */
 @Inherited
 @Retention(RUNTIME)
-@Target({FIELD})
+@Target({ FIELD })
 public @interface ItemName {
 
-	String value() default "";
-	
 }
