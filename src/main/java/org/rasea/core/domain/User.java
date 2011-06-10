@@ -16,10 +16,10 @@ public class User implements Serializable {
 	//@ItemName
 	private String login;
 
-	/**
-	 * Nome completo do usuário para exibição.
-	 */
-	private String name;
+	//	/**
+	//	 * Nome completo do usuário para exibição.
+	//	 */
+	//	private String name;
 
 	/**
 	 * Endereço eletrônico do usuário. Não é permitido o cadastro de e-mails
@@ -50,13 +50,13 @@ public class User implements Serializable {
 		this.login = login;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+	//	public String getName() {
+	//		return name;
+	//	}
+	//
+	//	public void setName(String name) {
+	//		this.name = name;
+	//	}
 
 	public String getEmail() {
 		return email;
@@ -92,7 +92,7 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [login=" + login + ", name=" + name + ", email=" + email + ", password=" + password + ", creation=" + creation + ", activation="
-				+ activation + "]";
+		return "User [login=" + login + /* ", name=" + name +*/", email=" + email + ", password=" + password + ", creation=" + creation
+				+ ", activation=" + activation + "]";
 	}
 }
