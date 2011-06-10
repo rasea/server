@@ -6,7 +6,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.rasea.core.domain.Account;
-import org.rasea.core.security.Credentials;
+import org.rasea.core.domain.Credentials;
 import org.rasea.core.service.AccountService;
 
 import br.gov.frameworkdemoiselle.annotation.ViewScoped;

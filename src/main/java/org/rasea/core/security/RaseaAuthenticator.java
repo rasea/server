@@ -23,8 +23,13 @@ package org.rasea.core.security;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 
+import org.rasea.core.domain.Credentials;
+import org.rasea.core.domain.User;
+import org.rasea.core.exception.AccountNotActiveException;
+import org.rasea.core.exception.InvalidCredentialsException;
+import org.rasea.core.service.AccountService;
+
 import br.gov.frameworkdemoiselle.security.Authenticator;
-import br.gov.frameworkdemoiselle.security.User;
 
 @Alternative
 public class RaseaAuthenticator implements Authenticator {
@@ -32,11 +37,29 @@ public class RaseaAuthenticator implements Authenticator {
 	private static final long serialVersionUID = -6728424241183581910L;
 
 	@Inject
+	private AccountService service;
+
+	@Inject
 	private Credentials credentials;
+
+	private User user;
 
 	@Override
 	public boolean authenticate() {
-		return true;
+		boolean authenticated = false;
+
+		try {
+			user = service.authenticate(credentials);
+			
+		} catch (AccountNotActiveException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidCredentialsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return authenticated;
 	}
 
 	@Override
@@ -45,23 +68,6 @@ public class RaseaAuthenticator implements Authenticator {
 
 	@Override
 	public User getUser() {
-		return new User() {
-
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void setAttribute(Object key, Object value) {
-			}
-
-			@Override
-			public String getId() {
-				return credentials.getUsername();
-			}
-
-			@Override
-			public Object getAttribute(Object key) {
-				return null;
-			}
-		};
+		return null;
 	}
 }

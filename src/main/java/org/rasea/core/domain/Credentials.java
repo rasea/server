@@ -1,22 +1,26 @@
-package org.rasea.core.security;
+package org.rasea.core.domain;
 
 import java.io.Serializable;
 
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 @Named
-@SessionScoped
+@RequestScoped
 public class Credentials implements Serializable {
 
 	private static final long serialVersionUID = 633687017842755204L;
 
-	private String username;
+	private String usernameOrEmail;
 
 	private String password;
 
-	public String getUsername() {
-		return username;
+	public String getUsernameOrEmail() {
+		return usernameOrEmail;
+	}
+
+	public void setUsernameOrEmail(String usernameOrEmail) {
+		this.usernameOrEmail = usernameOrEmail;
 	}
 
 	public String getPassword() {
@@ -25,9 +29,5 @@ public class Credentials implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 }

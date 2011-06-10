@@ -2,56 +2,32 @@ package org.rasea.core.domain;
 
 import java.io.Serializable;
 
-import org.rasea.core.annotation.Attribute;
-import org.rasea.core.annotation.Domain;
-import org.rasea.core.annotation.ItemName;
-
-@Domain(name = "USERS")
 public class User implements Serializable {
 
-	private static final long serialVersionUID = 1345893142166701824L;
+	private static final long serialVersionUID = -1260271078329207417L;
 
-	@ItemName
-	private String login;
+	private String username;
 
-	/**
-	 * Nome completo do usuário para exibição.
-	 */
-	private String name;
+	private String photoUrl;
 
-	/**
-	 * Endereço eletrônico do usuário. Não é permitido o cadastro de e-mails duplicados.
-	 */
-	@Attribute(unique = true)
-	private String email;
-
-	public String getLogin() {
-		return login;
+	public User(String username) {
+		this.username = username;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public String getUsername() {
+		return username;
 	}
 
-	public String getName() {
-		return name;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public String getPhotoUrl() {
+		return photoUrl;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	@Override
-	public String toString() {
-		return "User [login=" + login + ", name=" + name + ", email=" + email + "]";
+	public void setPhotoUrl(String photoUrl) {
+		this.photoUrl = photoUrl;
 	}
 
 }
