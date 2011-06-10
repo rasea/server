@@ -21,6 +21,7 @@
 package org.rasea.core.security;
 
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 
 import org.rasea.core.domain.Credentials;
@@ -32,6 +33,7 @@ import org.rasea.core.service.AccountService;
 import br.gov.frameworkdemoiselle.security.Authenticator;
 
 @RequestScoped
+@Alternative
 public class RaseaAuthenticator implements Authenticator {
 
 	private static final long serialVersionUID = -6728424241183581910L;
