@@ -21,7 +21,8 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 	public void create(final Account account) {
 		final List<ReplaceableAttribute> attrs = new ArrayList<ReplaceableAttribute>();
 		attrs.add(new ReplaceableAttribute("email", account.getEmail(), true));
-		attrs.add(new ReplaceableAttribute("photoUrl", account.getPhotoUrl(), true));
+		if (account.getPhotoUrl() != null)
+			attrs.add(new ReplaceableAttribute("photoUrl", account.getPhotoUrl(), true));
 		attrs.add(new ReplaceableAttribute("password", account.getPassword(), true));
 		attrs.add(new ReplaceableAttribute("activationCode", account.getActivationCode(), true));
 

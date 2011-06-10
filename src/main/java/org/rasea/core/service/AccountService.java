@@ -61,28 +61,9 @@ public class AccountService implements Serializable {
 		return false;
 	}
 
-	public void activate(Account account) throws InvalidActivationCodeException, AccountAlreadyActiveException {
-		Account persisted = manager.findByUsername(account.getUsername());
-
-		if (persisted == null) {
-			throw new InvalidActivationCodeException();
-		}
-
-		if (persisted.getActivationDate() != null) {
-			throw new AccountAlreadyActiveException();
-		}
-
-		if (!persisted.getActivationCode().equals(account.getActivationCode())) {
-			throw new InvalidActivationCodeException();
-		}
-
-		manager.activate(account);
-
-		// TODO Mandar e-mail dizendo que a conta está ativa e mais alguns blá-blá-blás
-	}
-
 	public void create(Account account) throws InvalidUsernameFormatException, InvalidEmailFormatException,
 			UsernameAlreadyExistsException, EmailAlreadyAssignedException {
+		
 		if (isValidUsername(account.getUsername())) {
 			throw new InvalidUsernameFormatException();
 		}
@@ -107,11 +88,31 @@ public class AccountService implements Serializable {
 		// sendMail(user.getEmail(), "título teste", "corpo teste");
 	}
 
+	public void activate(Account account) throws InvalidActivationCodeException, AccountAlreadyActiveException {
+		Account persisted = manager.findByUsername(account.getUsername());
+
+		if (persisted == null) {
+			throw new InvalidActivationCodeException();
+		}
+
+		if (persisted.getActivationDate() != null) {
+			throw new AccountAlreadyActiveException();
+		}
+
+		if (!persisted.getActivationCode().equals(account.getActivationCode())) {
+			throw new InvalidActivationCodeException();
+		}
+
+		account.setActivationDate(Calendar.getInstance().getTime());
+		manager.activate(account);
+
+		// TODO Mandar e-mail dizendo que a conta está ativa e mais alguns blá-blá-blás
+	}
+
 	public void delete(Account account) throws AccountDoesNotExistsException {
 		if (!manager.containsUsername(account.getUsername())) {
 			throw new AccountDoesNotExistsException();
 		}
-
 		manager.delete(account);
 	}
 
@@ -128,4 +129,5 @@ public class AccountService implements Serializable {
 	// public void sendMail(String to, String subject, String body) {
 	// mail.get().to(to).from("raseatestmail@gmail.com").subject(subject).body().text(body).send();
 	// }
+
 }
