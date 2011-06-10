@@ -40,9 +40,9 @@ public class SignInController implements Serializable {
 		// return "pretty:index";
 	}
 
-	private boolean isEmail() {
-		return false;
-	}
+	//	private boolean isEmail() {
+	//		return false;
+	//	}
 
 	public String getLoginOrEmail() {
 		return loginOrEmail;

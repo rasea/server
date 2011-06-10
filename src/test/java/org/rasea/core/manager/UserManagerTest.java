@@ -237,8 +237,10 @@ public class UserManagerTest {
 		manager.deleteAccount(user);
 
 		User persisted;
+		
 		persisted = manager.findByLogin(user.getLogin());
 		assertNull(persisted);
+		
 		persisted = manager.findByEmail(user.getEmail());
 		assertNull(persisted);
 	}
@@ -246,12 +248,13 @@ public class UserManagerTest {
 	@Test
 	public void findingExistentUserByLogin() {
 		User user = getNewFakeUserInstance();
-
 		manager.createAccount(user);
+		
 		User persisted = manager.findByLogin(user.getLogin());
 		assertNotNull(persisted);
 		assertEquals(user.getLogin(), persisted.getLogin());
-		assertEquals(user.getName(), persisted.getName());
+		assertEquals(user.getEmail(), persisted.getEmail());
+
 		manager.deleteAccount(user);
 	}
 
@@ -266,12 +269,13 @@ public class UserManagerTest {
 	@Test
 	public void findingExistentUserByEmail() {
 		User user = getNewFakeUserInstance();
-
 		manager.createAccount(user);
+
 		User persisted = manager.findByEmail(user.getEmail());
 		assertNotNull(persisted);
 		assertEquals(user.getLogin(), persisted.getLogin());
-		assertEquals(user.getName(), persisted.getName());
+		assertEquals(user.getEmail(), persisted.getEmail());
+		
 		manager.deleteAccount(user);
 	}
 
