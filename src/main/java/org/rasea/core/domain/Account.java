@@ -3,12 +3,15 @@ package org.rasea.core.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-//@Domain(name = "ACCOUNTS")
+import org.rasea.core.annotation.Domain;
+import org.rasea.core.annotation.ItemName;
+
+@Domain(name = "ACCOUNTS")
 public class Account implements Serializable {
 
 	private static final long serialVersionUID = -5630651623043896485L;
 
-	// @ItemName
+	@ItemName
 	private String username;
 
 	private String email;
