@@ -1,8 +1,10 @@
 package org.rasea.core.manager;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
+import static junit.framework.Assert.assertTrue;
 
 import java.util.Date;
 
@@ -120,4 +122,38 @@ public class AccountManagerTest {
 		assertNull(persisted);
 	}
 	
+	@Test
+	public void testContainsExistingAccountByUsername() {
+		Account account = getNewFakeAccountInstance();
+		manager.create(account);
+		
+		assertTrue(manager.containsUsername(account.getUsername()));
+
+		manager.delete(account);
+	}
+
+	@Test
+	public void testContainsInexistingAccountByUsername() {
+		Account account = getNewFakeAccountInstance();
+
+		assertFalse(manager.containsUsername(account.getUsername()));
+	}
+
+	@Test
+	public void testContainsExistingAccountByEmail() {
+		Account account = getNewFakeAccountInstance();
+		manager.create(account);
+
+		assertTrue(manager.containsEmail(account.getEmail()));
+		
+		manager.delete(account);
+	}
+
+	@Test
+	public void testContainsInexistingAccountByEmail() {
+		Account account = getNewFakeAccountInstance();
+
+		assertFalse(manager.containsEmail(account.getEmail()));
+	}
+
 }
