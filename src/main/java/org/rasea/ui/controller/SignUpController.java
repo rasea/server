@@ -5,9 +5,9 @@ import java.io.Serializable;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.rasea.core.domain.User;
+import org.rasea.core.domain.Account;
 import org.rasea.core.security.Credentials;
-import org.rasea.core.service.UserService;
+import org.rasea.core.service.AccountService;
 
 import br.gov.frameworkdemoiselle.annotation.ViewScoped;
 import br.gov.frameworkdemoiselle.security.SecurityContext;
@@ -26,7 +26,7 @@ public class SignUpController implements Serializable {
 	private Credentials credentials;
 
 	@Inject
-	private UserService service;
+	private AccountService service;
 
 	//	@NotNull
 	private String username;
@@ -43,11 +43,11 @@ public class SignUpController implements Serializable {
 
 	@Transactional
 	public void createAccount() {
-		User user = new User();
-		user.setLogin(username);
-		user.setEmail(email);
-		user.setPassword(password);
-		service.createAccount(user);
+		Account account = new Account();
+		account.setLogin(username);
+//		account.setEmail(email);
+		account.setPassword(password);
+		service.createAccount(account);
 
 		credentials.setUsername(username);
 		credentials.setPassword(password);

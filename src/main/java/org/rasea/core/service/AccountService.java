@@ -1,28 +1,34 @@
 package org.rasea.core.service;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
 
 import javax.inject.Inject;
 
-import org.rasea.core.domain.User;
-import org.rasea.core.manager.UserManager;
+import org.rasea.core.domain.Account;
+import org.rasea.core.manager.AccountManager;
 
-public class UserService implements Serializable {
+public class AccountService implements Serializable {
 
 	private static final long serialVersionUID = 2097626878174583664L;
 
 	@Inject
-	private UserManager manager;
+	private AccountManager accountManager;
+
+//	@Inject
+//	private UserManager userManager;
 
 	// @Inject
 	// private Instance<Mail> mail;
 
 	// @Transactional
-	public void createAccount(User user) {
-		user.setCreation(new Date());
-		manager.createAccount(user);
+	public void createAccount(Account account) {
+		
+		account.setCreationDate(Calendar.getInstance().getTime());
+		accountManager.createAccount(account);
 
+//		userManager.createUser(user);
+		
 		// sendMail(user.getEmail(), "título teste", "corpo teste");
 	}
 

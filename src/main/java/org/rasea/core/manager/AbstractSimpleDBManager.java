@@ -5,6 +5,7 @@ import static java.lang.String.format;
 import java.lang.reflect.ParameterizedType;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -13,6 +14,7 @@ import org.rasea.core.annotation.Domain;
 import br.gov.frameworkdemoiselle.util.Beans;
 
 import com.amazonaws.services.simpledb.AmazonSimpleDB;
+import com.amazonaws.services.simpledb.model.Attribute;
 import com.amazonaws.services.simpledb.model.CreateDomainRequest;
 import com.amazonaws.util.DateUtils;
 
@@ -70,4 +72,17 @@ public abstract class AbstractSimpleDBManager<T> {
 		return date;
 	}
 
+	protected T fillAttributes(T object, List<Attribute> attributes) {
+		
+		if (attributes == null || attributes.isEmpty())
+			return null;
+		
+		for (Attribute attr : attributes)
+			fillAttribute(object, attr.getName(), attr.getValue());
+		
+		return object;
+	}
+
+	protected abstract void fillAttribute(T object, final String name, final String value);
+	
 }
