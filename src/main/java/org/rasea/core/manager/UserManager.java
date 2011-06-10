@@ -43,8 +43,8 @@ public class UserManager extends AbstractSimpleDBManager<User> {
 		// FIXME: essa expressão SQL-like não tá funfando!
 		final String expr = "select * from `" + getDomainName() + "` where email = '" + email + "'";
 
-		SelectRequest request = new SelectRequest(expr);
-		SelectResult result = getSimpleDB().select(request);
+		final SelectRequest request = new SelectRequest(expr);
+		final SelectResult result = getSimpleDB().select(request);
 
 		if (result != null) {
 			for (Item item : result.getItems()) {

@@ -21,12 +21,12 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 	 * 
 	 * @param account
 	 */
-	public void createAccount(Account account) {
-		List<ReplaceableAttribute> attrs = new ArrayList<ReplaceableAttribute>();
+	public void createAccount(final Account account) {
+		final List<ReplaceableAttribute> attrs = new ArrayList<ReplaceableAttribute>();
 		attrs.add(new ReplaceableAttribute("password", account.getPassword(), true));
 		attrs.add(new ReplaceableAttribute("act_code", account.getActivationCode(), true));
 
-		String creationDateString = dateUtils.formatIso8601Date(account.getCreationDate());
+		final String creationDateString = dateUtils.formatIso8601Date(account.getCreationDate());
 		attrs.add(new ReplaceableAttribute("cre_date", creationDateString, true));
 
 		getSimpleDB().putAttributes(new PutAttributesRequest(getDomainName(), account.getLogin(), attrs));
@@ -38,7 +38,7 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 	 * @param login
 	 * @return account
 	 */
-	public Account findByLogin(String login) {
+	public Account findByLogin(final String login) {
 		Account account = null;
 
 		GetAttributesResult result = getSimpleDB().getAttributes(
@@ -53,22 +53,22 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 		return account;
 	}
 
-	public void deleteAccount(Account account) {
+	public void deleteAccount(final Account account) {
 		getSimpleDB().deleteAttributes(new DeleteAttributesRequest(getDomainName(), account.getLogin()));
 	}
 
-	public void activateAccount(Account account) {
-		List<ReplaceableAttribute> attrs = new ArrayList<ReplaceableAttribute>();
+	public void activateAccount(final Account account) {
+		final List<ReplaceableAttribute> attrs = new ArrayList<ReplaceableAttribute>();
 
-		Date currentTimestamp = Calendar.getInstance().getTime();
-		String stringTimestamp = dateUtils.formatIso8601Date(currentTimestamp);
+		final Date currentTimestamp = Calendar.getInstance().getTime();
+		final String stringTimestamp = dateUtils.formatIso8601Date(currentTimestamp);
 		attrs.add(new ReplaceableAttribute("act_date", stringTimestamp, true));
 
 		getSimpleDB().putAttributes(new PutAttributesRequest(getDomainName(), account.getLogin(), attrs));
 	}
 
 	@Override
-	protected void fillAttribute(Account account, final String name, final String value) {
+	protected void fillAttribute(final Account account, final String name, final String value) {
 		if ("password".equals(name)) {
 			account.setPassword(value);
 		} else if ("cre_date".equals(name)) {
