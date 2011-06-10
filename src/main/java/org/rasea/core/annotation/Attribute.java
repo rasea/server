@@ -15,6 +15,8 @@ import java.lang.annotation.Target;
 @Target({ FIELD })
 public @interface Attribute {
 
-	String name();
+	String name() default "";
+
+	boolean unique() default false;
 	
 }
