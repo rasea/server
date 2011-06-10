@@ -7,11 +7,14 @@ import javax.inject.Named;
 
 import org.rasea.core.domain.Account;
 import org.rasea.core.domain.Credentials;
+import org.rasea.core.exception.EmailAlreadyAssignedException;
+import org.rasea.core.exception.InvalidEmailFormatException;
+import org.rasea.core.exception.InvalidUsernameFormatException;
+import org.rasea.core.exception.UsernameAlreadyExistsException;
 import org.rasea.core.service.AccountService;
 
 import br.gov.frameworkdemoiselle.annotation.ViewScoped;
 import br.gov.frameworkdemoiselle.security.SecurityContext;
-import br.gov.frameworkdemoiselle.transaction.Transactional;
 
 @Named
 @ViewScoped
@@ -28,32 +31,46 @@ public class SignUpController implements Serializable {
 	@Inject
 	private AccountService service;
 
-	//	@NotNull
+	// @NotNull
 	private String username;
 
-	//	@Email
-	//	@NotNull
+	// @Email
+	// @NotNull
 	private String email;
 
-	//	@NotNull
+	// @NotNull
 	private String password;
 
-	//	@NotNull
+	// @NotNull
 	private String confirmPassword;
 
-	@Transactional
 	public void createAccount() {
-		Account account = new Account();
-		account.setLogin(username);
-//		account.setEmail(email);
-		account.setPassword(password);
-		service.createAccount(account);
+		try {
+			Account account = new Account();
+			account.setUsername(username);
+			account.setEmail(email);
+			account.setPassword(password);
 
-		credentials.setUsername(username);
-		credentials.setPassword(password);
-		context.login();
+			service.create(account);
 
-		//		return "pretty:index";
+			credentials.setUsernameOrEmail(username);
+			credentials.setPassword(password);
+			context.login();
+
+		} catch (InvalidUsernameFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidEmailFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UsernameAlreadyExistsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (EmailAlreadyAssignedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// return "pretty:index";
 	}
 
 	public String getUsername() {

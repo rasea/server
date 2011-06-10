@@ -33,7 +33,7 @@ public class SignInController implements Serializable {
 
 		// TODO Caso seja passado o e-mail, deve-se obter o usuário pelo e-mail e
 		// passar o seu login para autenticação.
-		credentials.setUsername(loginOrEmail);
+		credentials.setUsernameOrEmail(loginOrEmail);
 		credentials.setPassword(password);
 		context.login();
 

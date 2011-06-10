@@ -1,8 +1,6 @@
 package org.rasea.core.domain;
 
-import java.io.Serializable;
-
-public class User implements Serializable {
+public class User implements br.gov.frameworkdemoiselle.security.User {
 
 	private static final long serialVersionUID = -1260271078329207417L;
 
@@ -30,4 +28,8 @@ public class User implements Serializable {
 		this.photoUrl = photoUrl;
 	}
 
+	@Override
+	public String toString() {
+		return getUsername();
+	}
 }
