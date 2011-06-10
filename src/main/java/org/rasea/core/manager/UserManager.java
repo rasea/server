@@ -1,7 +1,7 @@
 package org.rasea.core.manager;
 
-import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -16,13 +16,8 @@ import com.amazonaws.services.simpledb.model.PutAttributesRequest;
 import com.amazonaws.services.simpledb.model.ReplaceableAttribute;
 import com.amazonaws.services.simpledb.model.SelectRequest;
 import com.amazonaws.services.simpledb.model.SelectResult;
-import com.amazonaws.util.DateUtils;
 
-@Domain("Users")
-public class UserManager extends AbstractSimpleDBManager {
-
-	// FIXME: variável não pode ser estática (vide documentação do DateUtils)
-	public final DateUtils DATE_UTILS = new DateUtils();
+public class UserManager extends AbstractSimpleDBManager<User> {
 
 	/**
 	 * Cria a conta do usuário persistindo o id, name, email, password e
@@ -35,10 +30,10 @@ public class UserManager extends AbstractSimpleDBManager {
 		attrs.add(new ReplaceableAttribute("email", user.getEmail(), true));
 		attrs.add(new ReplaceableAttribute("password", user.getPassword(), true));
 
-		String creationDateString = DATE_UTILS.formatIso8601Date(user.getCreation());
+		String creationDateString = dateUtils.formatIso8601Date(user.getCreation());
 		attrs.add(new ReplaceableAttribute("creation", creationDateString, true));
 
-		getSimpleDB().putAttributes(new PutAttributesRequest(getDomain(), user.getLogin(), attrs));
+		getSimpleDB().putAttributes(new PutAttributesRequest(getDomainName(), user.getLogin(), attrs));
 
 		return null;
 	}
@@ -52,7 +47,9 @@ public class UserManager extends AbstractSimpleDBManager {
 	public User findByLogin(String login) {
 		User user = null;
 
-		GetAttributesResult result = getSimpleDB().getAttributes(new GetAttributesRequest(getDomain(), login));
+		GetAttributesResult result = getSimpleDB().getAttributes(
+				new GetAttributesRequest(getDomainName(), login));
+		
 		if (result != null) {
 			user = new User();
 			user.setLogin(login);
@@ -72,7 +69,7 @@ public class UserManager extends AbstractSimpleDBManager {
 		User user = null;
 
 		// FIXME: essa expressão SQL-like não tá funfando!
-		final String expr = "select * from `" + getDomain() + "` where email = '" + email + "'";
+		final String expr = "select * from `" + getDomainName() + "` where email = '" + email + "'";
 
 		SelectRequest request = new SelectRequest(expr);
 		SelectResult result = getSimpleDB().select(request);
@@ -115,22 +112,17 @@ public class UserManager extends AbstractSimpleDBManager {
 		return user;
 	}
 
-	private Date parseDateValue(final String value) {
-		Date date = null;
-		if (value != null && !"".equals(value)) {
-			try {
-				date = DATE_UTILS.parseIso8601Date(value);
-			} catch (ParseException e) {
-			}
-		}
-		return date;
-	}
-
 	public void deleteAccount(User user) {
-		getSimpleDB().deleteAttributes(new DeleteAttributesRequest(getDomain(), user.getLogin()));
+		getSimpleDB().deleteAttributes(new DeleteAttributesRequest(getDomainName(), user.getLogin()));
 	}
 
 	public void activateAccount(User user, String activationCode) {
-		// TODO Auto-generated method stub
+		List<ReplaceableAttribute> attrs = new ArrayList<ReplaceableAttribute>();
+
+		Date currentTimestamp = Calendar.getInstance().getTime();
+		String stringTimestamp = dateUtils.formatIso8601Date(currentTimestamp);
+		attrs.add(new ReplaceableAttribute("activation", stringTimestamp, true));
+
+		getSimpleDB().putAttributes(new PutAttributesRequest(getDomainName(), user.getLogin(), attrs));
 	}
 }

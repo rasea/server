@@ -2,18 +2,43 @@ package org.rasea.core.manager;
 
 import static java.lang.String.format;
 
+import java.lang.reflect.ParameterizedType;
+import java.text.ParseException;
+import java.util.Date;
+
 import javax.annotation.PostConstruct;
+
+import org.rasea.core.annotation.Domain;
 
 import br.gov.frameworkdemoiselle.util.Beans;
 
 import com.amazonaws.services.simpledb.AmazonSimpleDB;
 import com.amazonaws.services.simpledb.model.CreateDomainRequest;
+import com.amazonaws.util.DateUtils;
 
-public abstract class AbstractSimpleDBManager {
+public abstract class AbstractSimpleDBManager<T> {
 
 	private AmazonSimpleDB simpleDB;
 
-	private String domain;
+	private Class<T> clz;
+	
+	private final String domainName;
+
+	protected final DateUtils dateUtils = new DateUtils();
+
+	@SuppressWarnings("unchecked")
+	public AbstractSimpleDBManager() {
+		clz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+		
+		Domain domain = clz.getAnnotation(Domain.class);
+		if (domain != null) {
+			domainName = domain.name();
+		} else {
+			String message = format("A classe %s deve ser anotada com @%s",
+					getClass().getCanonicalName(), Domain.class.getSimpleName());
+			throw new RuntimeException(message);
+		}
+	}
 
 	@PostConstruct
 	@SuppressWarnings("unused")
@@ -23,27 +48,26 @@ public abstract class AbstractSimpleDBManager {
 	protected AmazonSimpleDB getSimpleDB() {
 		if (simpleDB == null) {
 			simpleDB = Beans.getReference(AmazonSimpleDB.class);
-
-			CreateDomainRequest request = new CreateDomainRequest(getDomain());
+			
+			CreateDomainRequest request = new CreateDomainRequest(getDomainName());
 			simpleDB.createDomain(request);
 		}
-
 		return simpleDB;
 	}
 
-	protected String getDomain() {
-		if (domain == null) {
-			Domain annotation = getClass().getAnnotation(Domain.class);
-
-			if (annotation != null) {
-				domain = annotation.value();
-
-			} else {
-				String message = format("A classe %s deve ser anotada com @%s", getClass().getCanonicalName(), Domain.class.getSimpleName());
-				throw new RuntimeException(message);
+	protected String getDomainName() {
+		return domainName;
+	}
+	
+	protected Date parseDateValue(final String value) {
+		Date date = null;
+		if (value != null && !"".equals(value)) {
+			try {
+				date = dateUtils.parseIso8601Date(value);
+			} catch (ParseException e) {
 			}
 		}
-
-		return domain;
+		return date;
 	}
+
 }
