@@ -20,7 +20,7 @@
  */
 package org.rasea.core.security;
 
-import javax.enterprise.inject.Alternative;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import org.rasea.core.domain.Credentials;
@@ -31,7 +31,7 @@ import org.rasea.core.service.AccountService;
 
 import br.gov.frameworkdemoiselle.security.Authenticator;
 
-@Alternative
+@RequestScoped
 public class RaseaAuthenticator implements Authenticator {
 
 	private static final long serialVersionUID = -6728424241183581910L;
@@ -50,7 +50,7 @@ public class RaseaAuthenticator implements Authenticator {
 
 		try {
 			user = service.authenticate(credentials);
-			
+
 		} catch (AccountNotActiveException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,7 +67,8 @@ public class RaseaAuthenticator implements Authenticator {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public User getUser() {
-		return null;
+		return user;
 	}
 }

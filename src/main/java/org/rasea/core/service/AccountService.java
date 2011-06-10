@@ -28,8 +28,11 @@ public class AccountService implements Serializable {
 	private AccountManager manager;
 
 	public User authenticate(Credentials credentials) throws AccountNotActiveException, InvalidCredentialsException {
-		Account account;
+		if (credentials == null || credentials.getUsernameOrEmail() == null || credentials.getPassword() == null) {
+			throw new InvalidCredentialsException();
+		}
 
+		Account account;
 		if (isValidEmail(credentials.getUsernameOrEmail())) {
 			account = manager.findByEmail(credentials.getUsernameOrEmail());
 		} else {
