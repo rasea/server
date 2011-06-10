@@ -2,6 +2,8 @@ package org.rasea.core.manager;
 
 import org.rasea.core.domain.User;
 
+import com.amazonaws.services.simpledb.model.GetAttributesRequest;
+import com.amazonaws.services.simpledb.model.GetAttributesResult;
 import com.amazonaws.services.simpledb.model.Item;
 import com.amazonaws.services.simpledb.model.SelectRequest;
 import com.amazonaws.services.simpledb.model.SelectResult;
@@ -9,12 +11,33 @@ import com.amazonaws.services.simpledb.model.SelectResult;
 public class UserManager extends AbstractSimpleDBManager<User> {
 
 	/**
+	 * Retorna o usuário com base no seu login.
+	 * 
+	 * @param login
+	 * @return user
+	 */
+	public User findByLogin(final String login) {
+		User user = null;
+
+		GetAttributesResult result = getSimpleDB().getAttributes(
+				new GetAttributesRequest(getDomainName(), login));
+		
+		if (result != null) {
+			user = new User();
+			user.setLogin(login);
+			user = fillAttributes(user, result.getAttributes());
+		}
+
+		return user;
+	}
+
+	/**
 	 * Retorna o usuário com base no seu e-mail.
 	 * 
 	 * @param email
 	 * @return
 	 */
-	public User findByEmail(String email) {
+	public User findByEmail(final String email) {
 		User user = null;
 
 		// FIXME: essa expressão SQL-like não tá funfando!
@@ -39,7 +62,7 @@ public class UserManager extends AbstractSimpleDBManager<User> {
 	}
 
 	@Override
-	protected void fillAttribute(User user, final String name, final String value) {
+	protected void fillAttribute(final User user, final String name, final String value) {
 		if ("name".equals(name)) {
 			user.setName(value);
 		} else if ("email".equals(name)) {
