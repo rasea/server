@@ -33,7 +33,7 @@ public class AccountService implements Serializable {
 		if (isValidEmail(credentials.getUsernameOrEmail())) {
 			account = manager.findByEmail(credentials.getUsernameOrEmail());
 		} else {
-			account = manager.load(credentials.getUsernameOrEmail());
+			account = manager.findByUsername(credentials.getUsernameOrEmail());
 		}
 
 		if (account == null) {
@@ -62,7 +62,7 @@ public class AccountService implements Serializable {
 	}
 
 	public void activate(Account account) throws InvalidActivationCodeException, AccountAlreadyActiveException {
-		Account persisted = manager.load(account.getUsername());
+		Account persisted = manager.findByUsername(account.getUsername());
 
 		if (persisted == null) {
 			throw new InvalidActivationCodeException();
@@ -95,7 +95,7 @@ public class AccountService implements Serializable {
 			throw new UsernameAlreadyExistsException();
 		}
 
-		if (manager.containsUsername(account.getEmail())) {
+		if (manager.containsEmail(account.getEmail())) {
 			throw new EmailAlreadyAssignedException();
 		}
 
