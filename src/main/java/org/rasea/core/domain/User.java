@@ -32,4 +32,22 @@ public class User implements br.gov.frameworkdemoiselle.security.User {
 	public String toString() {
 		return getUsername();
 	}
+
+	@Override
+	public Object getAttribute(Object arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setAttribute(Object arg0, Object arg1) {
+		// TODO Auto-generated method stub
+		
+	}
 }
