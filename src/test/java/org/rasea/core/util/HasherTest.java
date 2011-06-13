@@ -14,18 +14,20 @@ public class HasherTest {
 		String hash1, hash2;
 		String salt = "fixedSalt";
 
-		hash1 = Hasher.digest("secretPassword1", salt);
-		hash2 = Hasher.digest("secretPassword2", salt);
+		hash1 = Hasher.getInstance().digest("secretPassword1", salt);
+		hash2 = Hasher.getInstance().digest("secretPassword2", salt);
 		assertFalse(hash1 == hash2);
 
-		hash1 = Hasher.digest("1", salt);
-		hash2 = Hasher.digest("2", salt);
+		hash1 = Hasher.getInstance().digest("1", salt);
+		hash2 = Hasher.getInstance().digest("2", salt);
 		assertFalse(hash1 == hash2);
 
 		hash1 = Hasher
+				.getInstance()
 				.digest("thisIsAVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryBigPassword1",
 						salt);
 		hash2 = Hasher
+				.getInstance()
 				.digest("thisIsAVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryBigPassword2",
 						salt);
 		assertFalse(hash1 == hash2);
@@ -36,20 +38,20 @@ public class HasherTest {
 		String hash1, hash2;
 		String litral = "secretPassword";
 
-		hash1 = Hasher.digest(litral, "");
-		hash2 = Hasher.digest(litral, null);
+		hash1 = Hasher.getInstance().digest(litral, "");
+		hash2 = Hasher.getInstance().digest(litral, null);
 		assertEquals(hash1, hash2);
 	}
 
 	@Test
 	public void nullLiteralGeneratesNullHashPassingNotEmptySalt() {
-		String hash = Hasher.digest(null, "fixedSalt");
+		String hash = Hasher.getInstance().digest(null, "fixedSalt");
 		assertNull(hash);
 	}
 
 	@Test
 	public void emptyLiteralGeneratesNotNullAndNotEmptyHash() {
-		String hash = Hasher.digest("", "fixedSalt");
+		String hash = Hasher.getInstance().digest("", "fixedSalt");
 		assertNotNull(hash);
 		assertFalse("".equals(hash));
 	}

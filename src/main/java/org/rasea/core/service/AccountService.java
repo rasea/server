@@ -47,7 +47,7 @@ public class AccountService implements Serializable {
 			throw new AccountNotActiveException();
 		}
 
-		String passwordHash = Hasher.digest(credentials.getPassword(), account.getUsername());
+		String passwordHash = Hasher.getInstance().digest(credentials.getPassword(), account.getUsername());
 
 		if (!account.getPassword().equals(passwordHash)) {
 			throw new InvalidCredentialsException();
@@ -61,12 +61,12 @@ public class AccountService implements Serializable {
 
 	private boolean isValidEmail(String usernameOrEmail) {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	public void create(Account account) throws InvalidUsernameFormatException, InvalidEmailFormatException,
 			UsernameAlreadyExistsException, EmailAlreadyAssignedException {
-		
+
 		if (isValidUsername(account.getUsername())) {
 			throw new InvalidUsernameFormatException();
 		}

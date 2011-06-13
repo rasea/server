@@ -8,10 +8,20 @@ public class Hasher {
 
 	private static final String ALGORITHM = "SHA-256";
 
+	private static Hasher instance;
+
 	private Hasher() {
 	}
 
-	public static String digest(final String literal, final String salt) {
+	public static synchronized Hasher getInstance() {
+		if (instance == null) {
+			instance = new Hasher();
+		}
+
+		return instance;
+	}
+
+	public String digest(final String literal, final String salt) {
 		String hash = literal;
 
 		if (literal != null) {
