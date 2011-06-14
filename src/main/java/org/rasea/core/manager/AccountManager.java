@@ -1,8 +1,6 @@
 package org.rasea.core.manager;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.rasea.core.domain.Account;
@@ -35,9 +33,8 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 	public void activate(final Account account) {
 		final List<ReplaceableAttribute> attrs = new ArrayList<ReplaceableAttribute>();
 
-		final Date currentTimestamp = Calendar.getInstance().getTime();
-		final String stringTimestamp = dateUtils.formatIso8601Date(currentTimestamp);
-		attrs.add(new ReplaceableAttribute("activationDate", stringTimestamp, true));
+		final String activationDateString = dateUtils.formatIso8601Date(account.getActivationDate());
+		attrs.add(new ReplaceableAttribute("activationDate", activationDateString, true));
 
 		getSimpleDB().putAttributes(new PutAttributesRequest(getDomainName(), account.getUsername(), attrs));
 	}
