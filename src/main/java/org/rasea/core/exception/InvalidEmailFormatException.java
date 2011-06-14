@@ -24,4 +24,9 @@ public class InvalidEmailFormatException extends RaseaException {
 
 	private static final long serialVersionUID = 8410479961825252447L;
 
+	public static final String MESSAGE = "InvalidEmailFormatException";
+
+	public InvalidEmailFormatException() {
+		super(MESSAGE);
+	}
 }

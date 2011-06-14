@@ -24,4 +24,9 @@ public class InvalidUsernameFormatException extends RaseaException {
 
 	private static final long serialVersionUID = -5821578595866075192L;
 
+	public static final String MESSAGE = "InvalidUsernameFormatException";
+
+	public InvalidUsernameFormatException() {
+		super(MESSAGE);
+	}
 }

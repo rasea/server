@@ -28,4 +28,11 @@ public abstract class RaseaException extends RuntimeException {
 
 	private static final long serialVersionUID = 764003727790783341L;
 
+	public RaseaException() {
+		super();
+	}
+
+	public RaseaException(String message) {
+		super(message);
+	}
 }

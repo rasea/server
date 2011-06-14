@@ -24,4 +24,9 @@ public class EmailAlreadyAssignedException extends RaseaException {
 
 	private static final long serialVersionUID = -329100152034893678L;
 
+	public static final String MESSAGE = "EmailAlreadyAssignedException";
+
+	public EmailAlreadyAssignedException() {
+		super(MESSAGE);
+	}
 }

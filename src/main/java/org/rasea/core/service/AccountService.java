@@ -69,8 +69,7 @@ public class AccountService implements Serializable {
 			throw new AccountNotActiveException();
 		}
 
-		final String passwordHash = generatePasswordHash(
-				credentials.getPassword(), account.getUsername());
+		final String passwordHash = generatePasswordHash(credentials.getPassword(), account.getUsername());
 
 		if (!account.getPassword().equals(passwordHash)) {
 			throw new InvalidCredentialsException();
@@ -97,11 +96,11 @@ public class AccountService implements Serializable {
 			throw new InvalidEmailFormatException();
 		}
 
-		if (manager.containsUsername(account.getUsername())) {
+		if (containsUsername(account.getUsername())) {
 			throw new UsernameAlreadyExistsException();
 		}
 
-		if (manager.containsEmail(account.getEmail())) {
+		if (containsEmail(account.getEmail())) {
 			throw new EmailAlreadyAssignedException();
 		}
 
@@ -145,8 +144,16 @@ public class AccountService implements Serializable {
 
 	}
 
+	public boolean containsUsername(String username) {
+		return manager.containsUsername(username);
+	}
+
+	public boolean containsEmail(String email) {
+		return manager.containsEmail(email);
+	}
+
 	public void delete(Account account) throws AccountDoesNotExistsException {
-		if (!manager.containsUsername(account.getUsername())) {
+		if (!containsUsername(account.getUsername())) {
 			throw new AccountDoesNotExistsException();
 		}
 		manager.delete(account);
@@ -180,24 +187,24 @@ public class AccountService implements Serializable {
 	 * @return String
 	 */
 	private String generateGravatarURL(final String email) {
-		
+
 		final String GRAVATAR_PREFIX_SECURE = "https://secure.gravatar.com/avatar/";
-//		final String GRAVATAR_PREFIX_REGULAR = "http://www.gravatar.com/avatar/";
-		
+		// final String GRAVATAR_PREFIX_REGULAR = "http://www.gravatar.com/avatar/";
+
 		final String emailHash = Hasher.md5(email);
 		final String sizeInfo = "?s=140";
-		
+
 		StringBuffer sb = new StringBuffer(80);
 		sb.append(GRAVATAR_PREFIX_SECURE);
 		sb.append(emailHash);
 		sb.append(sizeInfo);
-		
+
 		// TODO: incluir gravatar default
-		//sb.append("&d=http://imagem/default.png");
-		
+		// sb.append("&d=http://imagem/default.png");
+
 		return sb.toString();
 	}
-	
+
 	// public void sendMail(String to, String subject, String body) {
 	// mail.get().to(to).from("raseatestmail@gmail.com").subject(subject).body().text(body).send();
 	// }

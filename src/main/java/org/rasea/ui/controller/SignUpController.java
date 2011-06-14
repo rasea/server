@@ -20,6 +20,9 @@
  */
 package org.rasea.ui.controller;
 
+import static org.rasea.ui.validator.FieldType.EMAIL;
+import static org.rasea.ui.validator.FieldType.USERNAME;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
@@ -30,6 +33,8 @@ import org.rasea.core.exception.InvalidEmailFormatException;
 import org.rasea.core.exception.InvalidUsernameFormatException;
 import org.rasea.core.exception.UsernameAlreadyExistsException;
 import org.rasea.core.service.AccountService;
+import org.rasea.ui.validator.Unique;
+import org.rasea.ui.validator.ValidFormat;
 
 import br.gov.frameworkdemoiselle.annotation.ViewScoped;
 import br.gov.frameworkdemoiselle.message.MessageContext;
@@ -48,9 +53,13 @@ public class SignUpController extends AbstractController {
 	private AccountService service;
 
 	@NotNull
+	@Unique(type = USERNAME, message = UsernameAlreadyExistsException.MESSAGE)
+	@ValidFormat(type = USERNAME, message = InvalidUsernameFormatException.MESSAGE)
 	private String username;
 
 	@NotNull
+	@Unique(type = EMAIL, message = EmailAlreadyAssignedException.MESSAGE)
+	@ValidFormat(type = EMAIL, message = InvalidEmailFormatException.MESSAGE)
 	private String email;
 
 	@NotNull
