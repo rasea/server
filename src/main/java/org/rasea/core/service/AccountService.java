@@ -32,6 +32,8 @@ import org.rasea.core.exception.AccountAlreadyActiveException;
 import org.rasea.core.exception.AccountDoesNotExistsException;
 import org.rasea.core.exception.AccountNotActiveException;
 import org.rasea.core.exception.EmailAlreadyAssignedException;
+import org.rasea.core.exception.EmptyEmailException;
+import org.rasea.core.exception.EmptyUsernameException;
 import org.rasea.core.exception.InvalidActivationCodeException;
 import org.rasea.core.exception.InvalidCredentialsException;
 import org.rasea.core.exception.InvalidEmailFormatException;
@@ -41,6 +43,8 @@ import org.rasea.core.manager.AccountManager;
 import org.rasea.core.util.Hasher;
 import org.rasea.core.util.Mailer;
 import org.rasea.core.util.Validator;
+
+import br.gov.frameworkdemoiselle.util.Strings;
 
 public class AccountService implements Serializable {
 
@@ -86,11 +90,20 @@ public class AccountService implements Serializable {
 		return user;
 	}
 
-	public void create(Account account) throws InvalidUsernameFormatException, InvalidEmailFormatException,
-			UsernameAlreadyExistsException, EmailAlreadyAssignedException {
+	public void create(Account account) throws EmptyUsernameException, InvalidUsernameFormatException,
+			EmptyEmailException, InvalidEmailFormatException, UsernameAlreadyExistsException,
+			EmailAlreadyAssignedException {
+		
+		if (Strings.isEmpty(account.getUsername())) {
+			throw new EmptyUsernameException();
+		}
 
 		if (!Validator.getInstance().isValidUsernameFormat(account.getUsername())) {
 			throw new InvalidUsernameFormatException();
+		}
+		
+		if (Strings.isEmpty(account.getEmail())) {
+			throw new EmptyEmailException();
 		}
 
 		if (!Validator.getInstance().isValidEmailFormat(account.getEmail())) {
