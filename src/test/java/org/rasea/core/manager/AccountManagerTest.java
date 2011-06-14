@@ -10,12 +10,14 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.rasea.core.domain.Account;
 
 import br.gov.frameworkdemoiselle.util.DemoiselleRunner;
 
+@Ignore
 @RunWith(DemoiselleRunner.class)
 public class AccountManagerTest {
 
@@ -94,7 +96,7 @@ public class AccountManagerTest {
 	}
 
 	@Test
-	public void findInexistingAccountByUsername() {
+	public void notFindInexistingAccountByUsername() {
 		Account account = getNewFakeAccountInstance();
 
 		Account persisted = manager.findByUsername(account.getUsername());
@@ -115,7 +117,7 @@ public class AccountManagerTest {
 	}
 
 	@Test
-	public void findInexistingAccountByEmail() {
+	public void notFindInexistingAccountByEmail() {
 		Account account = getNewFakeAccountInstance();
 
 		Account persisted = manager.findByEmail(account.getEmail());
@@ -123,7 +125,7 @@ public class AccountManagerTest {
 	}
 	
 	@Test
-	public void testContainsExistingAccountByUsername() {
+	public void containsExistingAccountByUsername() {
 		Account account = getNewFakeAccountInstance();
 		manager.create(account);
 		
@@ -133,14 +135,14 @@ public class AccountManagerTest {
 	}
 
 	@Test
-	public void testContainsInexistingAccountByUsername() {
+	public void notContainsInexistingAccountByUsername() {
 		Account account = getNewFakeAccountInstance();
 
 		assertFalse(manager.containsUsername(account.getUsername()));
 	}
 
 	@Test
-	public void testContainsExistingAccountByEmail() {
+	public void containsExistingAccountByEmail() {
 		Account account = getNewFakeAccountInstance();
 		manager.create(account);
 
@@ -150,7 +152,7 @@ public class AccountManagerTest {
 	}
 
 	@Test
-	public void testContainsInexistingAccountByEmail() {
+	public void notContainsInexistingAccountByEmail() {
 		Account account = getNewFakeAccountInstance();
 
 		assertFalse(manager.containsEmail(account.getEmail()));
