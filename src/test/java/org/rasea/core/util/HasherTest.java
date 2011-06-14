@@ -55,4 +55,23 @@ public class HasherTest {
 		assertNotNull(hash);
 		assertFalse("".equals(hash));
 	}
+	
+	@Test
+	public void md5WithNullString() {
+		assertNull(Hasher.md5(null));
+	}
+
+	@Test
+	public void md5WithEmptyString() {
+		assertNotNull(Hasher.md5(""));
+		assertEquals("d41d8cd98f00b204e9800998ecf8427e", Hasher.md5(""));
+	}
+
+	@Test
+	public void md5WithRegularString() {
+		assertEquals("6ba88c88c712a7ac248a8c15e59edc31", Hasher.md5("simple message 1"));
+		assertEquals("543ca4510adf17fe9f89eddf849bcce9", Hasher.md5("simple message 2"));
+		assertEquals(Hasher.md5("a simple message"), Hasher.md5("a simple message"));
+	}
+
 }
