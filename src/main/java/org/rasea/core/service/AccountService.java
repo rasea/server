@@ -132,6 +132,14 @@ public class AccountService implements Serializable {
 		// TODO Mandar e-mail dizendo que a conta está ativa e mais alguns blá-blá-blás
 	}
 
+	public void resetPasswordRequest(final Credentials credentials) {
+
+	}
+
+	public void resetPasswordConfirmation(final Account account) {
+
+	}
+
 	public void delete(Account account) throws AccountDoesNotExistsException {
 		if (!manager.containsUsername(account.getUsername())) {
 			throw new AccountDoesNotExistsException();

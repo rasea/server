@@ -60,7 +60,7 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 
 		getSimpleDB().putAttributes(new PutAttributesRequest(getDomainName(), account.getUsername(), attrs));
 	}
-
+	
 	public Account findByUsername(final String username) {
 		Account account = null;
 

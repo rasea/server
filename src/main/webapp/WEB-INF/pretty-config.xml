@@ -18,8 +18,8 @@
  or write to the Free Software Foundation, Inc., 51 Franklin Street,
  Fifth Floor, Boston, MA  02110-1301, USA.
 -->
-<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.2.0 http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.2.0.xsd">
+<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.2.1 http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.2.1.xsd">
 
 	<rewrite match="^/(.*)/$" substitute="/$1" redirect="301" />
 
@@ -43,7 +43,7 @@
 		<pattern value="/signup" />
 		<view-id value="/signup.jsf" />
 	</url-mapping>
-	
+
 	<url-mapping id="activate">
 		<action>#{accountActivationController.activate}</action>
 		<pattern value="/activate/#{username}/#{activationCode}" />
