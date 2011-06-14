@@ -48,8 +48,8 @@ public class AccountService implements Serializable {
 			throw new AccountNotActiveException();
 		}
 
-		String passwordHash = Hasher.getInstance().digest(credentials.getPassword(), account.getUsername());
-
+		final String passwordHash = generatePasswordHash(credentials.getPassword(), account.getUsername());
+		
 		if (!account.getPassword().equals(passwordHash)) {
 			throw new InvalidCredentialsException();
 		}
@@ -81,6 +81,10 @@ public class AccountService implements Serializable {
 
 		account.setCreationDate(Calendar.getInstance().getTime());
 		account.setActivationCode(generateActivationCode(account.getUsername()));
+		
+		final String passwordHash = generatePasswordHash(account.getPassword(), account.getUsername());
+		account.setPassword(passwordHash);
+		
 		manager.create(account);
 
 		// TODO Mandar e-mail dizendo que a conta foi criada mas que precisa ser ativada clicando no link tal
@@ -125,6 +129,17 @@ public class AccountService implements Serializable {
 		return Hasher.md5(username + System.currentTimeMillis());
 	}
 
+	/**
+	 * Generates a hash string from a given password and username.
+	 * 
+	 * @param password
+	 * @param username
+	 * @return String
+	 */
+	private String generatePasswordHash(final String password, final String username) {
+		return Hasher.getInstance().digest(password, username);
+	}
+	
 	// public void sendMail(String to, String subject, String body) {
 	// mail.get().to(to).from("raseatestmail@gmail.com").subject(subject).body().text(body).send();
 	// }
