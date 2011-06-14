@@ -2,6 +2,7 @@ package org.rasea.core.manager;
 
 import static java.lang.String.format;
 
+import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.text.ParseException;
 import java.util.Date;
@@ -18,12 +19,14 @@ import com.amazonaws.services.simpledb.model.Attribute;
 import com.amazonaws.services.simpledb.model.CreateDomainRequest;
 import com.amazonaws.util.DateUtils;
 
-public abstract class AbstractSimpleDBManager<T> {
+public abstract class AbstractSimpleDBManager<T> implements Serializable {
+
+	private static final long serialVersionUID = -5003752373120758712L;
 
 	private AmazonSimpleDB simpleDB;
 
 	private Class<T> clz;
-	
+
 	private final String domainName;
 
 	protected final DateUtils dateUtils = new DateUtils();
@@ -31,13 +34,13 @@ public abstract class AbstractSimpleDBManager<T> {
 	@SuppressWarnings("unchecked")
 	public AbstractSimpleDBManager() {
 		clz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-		
+
 		Domain domain = clz.getAnnotation(Domain.class);
 		if (domain != null) {
 			domainName = domain.name();
 		} else {
-			String message = format("A classe %s deve ser anotada com @%s",
-					getClass().getCanonicalName(), Domain.class.getSimpleName());
+			String message = format("A classe %s deve ser anotada com @%s", getClass().getCanonicalName(),
+					Domain.class.getSimpleName());
 			throw new RuntimeException(message);
 		}
 	}
@@ -50,7 +53,7 @@ public abstract class AbstractSimpleDBManager<T> {
 	protected AmazonSimpleDB getSimpleDB() {
 		if (simpleDB == null) {
 			simpleDB = Beans.getReference(AmazonSimpleDB.class);
-			
+
 			CreateDomainRequest request = new CreateDomainRequest(getDomainName());
 			simpleDB.createDomain(request);
 		}
@@ -60,7 +63,7 @@ public abstract class AbstractSimpleDBManager<T> {
 	protected String getDomainName() {
 		return domainName;
 	}
-	
+
 	protected Date parseDateValue(final String value) {
 		Date date = null;
 		if (value != null && !"".equals(value)) {
@@ -73,16 +76,16 @@ public abstract class AbstractSimpleDBManager<T> {
 	}
 
 	protected T fillAttributes(T object, List<Attribute> attributes) {
-		
+
 		if (attributes == null || attributes.isEmpty())
 			return null;
-		
+
 		for (Attribute attr : attributes)
 			fillAttribute(object, attr.getName(), attr.getValue());
-		
+
 		return object;
 	}
 
 	protected abstract void fillAttribute(T object, final String name, final String value);
-	
+
 }

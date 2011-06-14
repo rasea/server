@@ -51,6 +51,7 @@ public class Mailer implements Serializable {
 
 		SendEmailRequest request = new SendEmailRequest(SENDER_EMAIL_ADDRESS, to, message);
 		AmazonSimpleEmailServiceAsync service = Beans.getReference(AmazonSimpleEmailServiceAsync.class);
-		service.sendEmailAsync(request);
+		service.sendEmail(request);
+		
 	}
 }

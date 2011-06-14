@@ -86,10 +86,10 @@
 			<groupId>br.gov.frameworkdemoiselle</groupId>
 			<artifactId>demoiselle-jsf</artifactId>
 			<exclusions>
-				<exclusion>
-					<artifactId>jstl</artifactId>
-					<groupId>javax.servlet</groupId>
-				</exclusion>
+<!--				<exclusion>-->
+<!--					<artifactId>jstl</artifactId>-->
+<!--					<groupId>javax.servlet</groupId>-->
+<!--				</exclusion>-->
 				<exclusion>
 					<artifactId>jsr250-api</artifactId>
 					<groupId>javax.annotation</groupId>

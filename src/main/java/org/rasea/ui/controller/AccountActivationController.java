@@ -1,7 +1,6 @@
 package org.rasea.ui.controller;
 
-import java.io.Serializable;
-
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -13,7 +12,7 @@ import br.gov.frameworkdemoiselle.util.Parameter;
 
 @Named
 @ViewScoped
-public class AccountActivationController implements Serializable {
+public class AccountActivationController extends AbstractController {
 
 	private static final long serialVersionUID = -2528453695349940601L;
 
@@ -32,5 +31,8 @@ public class AccountActivationController implements Serializable {
 		account.setActivationCode(activationCode.getValue());
 
 		service.activate(account);
+
+		FacesMessage message = new FacesMessage("Sua conta foi ativada com sucesso!");
+		getFacesContext().addMessage(null, message);
 	}
 }

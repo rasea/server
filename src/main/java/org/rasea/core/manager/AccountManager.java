@@ -16,6 +16,8 @@ import com.amazonaws.services.simpledb.model.SelectResult;
 
 public class AccountManager extends AbstractSimpleDBManager<Account> {
 
+	private static final long serialVersionUID = -4125340520704031487L;
+
 	public void create(final Account account) {
 		final List<ReplaceableAttribute> attrs = new ArrayList<ReplaceableAttribute>();
 		attrs.add(new ReplaceableAttribute("email", account.getEmail(), true));
@@ -42,7 +44,8 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 	public Account findByUsername(final String username) {
 		Account account = null;
 
-		final GetAttributesResult result = getSimpleDB().getAttributes(new GetAttributesRequest(getDomainName(), username));
+		final GetAttributesResult result = getSimpleDB().getAttributes(
+				new GetAttributesRequest(getDomainName(), username));
 
 		if (result != null) {
 			account = new Account();
@@ -77,15 +80,16 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 	}
 
 	public boolean containsUsername(final String username) {
-		final GetAttributesRequest request = new GetAttributesRequest(getDomainName(), username).withAttributeNames("email");
+		final GetAttributesRequest request = new GetAttributesRequest(getDomainName(), username)
+				.withAttributeNames("email");
 		final GetAttributesResult result = getSimpleDB().getAttributes(request);
-		
+
 		return (result != null && !result.getAttributes().isEmpty());
 	}
 
 	public boolean containsEmail(final String email) {
 		final String expr = "select ItemName() from `" + getDomainName() + "` where email = '" + email + "'";
-		
+
 		final SelectRequest request = new SelectRequest(expr);
 		final SelectResult result = getSimpleDB().select(request);
 

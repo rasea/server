@@ -43,11 +43,11 @@
 		<pattern value="/signup" />
 		<view-id value="/signup.jsf" />
 	</url-mapping>
-
+	
 	<url-mapping id="activate">
-		<pattern value="/activate/#{username}/#{activationCode}" />
-		<view-id value="/account-activation.jsf" />
 		<action>#{accountActivationController.activate}</action>
+		<pattern value="/activate/#{username}/#{activationCode}" />
+		<view-id value="/activate.jsf" />
 	</url-mapping>
 
 	<url-mapping id="user-profile">
