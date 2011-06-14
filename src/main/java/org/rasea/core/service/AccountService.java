@@ -19,6 +19,7 @@ import org.rasea.core.exception.InvalidUsernameFormatException;
 import org.rasea.core.exception.UsernameAlreadyExistsException;
 import org.rasea.core.manager.AccountManager;
 import org.rasea.core.util.Hasher;
+import org.rasea.core.util.Validator;
 
 public class AccountService implements Serializable {
 
@@ -32,8 +33,8 @@ public class AccountService implements Serializable {
 			throw new InvalidCredentialsException();
 		}
 
-		Account account;
-		if (isValidEmail(credentials.getUsernameOrEmail())) {
+		Account account = null;
+		if (Validator.isValidEmail(credentials.getUsernameOrEmail())) {
 			account = manager.findByEmail(credentials.getUsernameOrEmail());
 		} else {
 			account = manager.findByUsername(credentials.getUsernameOrEmail());
@@ -59,11 +60,6 @@ public class AccountService implements Serializable {
 		return user;
 	}
 
-	private boolean isValidEmail(String usernameOrEmail) {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
 	public void create(Account account) throws InvalidUsernameFormatException, InvalidEmailFormatException,
 			UsernameAlreadyExistsException, EmailAlreadyAssignedException {
 
@@ -71,7 +67,7 @@ public class AccountService implements Serializable {
 			throw new InvalidUsernameFormatException();
 		}
 
-		if (isValidEmail(account.getEmail())) {
+		if (Validator.isValidEmail(account.getEmail())) {
 			throw new InvalidEmailFormatException();
 		}
 
