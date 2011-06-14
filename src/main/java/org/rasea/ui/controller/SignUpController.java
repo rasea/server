@@ -24,16 +24,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Length;
 import org.rasea.core.domain.Account;
-import org.rasea.core.exception.EmailAlreadyAssignedException;
-import org.rasea.core.exception.InvalidEmailFormatException;
-import org.rasea.core.exception.InvalidUsernameFormatException;
-import org.rasea.core.exception.UsernameAlreadyExistsException;
 import org.rasea.core.service.AccountService;
 
 import br.gov.frameworkdemoiselle.annotation.ViewScoped;
 import br.gov.frameworkdemoiselle.message.MessageContext;
-import br.gov.frameworkdemoiselle.util.Faces;
 
 @Named
 @ViewScoped
@@ -47,47 +43,32 @@ public class SignUpController extends AbstractController {
 	@Inject
 	private AccountService service;
 
-	@NotNull
+	@Length(min = 1, message = "{required.field}")
 	private String username;
 
 	@NotNull
+	@Length(min = 1, message = "{required.field}")
 	private String email;
 
 	@NotNull
+	@Length(min = 1, message = "{required.field}")
 	private String password;
 
 	@NotNull
+	@Length(min = 1, message = "{required.field}")
 	private String confirmPassword;
 
 	public String createAccount() {
-		String outcome = null;
+		Account account = new Account(username);
+		account.setEmail(email);
+		account.setPassword(password);
 
-		try {
-			Account account = new Account(username);
-			account.setEmail(email);
-			account.setPassword(password);
+		service.create(account);
 
-			service.create(account);
+		messageContext.add("Conta criada com sucesso.");
+		messageContext.add("Verifique seu e-mail e siga as instruções para ativar sua conta.");
 
-			messageContext.add("Conta criada com sucesso.");
-			messageContext.add("Verifique seu e-mail e siga as instruções para ativar sua conta.");
-
-			outcome = "pretty:index";
-
-		} catch (InvalidUsernameFormatException cause) {
-			Faces.addMessage("username", cause);
-
-		} catch (UsernameAlreadyExistsException cause) {
-			Faces.addMessage("username", cause);
-
-		} catch (InvalidEmailFormatException cause) {
-			Faces.addMessage("email", cause);
-
-		} catch (EmailAlreadyAssignedException cause) {
-			Faces.addMessage("email", cause);
-		}
-
-		return outcome;
+		return "pretty:index";
 	}
 
 	public String getUsername() {

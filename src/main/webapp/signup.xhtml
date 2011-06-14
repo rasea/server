@@ -37,10 +37,12 @@
 
 			<h:outputLabel value="senha" for="password" />
 			<h:inputSecret id="password" value="#{signUpController.password}" autocomplete="true" />
+			<h:message for="password" />
 			<br />
 
 			<h:outputLabel value="confirme a senha" for="confirmPassword" />
 			<h:inputSecret id="confirmPassword" value="#{signUpController.confirmPassword}" autocomplete="true" />
+			<h:message for="confirmPassword" />
 			<br />
 
 			<h:commandButton id="submit" value="criar conta" action="#{signUpController.createAccount}" />
