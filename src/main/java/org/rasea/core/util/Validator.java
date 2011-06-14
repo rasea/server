@@ -7,15 +7,29 @@ public class Validator {
 
 	private static final String EMAIL_EXPRESSION = "^[\\w\\-]([\\.\\w])+[\\w]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
 
+	private static Validator instance;
+
 	private Validator() {
-		super();
 	}
 
-	public static boolean isValidEmail(final String emailAddress) {
-		final CharSequence inputStr = emailAddress;
+	public static synchronized Validator getInstance() {
+		if (instance == null) {
+			instance = new Validator();
+		}
+
+		return instance;
+	}
+
+	public boolean isValidEmailFormat(final String email) {
+		final CharSequence inputStr = email;
 		final Pattern pattern = Pattern.compile(EMAIL_EXPRESSION, Pattern.CASE_INSENSITIVE);
 		final Matcher matcher = pattern.matcher(inputStr);
+
 		return matcher.matches();
+	}
+
+	public boolean isValidUsernameFormat(final String username) {
+		return true;
 	}
 
 }

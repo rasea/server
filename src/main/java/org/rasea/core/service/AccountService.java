@@ -34,7 +34,7 @@ public class AccountService implements Serializable {
 		}
 
 		Account account = null;
-		if (Validator.isValidEmail(credentials.getUsernameOrEmail())) {
+		if (Validator.getInstance().isValidEmailFormat(credentials.getUsernameOrEmail())) {
 			account = manager.findByEmail(credentials.getUsernameOrEmail());
 		} else {
 			account = manager.findByUsername(credentials.getUsernameOrEmail());
@@ -63,11 +63,11 @@ public class AccountService implements Serializable {
 	public void create(Account account) throws InvalidUsernameFormatException, InvalidEmailFormatException,
 			UsernameAlreadyExistsException, EmailAlreadyAssignedException {
 
-		if (isValidUsername(account.getUsername())) {
+		if (Validator.getInstance().isValidUsernameFormat(account.getUsername())) {
 			throw new InvalidUsernameFormatException();
 		}
 
-		if (Validator.isValidEmail(account.getEmail())) {
+		if (Validator.getInstance().isValidEmailFormat(account.getEmail())) {
 			throw new InvalidEmailFormatException();
 		}
 
@@ -118,11 +118,6 @@ public class AccountService implements Serializable {
 	private String generateActivationCode() {
 		// TODO Auto-generated method stub
 		return "";
-	}
-
-	private boolean isValidUsername(String username) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	// public void sendMail(String to, String subject, String body) {

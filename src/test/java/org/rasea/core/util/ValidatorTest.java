@@ -1,7 +1,5 @@
 package org.rasea.core.util;
 
-import static org.rasea.core.util.Validator.isValidEmail;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -9,20 +7,30 @@ import org.junit.Test;
 
 public class ValidatorTest {
 
+	private Validator validator = Validator.getInstance();
+
 	@Test
-	public void testValidEmail() {
-		assertTrue(isValidEmail("abc@domain.com"));
-		assertTrue(isValidEmail("abc.def@domain.com"));
-		assertTrue(isValidEmail("abc@domain.com.br"));
-		assertTrue(isValidEmail("abc.def@domain.com.br"));
+	public void validEmail() {
+		assertTrue(validator.isValidEmailFormat("abc@domain.com"));
+		assertTrue(validator.isValidEmailFormat("abc.def@domain.com"));
+		assertTrue(validator.isValidEmailFormat("abc@domain.com.br"));
+		assertTrue(validator.isValidEmailFormat("abc.def@domain.com.br"));
 	}
 
 	@Test
-	public void testInvalidEmail() {
-		assertFalse(isValidEmail("abc.def.com"));
-		assertFalse(isValidEmail("abc@def"));
-		assertFalse(isValidEmail("abc def@domain"));
-		assertFalse(isValidEmail("abc@def@ghi.com"));
+	public void invalidEmail() {
+		assertFalse(validator.isValidEmailFormat("abc.def.com"));
+		assertFalse(validator.isValidEmailFormat("abc@def"));
+		assertFalse(validator.isValidEmailFormat("abc def@domain"));
+		assertFalse(validator.isValidEmailFormat("abc@def@ghi.com"));
+		assertFalse(validator.isValidEmailFormat("abc"));
 	}
 
+	@Test
+	public void nullEmail() {
+	}
+
+	@Test
+	public void emptyEmail() {
+	}
 }
