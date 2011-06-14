@@ -69,14 +69,19 @@ public class AccountService implements Serializable {
 			throw new AccountNotActiveException();
 		}
 
-		final String passwordHash = generatePasswordHash(credentials.getPassword(), account.getUsername());
+		final String passwordHash = generatePasswordHash(
+				credentials.getPassword(), account.getUsername());
 
 		if (!account.getPassword().equals(passwordHash)) {
 			throw new InvalidCredentialsException();
 		}
 
-		User user = new User(account.getUsername());
-		user.setPhotoUrl(account.getPhotoUrl());
+		final User user = new User(account.getUsername());
+		String photoURL = account.getPhotoUrl();
+		if (photoURL == null || photoURL.isEmpty()) {
+			photoURL = generateGravatarURL(account.getEmail());
+		}
+		user.setPhotoUrl(photoURL);
 
 		return user;
 	}
@@ -168,6 +173,31 @@ public class AccountService implements Serializable {
 		return Hasher.getInstance().digest(password, username);
 	}
 
+	/**
+	 * Generates the URL corresponding to the user gravatar, based on its e-mail address.
+	 * 
+	 * @param email
+	 * @return String
+	 */
+	private String generateGravatarURL(final String email) {
+		
+		final String GRAVATAR_PREFIX_SECURE = "https://secure.gravatar.com/avatar/";
+//		final String GRAVATAR_PREFIX_REGULAR = "http://www.gravatar.com/avatar/";
+		
+		final String emailHash = Hasher.md5(email);
+		final String sizeInfo = "?s=140";
+		
+		StringBuffer sb = new StringBuffer(80);
+		sb.append(GRAVATAR_PREFIX_SECURE);
+		sb.append(emailHash);
+		sb.append(sizeInfo);
+		
+		// TODO: incluir gravatar default
+		//sb.append("&d=http://imagem/default.png");
+		
+		return sb.toString();
+	}
+	
 	// public void sendMail(String to, String subject, String body) {
 	// mail.get().to(to).from("raseatestmail@gmail.com").subject(subject).body().text(body).send();
 	// }
