@@ -25,8 +25,7 @@ public class AccountManagerTest {
 	private AccountManager manager;
 
 	private Account getNewFakeAccountInstance() {
-		Account account = new Account();
-		account.setUsername("fakeuser");
+		Account account = new Account("fakeuser");
 		account.setEmail("fakemail@fakemail.com");
 		account.setPassword("fakepass");
 		account.setActivationCode("ASDFG12345");

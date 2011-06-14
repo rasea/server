@@ -38,8 +38,7 @@ public class SignUpController extends AbstractController {
 
 	public void createAccount() {
 		try {
-			Account account = new Account();
-			account.setUsername(username);
+			Account account = new Account(username);
 			account.setEmail(email);
 			account.setPassword(password);
 

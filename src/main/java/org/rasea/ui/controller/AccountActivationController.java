@@ -26,8 +26,7 @@ public class AccountActivationController extends AbstractController {
 	private Parameter<String> activationCode;
 
 	public void activate() {
-		Account account = new Account();
-		account.setUsername(username.getValue());
+		Account account = new Account(username.getValue());
 		account.setActivationCode(activationCode.getValue());
 
 		service.activate(account);

@@ -48,8 +48,7 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 				new GetAttributesRequest(getDomainName(), username));
 
 		if (result != null) {
-			account = new Account();
-			account.setUsername(username);
+			account = new Account(username);
 			account = fillAttributes(account, result.getAttributes());
 		}
 
@@ -66,9 +65,7 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 
 		if (result != null) {
 			for (Item item : result.getItems()) {
-				account = new Account();
-
-				account.setUsername(item.getName());
+				account = new Account(item.getName());
 				account = fillAttributes(account, item.getAttributes());
 
 				// TODO: o campo "email" será único no domínio, ver como informar no SimpleDB

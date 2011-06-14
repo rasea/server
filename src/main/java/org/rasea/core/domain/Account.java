@@ -12,7 +12,7 @@ public class Account implements Serializable {
 	private static final long serialVersionUID = -5630651623043896485L;
 
 	@ItemName
-	private String username;
+	private final String username;
 
 	private String email;
 
@@ -26,12 +26,12 @@ public class Account implements Serializable {
 
 	private Date activationDate;
 
-	public String getUsername() {
-		return username;
+	public Account(String username) {
+		this.username = username;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public String getUsername() {
+		return username;
 	}
 
 	public String getEmail() {
@@ -88,5 +88,5 @@ public class Account implements Serializable {
 				+ password + ", creationDate=" + creationDate + ", activationCode=" + activationCode
 				+ ", activationDate=" + activationDate + "]";
 	}
-	
+
 }
