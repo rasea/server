@@ -61,8 +61,9 @@ public class Mailer implements Serializable {
 
 		Content content = new Content();
 		content.setCharset("UTF-8");
-		content.setData(String.format("http://localhost:8080/rasea-server/activate/%s/%s", account.getUsername(),
-				account.getActivationCode()));
+		// FIXME: substituir esse endereço hardcoded
+		content.setData(String.format("http://localhost:8080/rasea-server/activate/%s/%s",
+				account.getUsername(), account.getActivationCode()));
 
 		Body body = new Body();
 		body.setText(content);
@@ -72,6 +73,28 @@ public class Mailer implements Serializable {
 		SendEmailRequest request = new SendEmailRequest(SENDER_EMAIL_ADDRESS, to, message);
 		AmazonSimpleEmailServiceAsync service = Beans.getReference(AmazonSimpleEmailServiceAsync.class);
 		service.sendEmail(request);
+	}
 
+	public void notifyPasswordResetRequest(Account account) {
+		Destination to = new Destination().withToAddresses(account.getEmail());
+
+		Content subject = new Content();
+		subject.setCharset("UTF-8");
+		subject.setData("Reinicialização da senha");
+
+		Content content = new Content();
+		content.setCharset("UTF-8");
+		// FIXME: substituir esse endereço hardcoded
+		content.setData(String.format("http://localhost:8080/rasea-server/passwordReset/%s/%s",
+				account.getUsername(), account.getActivationCode()));
+
+		Body body = new Body();
+		body.setText(content);
+
+		Message message = new Message(subject, body);
+
+		SendEmailRequest request = new SendEmailRequest(SENDER_EMAIL_ADDRESS, to, message);
+		AmazonSimpleEmailServiceAsync service = Beans.getReference(AmazonSimpleEmailServiceAsync.class);
+		service.sendEmail(request);
 	}
 }

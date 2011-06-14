@@ -25,10 +25,13 @@
 	template="/templates/main.xhtml">
 
 	<ui:define name="body">
-		<h:outputText value="home do usuário #{securityContext.user}"/>
-
-		<h:outputLabel value="lata do cidadão:" />
-		<h:graphicImage value="https://secure.gravatar.com/avatar/149a71e1921d2f9f1d143d784efe6239" alt="gravatar" />
+		<p>
+			<h:outputText value="home do usuário #{securityContext.user}"/>
+		</p>
+		<p>
+			<h:graphicImage value="#{securityContext.user.photoUrl}" 
+				alt="#{securityContext.user}" width="100" height="100" />
+		</p>
 	</ui:define>
 
 </ui:composition>

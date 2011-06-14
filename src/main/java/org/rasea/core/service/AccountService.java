@@ -32,6 +32,8 @@ import org.rasea.core.exception.AccountAlreadyActiveException;
 import org.rasea.core.exception.AccountDoesNotExistsException;
 import org.rasea.core.exception.AccountNotActiveException;
 import org.rasea.core.exception.EmailAlreadyAssignedException;
+import org.rasea.core.exception.EmptyEmailException;
+import org.rasea.core.exception.EmptyUsernameException;
 import org.rasea.core.exception.InvalidActivationCodeException;
 import org.rasea.core.exception.InvalidCredentialsException;
 import org.rasea.core.exception.InvalidEmailFormatException;
@@ -41,6 +43,8 @@ import org.rasea.core.manager.AccountManager;
 import org.rasea.core.util.Hasher;
 import org.rasea.core.util.Mailer;
 import org.rasea.core.util.Validator;
+
+import br.gov.frameworkdemoiselle.util.Strings;
 
 public class AccountService implements Serializable {
 
@@ -69,23 +73,37 @@ public class AccountService implements Serializable {
 			throw new AccountNotActiveException();
 		}
 
-		final String passwordHash = generatePasswordHash(credentials.getPassword(), account.getUsername());
+		final String passwordHash = generatePasswordHash(
+				credentials.getPassword(), account.getUsername());
 
 		if (!account.getPassword().equals(passwordHash)) {
 			throw new InvalidCredentialsException();
 		}
 
-		User user = new User(account.getUsername());
-		user.setPhotoUrl(account.getPhotoUrl());
+		final User user = new User(account.getUsername());
+		String photoURL = account.getPhotoUrl();
+		if (photoURL == null || photoURL.isEmpty()) {
+			photoURL = generateGravatarURL(account.getEmail());
+		}
+		user.setPhotoUrl(photoURL);
 
 		return user;
 	}
 
-	public void create(Account account) throws InvalidUsernameFormatException, InvalidEmailFormatException,
-			UsernameAlreadyExistsException, EmailAlreadyAssignedException {
+	public void create(Account account) throws EmptyUsernameException, InvalidUsernameFormatException,
+			EmptyEmailException, InvalidEmailFormatException, UsernameAlreadyExistsException,
+			EmailAlreadyAssignedException {
+		
+		if (Strings.isEmpty(account.getUsername())) {
+			throw new EmptyUsernameException();
+		}
 
 		if (!Validator.getInstance().isValidUsernameFormat(account.getUsername())) {
 			throw new InvalidUsernameFormatException();
+		}
+		
+		if (Strings.isEmpty(account.getEmail())) {
+			throw new EmptyEmailException();
 		}
 
 		if (!Validator.getInstance().isValidEmailFormat(account.getEmail())) {
@@ -132,12 +150,49 @@ public class AccountService implements Serializable {
 		// TODO Mandar e-mail dizendo que a conta está ativa e mais alguns blá-blá-blás
 	}
 
-	public void resetPasswordRequest(final Credentials credentials) {
+	public void passwordResetRequest(final Credentials credentials) {
+		if (credentials == null || credentials.getUsernameOrEmail() == null) {
+			throw new InvalidCredentialsException();
+		}
 
+		Account account = null;
+		if (Validator.getInstance().isValidEmailFormat(credentials.getUsernameOrEmail())) {
+			account = manager.findByEmail(credentials.getUsernameOrEmail());
+		} else {
+			account = manager.findByUsername(credentials.getUsernameOrEmail());
+		}
+
+		if (account == null) {
+			throw new InvalidCredentialsException();
+		}
+
+		account.setActivationCode(generateActivationCode(account.getUsername()));
+		manager.askPasswordReset(account);
+		
+		Mailer.getInstance().notifyPasswordResetRequest(account);
 	}
 
-	public void resetPasswordConfirmation(final Account account) {
+	public void passwordResetConfirmation(final Account account) {
+		Account persisted = manager.findByUsername(account.getUsername());
 
+		if (persisted == null) {
+			throw new InvalidActivationCodeException();
+		}
+
+		if (persisted.getActivationDate() != null) {
+			throw new AccountAlreadyActiveException();
+		}
+
+		if (!persisted.getActivationCode().equals(account.getActivationCode())) {
+			throw new InvalidActivationCodeException();
+		}
+
+		final String passwordHash = generatePasswordHash(account.getPassword(), account.getUsername());
+		account.setPassword(passwordHash);
+
+		manager.confirmPasswordReset(account);
+		
+		// TODO: mandar e-mail dizendo que a senha foi alterada com sucesso (sem incluí-la no texto!)
 	}
 
 	public void delete(Account account) throws AccountDoesNotExistsException {
@@ -168,6 +223,31 @@ public class AccountService implements Serializable {
 		return Hasher.getInstance().digest(password, username);
 	}
 
+	/**
+	 * Generates the URL corresponding to the user gravatar, based on its e-mail address.
+	 * 
+	 * @param email
+	 * @return String
+	 */
+	private String generateGravatarURL(final String email) {
+		
+		final String GRAVATAR_PREFIX_SECURE = "https://secure.gravatar.com/avatar/";
+//		final String GRAVATAR_PREFIX_REGULAR = "http://www.gravatar.com/avatar/";
+		
+		final String emailHash = Hasher.md5(email);
+		final String sizeInfo = "?s=140";
+		
+		StringBuffer sb = new StringBuffer(80);
+		sb.append(GRAVATAR_PREFIX_SECURE);
+		sb.append(emailHash);
+		sb.append(sizeInfo);
+		
+		// TODO: incluir gravatar default
+		//sb.append("&d=http://imagem/default.png");
+		
+		return sb.toString();
+	}
+	
 	// public void sendMail(String to, String subject, String body) {
 	// mail.get().to(to).from("raseatestmail@gmail.com").subject(subject).body().text(body).send();
 	// }
