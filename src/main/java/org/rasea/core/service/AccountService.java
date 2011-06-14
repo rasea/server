@@ -19,6 +19,7 @@ import org.rasea.core.exception.InvalidUsernameFormatException;
 import org.rasea.core.exception.UsernameAlreadyExistsException;
 import org.rasea.core.manager.AccountManager;
 import org.rasea.core.util.Hasher;
+import org.rasea.core.util.Mailer;
 import org.rasea.core.util.Validator;
 
 public class AccountService implements Serializable {
@@ -49,7 +50,7 @@ public class AccountService implements Serializable {
 		}
 
 		final String passwordHash = generatePasswordHash(credentials.getPassword(), account.getUsername());
-		
+
 		if (!account.getPassword().equals(passwordHash)) {
 			throw new InvalidCredentialsException();
 		}
@@ -81,14 +82,13 @@ public class AccountService implements Serializable {
 
 		account.setCreationDate(Calendar.getInstance().getTime());
 		account.setActivationCode(generateActivationCode(account.getUsername()));
-		
+
 		final String passwordHash = generatePasswordHash(account.getPassword(), account.getUsername());
 		account.setPassword(passwordHash);
-		
+
 		manager.create(account);
 
-		// TODO Mandar e-mail dizendo que a conta foi criada mas que precisa ser ativada clicando no link tal
-		// sendMail(user.getEmail(), "título teste", "corpo teste");
+		Mailer.getInstance().notifyAccountActivation(account);
 	}
 
 	public void activate(Account account) throws InvalidActivationCodeException, AccountAlreadyActiveException {
@@ -139,7 +139,7 @@ public class AccountService implements Serializable {
 	private String generatePasswordHash(final String password, final String username) {
 		return Hasher.getInstance().digest(password, username);
 	}
-	
+
 	// public void sendMail(String to, String subject, String body) {
 	// mail.get().to(to).from("raseatestmail@gmail.com").subject(subject).body().text(body).send();
 	// }
