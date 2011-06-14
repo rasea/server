@@ -18,20 +18,16 @@
  or write to the Free Software Foundation, Inc., 51 Franklin Street,
  Fifth Floor, Boston, MA  02110-1301, USA.
 -->
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" template="/templates/main.xhtml">
 
-<h:body>
-	<b>inicio menu</b>
-	<ui:include src="/menu.xhtml" />
-	<b>fim menu</b>
-	<br />
-	
-	<h:messages globalOnly="true" />
+	<f:viewParam name="username" />
+	<f:viewParam name="activationCode" />
 
-	<b>inicio corpo</b>
-	<ui:insert name="body" />
-	<b>fim corpo</b>
-</h:body>
+	<ui:define name="body">
+		#{username} #{activationCode}
+		
+<!--		#{accountActivationController.activate}-->
+	</ui:define>
 
-</html>
+</ui:composition>

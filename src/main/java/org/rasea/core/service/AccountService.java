@@ -19,6 +19,7 @@ import org.rasea.core.exception.InvalidUsernameFormatException;
 import org.rasea.core.exception.UsernameAlreadyExistsException;
 import org.rasea.core.manager.AccountManager;
 import org.rasea.core.util.Hasher;
+import org.rasea.core.util.Mailer;
 import org.rasea.core.util.Validator;
 
 public class AccountService implements Serializable {
@@ -48,7 +49,7 @@ public class AccountService implements Serializable {
 			throw new AccountNotActiveException();
 		}
 
-		String passwordHash = Hasher.getInstance().digest(credentials.getPassword(), account.getUsername());
+		final String passwordHash = generatePasswordHash(credentials.getPassword(), account.getUsername());
 
 		if (!account.getPassword().equals(passwordHash)) {
 			throw new InvalidCredentialsException();
@@ -63,11 +64,11 @@ public class AccountService implements Serializable {
 	public void create(Account account) throws InvalidUsernameFormatException, InvalidEmailFormatException,
 			UsernameAlreadyExistsException, EmailAlreadyAssignedException {
 
-		if (Validator.getInstance().isValidUsernameFormat(account.getUsername())) {
+		if (!Validator.getInstance().isValidUsernameFormat(account.getUsername())) {
 			throw new InvalidUsernameFormatException();
 		}
 
-		if (Validator.getInstance().isValidEmailFormat(account.getEmail())) {
+		if (!Validator.getInstance().isValidEmailFormat(account.getEmail())) {
 			throw new InvalidEmailFormatException();
 		}
 
@@ -80,11 +81,14 @@ public class AccountService implements Serializable {
 		}
 
 		account.setCreationDate(Calendar.getInstance().getTime());
-		account.setActivationCode(generateActivationCode());
+		account.setActivationCode(generateActivationCode(account.getUsername()));
+
+		final String passwordHash = generatePasswordHash(account.getPassword(), account.getUsername());
+		account.setPassword(passwordHash);
+
 		manager.create(account);
 
-		// TODO Mandar e-mail dizendo que a conta foi criada mas que precisa ser ativada clicando no link tal
-		// sendMail(user.getEmail(), "título teste", "corpo teste");
+		Mailer.getInstance().notifyAccountActivation(account);
 	}
 
 	public void activate(Account account) throws InvalidActivationCodeException, AccountAlreadyActiveException {
@@ -115,9 +119,25 @@ public class AccountService implements Serializable {
 		manager.delete(account);
 	}
 
-	private String generateActivationCode() {
-		// TODO Auto-generated method stub
-		return "";
+	/**
+	 * Generates an activation code (a 32-bit hex) from a username and system timestamp.
+	 * 
+	 * @param username
+	 * @return String
+	 */
+	private String generateActivationCode(final String username) {
+		return Hasher.md5(username + System.currentTimeMillis());
+	}
+
+	/**
+	 * Generates a hash string from a given password and username.
+	 * 
+	 * @param password
+	 * @param username
+	 * @return String
+	 */
+	private String generatePasswordHash(final String password, final String username) {
+		return Hasher.getInstance().digest(password, username);
 	}
 
 	// public void sendMail(String to, String subject, String body) {

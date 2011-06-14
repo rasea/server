@@ -4,14 +4,15 @@ import java.io.Serializable;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
 
 import org.rasea.core.domain.Account;
-import org.rasea.core.domain.Credentials;
-import org.rasea.core.exception.RaseaException;
+import org.rasea.core.exception.InvalidEmailFormatException;
+import org.rasea.core.exception.InvalidUsernameFormatException;
 import org.rasea.core.service.AccountService;
 
 import br.gov.frameworkdemoiselle.annotation.ViewScoped;
-import br.gov.frameworkdemoiselle.security.SecurityContext;
+import br.gov.frameworkdemoiselle.util.Faces;
 
 @Named
 @ViewScoped
@@ -20,25 +21,18 @@ public class SignUpController implements Serializable {
 	private static final long serialVersionUID = -2528453695349940601L;
 
 	@Inject
-	private SecurityContext context;
-
-	@Inject
-	private Credentials credentials;
-
-	@Inject
 	private AccountService service;
 
-	// @NotNull
+	@NotNull
 	private String username;
 
-	// @Email
-	// @NotNull
+	@NotNull
 	private String email;
 
-	// @NotNull
+	@NotNull
 	private String password;
 
-	// @NotNull
+	@NotNull
 	private String confirmPassword;
 
 	public void createAccount() {
@@ -50,14 +44,12 @@ public class SignUpController implements Serializable {
 
 			service.create(account);
 
-			credentials.setUsernameOrEmail(username);
-			credentials.setPassword(password);
-			context.login();
+		} catch (InvalidUsernameFormatException cause) {
+			Faces.addMessage("username", cause);
 
-		} catch (RaseaException cause) {
-			throw cause;
+		} catch (InvalidEmailFormatException cause) {
+			Faces.addMessage("email", cause);
 		}
-		// return "pretty:index";
 	}
 
 	public String getUsername() {
