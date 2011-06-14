@@ -80,7 +80,7 @@ public class AccountService implements Serializable {
 		}
 
 		account.setCreationDate(Calendar.getInstance().getTime());
-		account.setActivationCode(generateActivationCode());
+		account.setActivationCode(generateActivationCode(account.getUsername()));
 		manager.create(account);
 
 		// TODO Mandar e-mail dizendo que a conta foi criada mas que precisa ser ativada clicando no link tal
@@ -115,9 +115,14 @@ public class AccountService implements Serializable {
 		manager.delete(account);
 	}
 
-	private String generateActivationCode() {
-		// TODO Auto-generated method stub
-		return "";
+	/**
+	 * Generates an activation code (a 32-bit hex) from a username and system timestamp.
+	 * 
+	 * @param username
+	 * @return String
+	 */
+	private String generateActivationCode(final String username) {
+		return Hasher.md5(username + System.currentTimeMillis());
 	}
 
 	// public void sendMail(String to, String subject, String body) {
