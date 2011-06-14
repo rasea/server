@@ -137,12 +137,49 @@ public class AccountService implements Serializable {
 		// TODO Mandar e-mail dizendo que a conta está ativa e mais alguns blá-blá-blás
 	}
 
-	public void resetPasswordRequest(final Credentials credentials) {
+	public void passwordResetRequest(final Credentials credentials) {
+		if (credentials == null || credentials.getUsernameOrEmail() == null) {
+			throw new InvalidCredentialsException();
+		}
 
+		Account account = null;
+		if (Validator.getInstance().isValidEmailFormat(credentials.getUsernameOrEmail())) {
+			account = manager.findByEmail(credentials.getUsernameOrEmail());
+		} else {
+			account = manager.findByUsername(credentials.getUsernameOrEmail());
+		}
+
+		if (account == null) {
+			throw new InvalidCredentialsException();
+		}
+
+		account.setActivationCode(generateActivationCode(account.getUsername()));
+		manager.askPasswordReset(account);
+		
+		Mailer.getInstance().notifyPasswordResetRequest(account);
 	}
 
-	public void resetPasswordConfirmation(final Account account) {
+	public void passwordResetConfirmation(final Account account) {
+		Account persisted = manager.findByUsername(account.getUsername());
 
+		if (persisted == null) {
+			throw new InvalidActivationCodeException();
+		}
+
+		if (persisted.getActivationDate() != null) {
+			throw new AccountAlreadyActiveException();
+		}
+
+		if (!persisted.getActivationCode().equals(account.getActivationCode())) {
+			throw new InvalidActivationCodeException();
+		}
+
+		final String passwordHash = generatePasswordHash(account.getPassword(), account.getUsername());
+		account.setPassword(passwordHash);
+
+		manager.confirmPasswordReset(account);
+		
+		// TODO: mandar e-mail dizendo que a senha foi alterada com sucesso (sem incluí-la no texto!)
 	}
 
 	public void delete(Account account) throws AccountDoesNotExistsException {
