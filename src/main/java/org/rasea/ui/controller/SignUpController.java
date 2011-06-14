@@ -7,10 +7,7 @@ import javax.inject.Named;
 
 import org.rasea.core.domain.Account;
 import org.rasea.core.domain.Credentials;
-import org.rasea.core.exception.EmailAlreadyAssignedException;
-import org.rasea.core.exception.InvalidEmailFormatException;
-import org.rasea.core.exception.InvalidUsernameFormatException;
-import org.rasea.core.exception.UsernameAlreadyExistsException;
+import org.rasea.core.exception.RaseaException;
 import org.rasea.core.service.AccountService;
 
 import br.gov.frameworkdemoiselle.annotation.ViewScoped;
@@ -57,18 +54,8 @@ public class SignUpController implements Serializable {
 			credentials.setPassword(password);
 			context.login();
 
-		} catch (InvalidUsernameFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidEmailFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UsernameAlreadyExistsException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (EmailAlreadyAssignedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (RaseaException cause) {
+			throw cause;
 		}
 		// return "pretty:index";
 	}

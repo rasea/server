@@ -26,8 +26,7 @@ import javax.inject.Inject;
 
 import org.rasea.core.domain.Credentials;
 import org.rasea.core.domain.User;
-import org.rasea.core.exception.AccountNotActiveException;
-import org.rasea.core.exception.InvalidCredentialsException;
+import org.rasea.core.exception.RaseaException;
 import org.rasea.core.service.AccountService;
 
 import br.gov.frameworkdemoiselle.security.Authenticator;
@@ -48,17 +47,15 @@ public class RaseaAuthenticator implements Authenticator {
 
 	@Override
 	public boolean authenticate() {
-		boolean authenticated = false;
+		boolean authenticated;
 
 		try {
 			user = service.authenticate(credentials);
+			authenticated = true;
 
-		} catch (AccountNotActiveException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidCredentialsException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (RaseaException cause) {
+			authenticated = false;
+			throw cause;
 		}
 
 		return authenticated;
@@ -69,7 +66,6 @@ public class RaseaAuthenticator implements Authenticator {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public User getUser() {
 		return user;
 	}
