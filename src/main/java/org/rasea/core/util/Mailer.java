@@ -41,7 +41,7 @@ public class Mailer implements Serializable {
 
 		Content content = new Content();
 		content.setCharset("UTF-8");
-		content.setData(String.format("username: %s\nactivationcode: %s", account.getUsername(),
+		content.setData(String.format("http://localhost:8080/rasea-server/activate/%s/%s", account.getUsername(),
 				account.getActivationCode()));
 
 		Body body = new Body();
@@ -52,6 +52,6 @@ public class Mailer implements Serializable {
 		SendEmailRequest request = new SendEmailRequest(SENDER_EMAIL_ADDRESS, to, message);
 		AmazonSimpleEmailServiceAsync service = Beans.getReference(AmazonSimpleEmailServiceAsync.class);
 		service.sendEmail(request);
-		
+
 	}
 }

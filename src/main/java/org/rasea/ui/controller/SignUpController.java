@@ -1,6 +1,5 @@
 package org.rasea.ui.controller;
 
-import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
@@ -13,6 +12,7 @@ import org.rasea.core.exception.UsernameAlreadyExistsException;
 import org.rasea.core.service.AccountService;
 
 import br.gov.frameworkdemoiselle.annotation.ViewScoped;
+import br.gov.frameworkdemoiselle.message.MessageContext;
 import br.gov.frameworkdemoiselle.util.Faces;
 
 @Named
@@ -20,6 +20,9 @@ import br.gov.frameworkdemoiselle.util.Faces;
 public class SignUpController extends AbstractController {
 
 	private static final long serialVersionUID = -2528453695349940601L;
+
+	@Inject
+	private MessageContext messageContext;
 
 	@Inject
 	private AccountService service;
@@ -36,7 +39,9 @@ public class SignUpController extends AbstractController {
 	@NotNull
 	private String confirmPassword;
 
-	public void createAccount() {
+	public String createAccount() {
+		String outcome = null;
+
 		try {
 			Account account = new Account(username);
 			account.setEmail(email);
@@ -44,13 +49,10 @@ public class SignUpController extends AbstractController {
 
 			service.create(account);
 
-			FacesMessage message;
+			messageContext.add("Conta criada com sucesso.");
+			messageContext.add("Verifique seu e-mail e siga as instruções para ativar sua conta.");
 
-			message = new FacesMessage("Conta criada com sucesso!");
-			getFacesContext().addMessage(null, message);
-
-			message = new FacesMessage("Verifique seu e-mail e siga as instruções para ativar sua conta.");
-			getFacesContext().addMessage(null, message);
+			outcome = "pretty:index";
 
 		} catch (InvalidUsernameFormatException cause) {
 			Faces.addMessage("username", cause);
@@ -64,6 +66,8 @@ public class SignUpController extends AbstractController {
 		} catch (EmailAlreadyAssignedException cause) {
 			Faces.addMessage("email", cause);
 		}
+
+		return outcome;
 	}
 
 	public String getUsername() {

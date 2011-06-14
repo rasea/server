@@ -1,6 +1,5 @@
 package org.rasea.ui.controller;
 
-import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -8,6 +7,7 @@ import org.rasea.core.domain.Account;
 import org.rasea.core.service.AccountService;
 
 import br.gov.frameworkdemoiselle.annotation.ViewScoped;
+import br.gov.frameworkdemoiselle.message.MessageContext;
 import br.gov.frameworkdemoiselle.util.Parameter;
 
 @Named
@@ -15,6 +15,9 @@ import br.gov.frameworkdemoiselle.util.Parameter;
 public class AccountActivationController extends AbstractController {
 
 	private static final long serialVersionUID = -2528453695349940601L;
+
+	@Inject
+	private MessageContext messageContext;
 
 	@Inject
 	private AccountService service;
@@ -31,7 +34,7 @@ public class AccountActivationController extends AbstractController {
 
 		service.activate(account);
 
-		FacesMessage message = new FacesMessage("Sua conta foi ativada com sucesso!");
-		getFacesContext().addMessage(null, message);
+		messageContext.add("Sua conta foi ativada com sucesso.");
+		messageContext.add("Efetue o login e aproveite!");
 	}
 }
