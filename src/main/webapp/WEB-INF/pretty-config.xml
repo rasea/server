@@ -50,6 +50,12 @@
 		<view-id value="/activate.jsf" />
 	</url-mapping>
 
+	<url-mapping id="passwordReset">
+		<action>#{passwordResetController.showForm}</action>
+		<pattern value="/passwordReset/#{username}/#{activationCode}" />
+		<view-id value="/passwordReset.jsf" />
+	</url-mapping>
+
 	<url-mapping id="user-profile">
 		<pattern value="/user/#{username}" />
 		<view-id value="/user-profile.jsf" />
@@ -59,4 +65,5 @@
 		<pattern value="/app/#{id}" />
 		<view-id value="/application-dashboard.jsf" />
 	</url-mapping>
+	
 </pretty-config>
