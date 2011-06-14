@@ -63,11 +63,11 @@ public class AccountService implements Serializable {
 	public void create(Account account) throws InvalidUsernameFormatException, InvalidEmailFormatException,
 			UsernameAlreadyExistsException, EmailAlreadyAssignedException {
 
-		if (Validator.getInstance().isValidUsernameFormat(account.getUsername())) {
+		if (!Validator.getInstance().isValidUsernameFormat(account.getUsername())) {
 			throw new InvalidUsernameFormatException();
 		}
 
-		if (Validator.getInstance().isValidEmailFormat(account.getEmail())) {
+		if (!Validator.getInstance().isValidEmailFormat(account.getEmail())) {
 			throw new InvalidEmailFormatException();
 		}
 
