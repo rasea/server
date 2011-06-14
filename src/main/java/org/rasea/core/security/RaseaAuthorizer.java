@@ -25,7 +25,7 @@ import javax.enterprise.inject.Alternative;
 import br.gov.frameworkdemoiselle.security.Authorizator;
 
 @Alternative
-public class RaseaAuthorizator implements Authorizator {
+public class RaseaAuthorizer implements Authorizator {
 
 	private static final long serialVersionUID = -1432059116255260326L;
 
@@ -35,7 +35,7 @@ public class RaseaAuthorizator implements Authorizator {
 	}
 
 	@Override
-	public boolean hasPermission(String resource, String operation) {
+	public boolean hasPermission(Object resource, String operation) {
 		return true;
 	}
 }

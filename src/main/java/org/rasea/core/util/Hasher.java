@@ -1,10 +1,13 @@
 package org.rasea.core.util;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 
 import sun.misc.BASE64Encoder;
 
-public class Hasher {
+public class Hasher implements Serializable {
+
+	private static final long serialVersionUID = 3670007311078805400L;
 
 	private static final String ALGORITHM = "SHA-256";
 

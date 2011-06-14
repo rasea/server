@@ -23,7 +23,6 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
 	<alternatives>
 		<class>org.rasea.core.security.RaseaAuthenticator</class>
-		<class>org.rasea.core.security.RaseaAuthorizator</class>
-<!--		<class>org.rasea.core.transaction.RaseaTransaction</class>-->
+		<class>org.rasea.core.security.RaseaAuthorizer</class>
 	</alternatives>
 </beans>

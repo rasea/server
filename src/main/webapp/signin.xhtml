@@ -18,28 +18,22 @@
  or write to the Free Software Foundation, Inc., 51 Franklin Street,
  Fifth Floor, Boston, MA  02110-1301, USA.
 -->
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/templates/main.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" template="/templates/main.xhtml">
 
 	<ui:param name="signinProcess" value="true" />
 
 	<ui:define name="body">
 		<h:form id="signin">
 			<h:outputLabel value="login ou e-mail" for="email" />
-			<h:inputText id="email" value="#{signInController.loginOrEmail}"
-				autocomplete="true" />
+			<h:inputText id="email" value="#{credentials.usernameOrEmail}" autocomplete="true" />
 
 			<br />
 
 			<h:outputLabel value="senha" for="password" />
-			<h:inputSecret id="password" value="#{signInController.password}"
-				autocomplete="true" />
+			<h:inputSecret id="password" value="#{credentials.password}" autocomplete="true" />
 
-			<h:commandButton id="signin" value="logar"
-				action="#{signInController.login}" />
+			<h:commandButton id="signin" value="logar" action="#{securityContext.login}" />
 		</h:form>
 	</ui:define>
 
