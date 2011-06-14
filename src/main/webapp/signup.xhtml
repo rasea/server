@@ -18,38 +18,32 @@
  or write to the Free Software Foundation, Inc., 51 Franklin Street,
  Fifth Floor, Boston, MA  02110-1301, USA.
 -->
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/templates/main.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" template="/templates/main.xhtml">
 
 	<ui:param name="signupProcess" value="true" />
 
 	<ui:define name="body">
-		<h:form id="signup">
+		<h:form id="signup" prependId="false">
 			<h:outputLabel value="login" for="username" />
-			<h:inputText id="username" value="#{signUpController.username}"
-				autocomplete="true" />
+			<h:inputText id="username" value="#{signUpController.username}" autocomplete="true" />
+			<h:message for="username" />
 			<br />
 
 			<h:outputLabel value="e-mail" for="email" />
-			<h:inputText id="email" value="#{signUpController.email}"
-				autocomplete="true" />
+			<h:inputText id="email" value="#{signUpController.email}" autocomplete="true" />
+			<h:message for="email" />
 			<br />
 
 			<h:outputLabel value="senha" for="password" />
-			<h:inputSecret id="password" value="#{signUpController.password}"
-				autocomplete="true" />
+			<h:inputSecret id="password" value="#{signUpController.password}" autocomplete="true" />
 			<br />
 
 			<h:outputLabel value="confirme a senha" for="confirmPassword" />
-			<h:inputSecret id="confirmPassword"
-				value="#{signUpController.confirmPassword}" autocomplete="true" />
+			<h:inputSecret id="confirmPassword" value="#{signUpController.confirmPassword}" autocomplete="true" />
 			<br />
 
-			<h:commandButton value="criar conta"
-				action="#{signUpController.createAccount}" />
+			<h:commandButton id="submit" value="criar conta" action="#{signUpController.createAccount}" />
 		</h:form>
 	</ui:define>
 
