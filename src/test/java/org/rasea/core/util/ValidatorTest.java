@@ -28,9 +28,36 @@ public class ValidatorTest {
 
 	@Test
 	public void nullEmail() {
+		assertTrue(validator.isValidEmailFormat(null));
 	}
 
 	@Test
 	public void emptyEmail() {
+		assertTrue(validator.isValidEmailFormat(""));
 	}
+	
+	@Test
+	public void validUsername() {
+		assertTrue(validator.isValidUsernameFormat("abc"));
+		assertTrue(validator.isValidUsernameFormat("abcdef"));
+		assertTrue(validator.isValidUsernameFormat("AbcDef"));
+		assertTrue(validator.isValidUsernameFormat("abc123"));
+	}
+
+	@Test
+	public void invalidUsername() {
+		assertFalse(validator.isValidUsernameFormat("abc def"));
+		assertFalse(validator.isValidUsernameFormat("abc@def"));
+	}
+
+	@Test
+	public void nullUsername() {
+		assertTrue(validator.isValidUsernameFormat(null));
+	}
+
+	@Test
+	public void emptyUsername() {
+		assertTrue(validator.isValidUsernameFormat(""));
+	}
+	
 }
