@@ -43,7 +43,7 @@
 				<groupId>br.gov.frameworkdemoiselle</groupId>
 				<artifactId>demoiselle-parent</artifactId>
 				<version>2.1.1-SNAPSHOT</version>
-<!-- 				<version>2.1.0</version> -->
+				<!-- <version>2.1.0</version> -->
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
@@ -86,31 +86,15 @@
 			<groupId>br.gov.frameworkdemoiselle</groupId>
 			<artifactId>demoiselle-jsf</artifactId>
 			<exclusions>
-<!-- 				<exclusion> -->
-<!-- 					<artifactId>jstl</artifactId> -->
-<!-- 					<groupId>javax.servlet</groupId> -->
-<!-- 				</exclusion> -->
+				<exclusion>
+					<artifactId>jstl</artifactId>
+					<groupId>javax.servlet</groupId>
+				</exclusion>
 				<exclusion>
 					<artifactId>jsr250-api</artifactId>
 					<groupId>javax.annotation</groupId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>br.gov.frameworkdemoiselle</groupId>
-			<artifactId>demoiselle-mail</artifactId>
-			<version>2.0.0-SNAPSHOT</version>
-		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.hibernate</groupId> -->
-<!-- 			<artifactId>hibernate-entitymanager</artifactId> -->
-<!-- 			<version>3.5.6-Final</version> -->
-<!-- 		</dependency> -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-<!-- 			<version>3.6.4.Final</version> -->
-			<version>3.5.6-Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -122,18 +106,35 @@
 			<artifactId>hsqldb</artifactId>
 			<version>1.8.0.10</version>
 		</dependency>
+
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
+			<groupId>br.gov.frameworkdemoiselle</groupId>
+			<artifactId>demoiselle-junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>javax.servlet</groupId> -->
-<!-- 			<artifactId>jstl</artifactId> -->
-<!-- 			<version>1.2</version> -->
-<!-- 			<type>jar</type> -->
-<!-- 			<scope>compile</scope> -->
-<!-- 		</dependency> -->
+		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymock</artifactId>
+			<version>3.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-easymock</artifactId>
+			<version>1.4.8</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.4</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -181,27 +182,21 @@
 	<profiles>
 		<profile>
 			<id>jboss</id>
-
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
-
 			<properties>
 				<profile.scope>provided</profile.scope>
 			</properties>
 		</profile>
-
 		<profile>
 			<id>tomcat</id>
-
 			<properties>
 				<profile.scope>compile</profile.scope>
 			</properties>
 		</profile>
-
 		<profile>
 			<id>jetty</id>
-
 			<properties>
 				<profile.scope>compile</profile.scope>
 			</properties>
@@ -231,4 +226,5 @@
 			<url>http://demoiselle.sourceforge.net/repository/snapshot/</url>
 		</repository>
 	</repositories>
+
 </project>

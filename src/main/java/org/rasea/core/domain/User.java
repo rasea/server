@@ -1,93 +1,53 @@
 package org.rasea.core.domain;
 
-import java.io.Serializable;
-import java.util.Date;
+public class User implements br.gov.frameworkdemoiselle.security.User {
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+	private static final long serialVersionUID = -1260271078329207417L;
 
-import org.hibernate.annotations.Index;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.Length;
+	private String username;
 
-@Entity
-@Table(name = "RASEA_USER")
-public class User implements Serializable {
+	private String photoUrl;
 
-	private static final long serialVersionUID = -5630651623043896485L;
+	public User(String username) {
+		this.username = username;
+	}
 
-	@Id
-	@Length(max = 255)
-	@Column(nullable = false, insertable = true)
-	private String id;
+	public String getUsername() {
+		return username;
+	}
 
-	@Length(max = 255)
-	@Column(nullable = true, insertable = false)
-	private String name;
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-	@Email
-	@Length(max = 255)
-	@Column(nullable = false, unique = true, insertable = true)
-	@Index(name = "idx_user_email")
-	private String email;
+	public String getPhotoUrl() {
+		return photoUrl;
+	}
 
-	@Length(max = 100)
-	@Column(nullable = false, insertable = true, updatable = false)
-	private String password;
+	public void setPhotoUrl(String photoUrl) {
+		this.photoUrl = photoUrl;
+	}
 
-	@Column(nullable = false, insertable = true, updatable = false)
-	private Date creation;
+	@Override
+	public String toString() {
+		return getUsername();
+	}
 
-	@Column(nullable = true, insertable = false, updatable = false)
-	private Date activation;
+	@Override
+	public Object getAttribute(Object arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
+	@Override
 	public String getId() {
-		return id;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public Date getCreation() {
-		return creation;
-	}
-
-	public void setCreation(Date creation) {
-		this.creation = creation;
-	}
-
-	public Date getActivation() {
-		return activation;
-	}
-
-	public void setActivation(Date activation) {
-		this.activation = activation;
+	@Override
+	public void setAttribute(Object arg0, Object arg1) {
+		// TODO Auto-generated method stub
+		
 	}
 }
