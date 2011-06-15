@@ -24,14 +24,18 @@
 	<ui:define name="body">
 		<h:form id="passwordConfirm">
 			<h:outputLabel value="login" for="username" />
-			<h:outputText id="username" value="#{passwordResetController.username}" />
+			<h:inputText id="username" value="#{passwordResetController.username}" readonly="true" />
+			<h:inputHidden id="activationCode" value="#{passwordResetController.confirmationCode}" />
+			<br />
 
-			<h:outputLabel value="nova senha" for="password" />
+			<h:outputLabel value="nova senha" for="newPassword" />
 			<h:inputSecret id="newPassword" value="#{passwordResetController.newPassword}" autocomplete="false" />
+			<h:message for="newPassword" />
 			<br />
 
 			<h:outputLabel value="confirme a senha" for="confirmPassword" />
 			<h:inputSecret id="confirmPassword" value="#{passwordResetController.confirmPassword}" autocomplete="false" />
+			<h:message for="confirmPassword" />
 			<br />
 
 			<h:commandButton id="submit" value="resetar a senha" action="#{passwordResetController.perform}" />

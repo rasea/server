@@ -56,11 +56,11 @@
 	</url-mapping>
 
 	<url-mapping id="reset-perform">
-		<pattern value="/reset/#{username}/#{confirmationCode}" />
+		<pattern value="/reset/#{usernameParam}/#{confirmationCodeParam}" />
 		<view-id value="/reset-perform.jsf" />
 		<action>#{passwordResetController.confirm}</action>
 	</url-mapping>
-		
+
 	<url-mapping id="user-profile">
 		<pattern value="/user/#{username}" />
 		<view-id value="/user-profile.jsf" />

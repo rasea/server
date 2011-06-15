@@ -24,12 +24,16 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 
+import org.rasea.core.domain.Account;
 import org.rasea.core.domain.Credentials;
+import org.rasea.core.exception.EmptyPasswordException;
+import org.rasea.core.exception.PasswordsDoNotMatchException;
 import org.rasea.core.service.AccountService;
 
 import br.gov.frameworkdemoiselle.annotation.ViewScoped;
 import br.gov.frameworkdemoiselle.message.MessageContext;
 import br.gov.frameworkdemoiselle.util.Parameter;
+import br.gov.frameworkdemoiselle.util.Strings;
 
 @Named
 @ViewScoped
@@ -43,13 +47,21 @@ public class PasswordResetController extends AbstractController {
 	@Inject
 	private AccountService service;
 
+	@Inject
+	@NotNull
 	private Credentials credentials;
 
 	@Inject
-	private Parameter<String> username;
+	private Parameter<String> usernameParam;
 
 	@Inject
-	private Parameter<String> confirmationCode;
+	private Parameter<String> confirmationCodeParam;
+
+	@NotNull
+	private String username;
+
+	@NotNull
+	private String confirmationCode;
 
 	@NotNull
 	private String newPassword;
@@ -66,23 +78,49 @@ public class PasswordResetController extends AbstractController {
 		return "pretty:index";
 	}
 
-	public String confirm() {
-		String outcome = null;
+	public void confirm() {
+		Account account = new Account(usernameParam.getValue());
+		account.setActivationCode(confirmationCodeParam.getValue());
 
-		// verificar se o código de confirmação confere
-		// se conferir não fazer nada
-		// se nao conferir, exibir mensagem de erro direcionando para pretty:index
-
-		// TODO: ???
-		//		service.passwordResetConfirmation(null);
-
-		return outcome;
+		this.setUsername(account.getUsername());
+		this.setConfirmationCode(account.getActivationCode());
 	}
 
 	public String perform() {
-		// Efetiva a mudança da senha
+		Account account = new Account(username);
+		account.setActivationCode(confirmationCode);
+		account.setPassword(newPassword);
+		
+		if (Strings.isEmpty(newPassword)) {
+			throw new EmptyPasswordException();
+		}
+		
+		if (!newPassword.equals(confirmPassword)) {
+			throw new PasswordsDoNotMatchException();
+		}
+		
+		service.passwordResetConfirmation(account);
+		
+		messageContext.add("Sua senha foi alterada com sucesso.");
+		messageContext.add("Efetue o login e aproveite!");
+		
+		return "pretty:index";
+	}
 
-		return null;
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getConfirmationCode() {
+		return confirmationCode;
+	}
+
+	public void setConfirmationCode(String confirmationCode) {
+		this.confirmationCode = confirmationCode;
 	}
 
 	public String getNewPassword() {
