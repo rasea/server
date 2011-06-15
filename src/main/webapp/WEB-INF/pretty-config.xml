@@ -45,9 +45,9 @@
 	</url-mapping>
 
 	<url-mapping id="activate">
-		<action>#{accountActivationController.activate}</action>
 		<pattern value="/activate/#{username}/#{activationCode}" />
 		<view-id value="/activate.jsf" />
+		<action>#{accountActivationController.activate}</action>
 	</url-mapping>
 
 	<url-mapping id="reset-request">
@@ -56,9 +56,9 @@
 	</url-mapping>
 
 	<url-mapping id="reset-perform">
-		<action>#{passwordResetController.confirm}</action>
 		<pattern value="/reset/#{username}/#{confirmationCode}" />
 		<view-id value="/reset-perform.jsf" />
+		<action>#{passwordResetController.confirm}</action>
 	</url-mapping>
 		
 	<url-mapping id="user-profile">
