@@ -102,8 +102,6 @@ public class AccountServiceAuthenticateTest {
 		}
 	}
 
-	// Tests with valid e-mail
-
 	@Test
 	public void failWithValidEmailNotFoundOnDatabase() throws AccountNotActiveException {
 		Credentials credentials = new Credentials();
@@ -195,8 +193,6 @@ public class AccountServiceAuthenticateTest {
 			fail();
 		}
 	}
-
-	// Tests with invalid e-mail
 
 	@Test
 	public void failWithInvalidEmailAndUsernameNotFoundOnDatabase() throws AccountNotActiveException {

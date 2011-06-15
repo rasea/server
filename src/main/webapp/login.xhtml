@@ -34,6 +34,10 @@
 			<h:inputSecret id="password" value="#{credentials.password}" autocomplete="true" />
 
 			<h:commandButton id="signin" value="logar" action="#{securityContext.login}" />
+
+			<br />
+			
+			<h:link id="forgot" value="esqueci a senha" outcome="pretty:reset-request" />			
 		</h:form>
 	</ui:define>
 

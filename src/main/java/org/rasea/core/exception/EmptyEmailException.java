@@ -18,17 +18,10 @@
  * or write to the Free Software Foundation, Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.rasea.ui.controller;
+package org.rasea.core.exception;
 
-import java.io.Serializable;
+public class EmptyEmailException extends RaseaException {
 
-import javax.faces.context.FacesContext;
+	private static final long serialVersionUID = -6791363725131395498L;
 
-public abstract class AbstractController implements Serializable {
-
-	private static final long serialVersionUID = -1769495940264063980L;
-
-	protected FacesContext getFacesContext() {
-		return FacesContext.getCurrentInstance();
-	}
 }

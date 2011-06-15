@@ -5,6 +5,8 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.rasea.core.util.Validator;
 
+import br.gov.frameworkdemoiselle.util.Strings;
+
 public class ValidFormatValidator implements ConstraintValidator<ValidFormat, String> {
 
 	private ValidFormat annotation;
@@ -16,7 +18,7 @@ public class ValidFormatValidator implements ConstraintValidator<ValidFormat, St
 
 	@Override
 	public boolean isValid(final String value, final ConstraintValidatorContext context) {
-		if (value != null) {
+		if (!Strings.isEmpty(value)) {
 			switch (annotation.type()) {
 				case EMAIL:
 					return Validator.getInstance().isValidEmailFormat(value);

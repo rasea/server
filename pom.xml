@@ -52,11 +52,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.rasea</groupId>
-			<artifactId>rasea-extensions</artifactId>
-			<version>0.1.0.GA</version>
-		</dependency>
-		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>4.2.0.Beta1</version>
@@ -101,11 +96,6 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.4.2</version>
 		</dependency>
-		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<version>1.8.0.10</version>
-		</dependency>
 
 		<dependency>
 			<groupId>br.gov.frameworkdemoiselle</groupId>
@@ -120,8 +110,14 @@
 		</dependency>
 		<dependency>
 			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>1.4.6</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
 			<artifactId>powermock-api-easymock</artifactId>
-			<version>1.4.8</version>
+			<version>1.4.6</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -134,6 +130,12 @@
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>1.4.4</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>activation</artifactId>
+					<groupId>javax.activation</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 

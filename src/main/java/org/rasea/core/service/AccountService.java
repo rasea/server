@@ -32,6 +32,8 @@ import org.rasea.core.exception.AccountAlreadyActiveException;
 import org.rasea.core.exception.AccountDoesNotExistsException;
 import org.rasea.core.exception.AccountNotActiveException;
 import org.rasea.core.exception.EmailAlreadyAssignedException;
+import org.rasea.core.exception.EmptyEmailException;
+import org.rasea.core.exception.EmptyUsernameException;
 import org.rasea.core.exception.InvalidActivationCodeException;
 import org.rasea.core.exception.InvalidCredentialsException;
 import org.rasea.core.exception.InvalidEmailFormatException;
@@ -41,6 +43,8 @@ import org.rasea.core.manager.AccountManager;
 import org.rasea.core.util.Hasher;
 import org.rasea.core.util.Mailer;
 import org.rasea.core.util.Validator;
+
+import br.gov.frameworkdemoiselle.util.Strings;
 
 public class AccountService implements Serializable {
 
@@ -85,11 +89,20 @@ public class AccountService implements Serializable {
 		return user;
 	}
 
-	public void create(Account account) throws InvalidUsernameFormatException, InvalidEmailFormatException,
-			UsernameAlreadyExistsException, EmailAlreadyAssignedException {
+	public void create(Account account) throws EmptyUsernameException, InvalidUsernameFormatException,
+			EmptyEmailException, InvalidEmailFormatException, UsernameAlreadyExistsException,
+			EmailAlreadyAssignedException {
+		
+		if (Strings.isEmpty(account.getUsername())) {
+			throw new EmptyUsernameException();
+		}
 
 		if (!Validator.getInstance().isValidUsernameFormat(account.getUsername())) {
 			throw new InvalidUsernameFormatException();
+		}
+		
+		if (Strings.isEmpty(account.getEmail())) {
+			throw new EmptyEmailException();
 		}
 
 		if (!Validator.getInstance().isValidEmailFormat(account.getEmail())) {
@@ -105,7 +118,7 @@ public class AccountService implements Serializable {
 		}
 
 		account.setCreationDate(Calendar.getInstance().getTime());
-		account.setActivationCode(generateActivationCode(account.getUsername()));
+		account.setActivationCode(generateCode(account.getUsername()));
 
 		final String passwordHash = generatePasswordHash(account.getPassword(), account.getUsername());
 		account.setPassword(passwordHash);
@@ -136,12 +149,49 @@ public class AccountService implements Serializable {
 		// TODO Mandar e-mail dizendo que a conta está ativa e mais alguns blá-blá-blás
 	}
 
-	public void resetPasswordRequest(final Credentials credentials) {
+	public void passwordResetRequest(final Credentials credentials) {
+		if (credentials == null || credentials.getUsernameOrEmail() == null) {
+			throw new InvalidCredentialsException();
+		}
 
+		Account account = null;
+		if (Validator.getInstance().isValidEmailFormat(credentials.getUsernameOrEmail())) {
+			account = manager.findByEmail(credentials.getUsernameOrEmail());
+		} else {
+			account = manager.findByUsername(credentials.getUsernameOrEmail());
+		}
+
+		if (account == null) {
+			throw new InvalidCredentialsException();
+		}
+
+		account.setActivationCode(generateCode(account.getUsername()));
+		manager.askPasswordReset(account);
+		
+		Mailer.getInstance().notifyPasswordResetRequest(account);
 	}
 
-	public void resetPasswordConfirmation(final Account account) {
+	public void passwordResetConfirmation(final Account account) {
+		Account persisted = manager.findByUsername(account.getUsername());
 
+		if (persisted == null) {
+			throw new InvalidActivationCodeException();
+		}
+
+		if (persisted.getActivationDate() != null) {
+			throw new AccountAlreadyActiveException();
+		}
+
+		if (!persisted.getActivationCode().equals(account.getActivationCode())) {
+			throw new InvalidActivationCodeException();
+		}
+
+		final String passwordHash = generatePasswordHash(account.getPassword(), account.getUsername());
+		account.setPassword(passwordHash);
+
+		manager.confirmPasswordReset(account);
+		
+		// TODO: mandar e-mail dizendo que a senha foi alterada com sucesso (sem incluí-la no texto!)
 	}
 
 	public boolean containsUsername(String username) {
@@ -160,12 +210,12 @@ public class AccountService implements Serializable {
 	}
 
 	/**
-	 * Generates an activation code (a 32-bit hex) from a username and system timestamp.
+	 * Generates an code (a 32-bit hex) from a username and system timestamp.
 	 * 
 	 * @param username
 	 * @return String
 	 */
-	private String generateActivationCode(final String username) {
+	private String generateCode(final String username) {
 		return Hasher.md5(username + System.currentTimeMillis());
 	}
 

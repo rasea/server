@@ -21,31 +21,20 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" template="/templates/main.xhtml">
 
-	<ui:param name="signupProcess" value="true" />
-
 	<ui:define name="body">
-		<h:form id="signup" prependId="false">
+		<h:form id="passwordConfirm">
 			<h:outputLabel value="login" for="username" />
-			<h:inputText id="username" value="#{signUpController.username}" autocomplete="true" />
-			<h:message for="username" />
-			<br />
+			<h:outputText id="username" value="#{passwordResetController.username}" />
 
-			<h:outputLabel value="e-mail" for="email" />
-			<h:inputText id="email" value="#{signUpController.email}" autocomplete="true" />
-			<h:message for="email" />
-			<br />
-
-			<h:outputLabel value="senha" for="password" />
-			<h:inputSecret id="password" value="#{signUpController.password}" autocomplete="true" />
-			<h:message for="password" />
+			<h:outputLabel value="nova senha" for="password" />
+			<h:inputSecret id="newPassword" value="#{passwordResetController.newPassword}" autocomplete="false" />
 			<br />
 
 			<h:outputLabel value="confirme a senha" for="confirmPassword" />
-			<h:inputSecret id="confirmPassword" value="#{signUpController.confirmPassword}" autocomplete="true" />
-			<h:message for="confirmPassword" />
+			<h:inputSecret id="confirmPassword" value="#{passwordResetController.confirmPassword}" autocomplete="false" />
 			<br />
 
-			<h:commandButton id="submit" value="criar conta" action="#{signUpController.createAccount}" />
+			<h:commandButton id="submit" value="resetar a senha" action="#{passwordResetController.perform}" />
 		</h:form>
 	</ui:define>
 
