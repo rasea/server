@@ -27,11 +27,13 @@
 		<h:form id="signin">
 			<h:outputLabel value="login ou e-mail" for="email" />
 			<h:inputText id="email" value="#{credentials.usernameOrEmail}" autocomplete="true" />
+			<h:message for="email" />
 
 			<br />
 
 			<h:outputLabel value="senha" for="password" />
 			<h:inputSecret id="password" value="#{credentials.password}" autocomplete="true" />
+			<h:message for="password" />
 
 			<h:commandButton id="signin" value="logar" action="#{securityContext.login}" />
 

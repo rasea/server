@@ -25,6 +25,7 @@
 		<h:form id="passwordReset">
 			<h:outputLabel value="login ou e-mail" for="email" />
 			<h:inputText id="email" value="#{credentials.usernameOrEmail}" autocomplete="true" />
+			<h:message for="email" />
 
 			<h:commandButton id="reset" value="resetar a senha" action="#{passwordResetController.request}" />
 		</h:form>

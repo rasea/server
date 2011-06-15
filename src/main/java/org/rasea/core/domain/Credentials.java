@@ -26,6 +26,8 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Length;
+
 @Named
 @RequestScoped
 public class Credentials implements Serializable {
@@ -33,9 +35,11 @@ public class Credentials implements Serializable {
 	private static final long serialVersionUID = 633687017842755204L;
 
 	@NotNull
+	@Length(min = 1, message = "{required.field}")
 	private String usernameOrEmail;
 
 	@NotNull
+	@Length(min = 1, message = "{required.field}")
 	private String password;
 
 	public String getUsernameOrEmail() {

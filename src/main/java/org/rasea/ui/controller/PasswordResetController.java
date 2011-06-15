@@ -43,7 +43,6 @@ public class PasswordResetController extends AbstractController {
 	@Inject
 	private AccountService service;
 
-	@NotNull
 	private Credentials credentials;
 
 	@Inject
@@ -59,16 +58,12 @@ public class PasswordResetController extends AbstractController {
 	private String confirmPassword;
 
 	public String request() {
-		String outcome = null;
-
 		service.passwordResetRequest(credentials);
 
 		messageContext.add("Pedido de reinicialização de senha efetuado com sucesso.");
 		messageContext.add("Verifique seu e-mail e siga as instruções para resetar sua senha.");
 
-		outcome = "pretty:index";
-
-		return outcome;
+		return "pretty:index";
 	}
 
 	public String confirm() {
