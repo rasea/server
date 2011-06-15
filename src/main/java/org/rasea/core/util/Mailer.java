@@ -62,7 +62,7 @@ public class Mailer implements Serializable {
 		Content content = new Content();
 		content.setCharset("UTF-8");
 		// FIXME: substituir esse endereço hardcoded
-		content.setData(String.format("http://localhost:8080/rasea-server/activate/%s/%s",
+		content.setData(String.format("http://rasea.elasticbeanstalk.com/activate/%s/%s",
 				account.getUsername(), account.getActivationCode()));
 
 		Body body = new Body();
