@@ -11,8 +11,11 @@ import junit.framework.Assert;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.easymock.PowerMock;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 import org.rasea.core.domain.Account;
 import org.rasea.core.exception.EmailAlreadyAssignedException;
 import org.rasea.core.exception.EmptyEmailException;
@@ -21,7 +24,10 @@ import org.rasea.core.exception.InvalidEmailFormatException;
 import org.rasea.core.exception.InvalidUsernameFormatException;
 import org.rasea.core.exception.UsernameAlreadyExistsException;
 import org.rasea.core.manager.AccountManager;
+import org.rasea.core.util.Mailer;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(Mailer.class)
 public class AccountServiceCreateTest {
 
 	private AccountService service;
@@ -165,18 +171,29 @@ public class AccountServiceCreateTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void succeedCreation() {
 		Account acct = new Account("username");
 		acct.setEmail("test@test.com");
 		
+		PowerMock.mockStatic(Mailer.class);
+		
+		Mailer mockSingleton = createMock(Mailer.class);
+		
+		expect(Mailer.getInstance()).andReturn(mockSingleton).anyTimes();
+		
+        mockSingleton.notifyAccountActivation(acct);
+        expectLastCall().times(2);
+        
+        PowerMock.replay(Mailer.class, mockSingleton);
+		
 		expect(manager.containsUsername(acct.getUsername())).andReturn(false);
 		expect(manager.containsEmail(acct.getEmail())).andReturn(false);
+		
 		manager.create(acct);
 		expectLastCall();
 		
-		replay(manager);
+		PowerMock.replay(manager);
 		
 		try {
 			service.create(acct);
