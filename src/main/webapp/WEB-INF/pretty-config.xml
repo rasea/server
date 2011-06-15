@@ -30,7 +30,7 @@
 
 	<url-mapping id="login">
 		<pattern value="/login" />
-		<view-id value="/signin.jsf" />
+		<view-id value="/login.jsf" />
 	</url-mapping>
 
 	<url-mapping id="logout">
@@ -50,12 +50,17 @@
 		<view-id value="/activate.jsf" />
 	</url-mapping>
 
-	<url-mapping id="passwordReset">
-		<action>#{passwordResetController.showForm}</action>
-		<pattern value="/passwordReset/#{username}/#{activationCode}" />
-		<view-id value="/passwordReset.jsf" />
+	<url-mapping id="reset-request">
+		<pattern value="/reset/request" />
+		<view-id value="/reset-request.jsf" />
 	</url-mapping>
 
+	<url-mapping id="reset-perform">
+		<action>#{passwordResetController.confirm}</action>
+		<pattern value="/reset/#{username}/#{confirmationCode}" />
+		<view-id value="/reset-perform.jsf" />
+	</url-mapping>
+		
 	<url-mapping id="user-profile">
 		<pattern value="/user/#{username}" />
 		<view-id value="/user-profile.jsf" />

@@ -34,7 +34,7 @@ import br.gov.frameworkdemoiselle.util.Parameter;
 @ViewScoped
 public class AccountActivationController extends AbstractController {
 
-	private static final long serialVersionUID = -2528453695349940601L;
+	private static final long serialVersionUID = 5164076649447930796L;
 
 	@Inject
 	private MessageContext messageContext;

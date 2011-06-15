@@ -21,14 +21,23 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" template="/templates/main.xhtml">
 
-	<ui:param name="passwordResetProcess" value="true" />
+	<ui:param name="signinProcess" value="true" />
 
 	<ui:define name="body">
-		<h:form id="passwordReset">
+		<h:form id="signin">
 			<h:outputLabel value="login ou e-mail" for="email" />
-			<h:inputText id="email" value="#{passwordResetController.usernameOrEmail}" autocomplete="true" />
+			<h:inputText id="email" value="#{credentials.usernameOrEmail}" autocomplete="true" />
 
-			<h:commandButton id="reset" value="resetar a senha" action="#{passwordResetController.requestReset}" />
+			<br />
+
+			<h:outputLabel value="senha" for="password" />
+			<h:inputSecret id="password" value="#{credentials.password}" autocomplete="true" />
+
+			<h:commandButton id="signin" value="logar" action="#{securityContext.login}" />
+
+			<br />
+			
+			<h:link id="forgot" value="esqueci a senha" outcome="pretty:reset-request" />			
 		</h:form>
 	</ui:define>
 

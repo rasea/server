@@ -35,7 +35,7 @@ import br.gov.frameworkdemoiselle.message.MessageContext;
 @ViewScoped
 public class SignUpController extends AbstractController {
 
-	private static final long serialVersionUID = -2528453695349940601L;
+	private static final long serialVersionUID = -7576321048358680557L;
 
 	@Inject
 	private MessageContext messageContext;

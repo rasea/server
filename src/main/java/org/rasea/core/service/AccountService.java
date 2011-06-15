@@ -119,7 +119,7 @@ public class AccountService implements Serializable {
 		}
 
 		account.setCreationDate(Calendar.getInstance().getTime());
-		account.setActivationCode(generateActivationCode(account.getUsername()));
+		account.setActivationCode(generateCode(account.getUsername()));
 
 		final String passwordHash = generatePasswordHash(account.getPassword(), account.getUsername());
 		account.setPassword(passwordHash);
@@ -166,7 +166,7 @@ public class AccountService implements Serializable {
 			throw new InvalidCredentialsException();
 		}
 
-		account.setActivationCode(generateActivationCode(account.getUsername()));
+		account.setActivationCode(generateCode(account.getUsername()));
 		manager.askPasswordReset(account);
 		
 		Mailer.getInstance().notifyPasswordResetRequest(account);
@@ -203,12 +203,12 @@ public class AccountService implements Serializable {
 	}
 
 	/**
-	 * Generates an activation code (a 32-bit hex) from a username and system timestamp.
+	 * Generates an code (a 32-bit hex) from a username and system timestamp.
 	 * 
 	 * @param username
 	 * @return String
 	 */
-	private String generateActivationCode(final String username) {
+	private String generateCode(final String username) {
 		return Hasher.md5(username + System.currentTimeMillis());
 	}
 

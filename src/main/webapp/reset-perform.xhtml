@@ -21,8 +21,6 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" template="/templates/main.xhtml">
 
-	<ui:param name="passwordResetProcess" value="true" />
-
 	<ui:define name="body">
 		<h:form id="passwordConfirm">
 			<h:outputLabel value="login" for="username" />
@@ -36,7 +34,7 @@
 			<h:inputSecret id="confirmPassword" value="#{passwordResetController.confirmPassword}" autocomplete="false" />
 			<br />
 
-			<h:commandButton id="submit" value="resetar a senha" action="#{passwordResetController.confirmReset}" />
+			<h:commandButton id="submit" value="resetar a senha" action="#{passwordResetController.perform}" />
 		</h:form>
 	</ui:define>
 
