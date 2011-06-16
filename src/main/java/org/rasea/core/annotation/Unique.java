@@ -28,15 +28,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * TODO: anotação para definir parâmetros adicionais nos atributos
+ * TODO: anotação para definir restrição de unicidade em atributos
  */
 @Inherited
 @Retention(RUNTIME)
 @Target({ FIELD })
-public @interface Attribute {
-
-	String name() default "";
-
-//	boolean unique() default false;
+public @interface Unique {
 	
 }

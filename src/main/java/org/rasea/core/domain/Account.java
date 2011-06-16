@@ -25,6 +25,7 @@ import java.util.Date;
 
 import org.rasea.core.annotation.Domain;
 import org.rasea.core.annotation.ItemName;
+import org.rasea.core.annotation.Unique;
 
 @Domain(name = "ACCOUNTS")
 public class Account implements Serializable {
@@ -34,6 +35,7 @@ public class Account implements Serializable {
 	@ItemName
 	private final String username;
 
+	@Unique
 	private String email;
 
 	private String photoUrl;
@@ -42,11 +44,11 @@ public class Account implements Serializable {
 
 	private Date creationDate;
 
+	private Date activationDate;
+
 	private String activationCode;
 
 	private String passwordResetCode;
-
-	private Date activationDate;
 
 	public Account(String username) {
 		this.username = username;
@@ -104,18 +106,18 @@ public class Account implements Serializable {
 		this.creationDate = creationDate;
 	}
 
-	@Override
-	public String toString() {
-		return "Account [username=" + username + ", email=" + email + ", photoUrl=" + photoUrl + ", password=" + password + ", creationDate="
-				+ creationDate + ", activationCode=" + activationCode + ", activationDate=" + activationDate + "]";
-	}
-
 	public String getPasswordResetCode() {
 		return passwordResetCode;
 	}
 
 	public void setPasswordResetCode(String passwordResetCode) {
 		this.passwordResetCode = passwordResetCode;
+	}
+
+	@Override
+	public String toString() {
+		return "Account [username=" + username + ", email=" + email + ", photoUrl=" + photoUrl + ", password=" + password + ", creationDate="
+				+ creationDate + ", activationCode=" + activationCode + ", activationDate=" + activationDate + "]";
 	}
 
 }
