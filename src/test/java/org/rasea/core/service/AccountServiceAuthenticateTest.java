@@ -146,7 +146,7 @@ public class AccountServiceAuthenticateTest {
 	}
 
 	@Test
-	public void failWithValidEmailAndWrongPassword() {
+	public void failWithValidEmailAndWrongPassword() throws AccountNotActiveException {
 		Credentials credentials = new Credentials();
 		credentials.setUsernameOrEmail("test@test.com");
 		credentials.setPassword("1234");
@@ -169,11 +169,11 @@ public class AccountServiceAuthenticateTest {
 	}
 
 	@Test
-	public void succeedWithValidEmail() {
+	public void succeedWithValidEmail() throws AccountNotActiveException {
 		Credentials credentials = new Credentials();
 		credentials.setUsernameOrEmail("test@test.com");
 		credentials.setPassword("1234");
-		
+
 		String passwordHash = Hasher.getInstance().digest(credentials.getPassword(), "username");
 
 		Account account = createMock(Account.class);
@@ -213,13 +213,13 @@ public class AccountServiceAuthenticateTest {
 			assertNull(user);
 		}
 	}
-	
+
 	@Test
-	public void succeedWithUsernameFoundOnDatabase() {
+	public void succeedWithUsernameFoundOnDatabase() throws AccountNotActiveException {
 		Credentials credentials = new Credentials();
 		credentials.setUsernameOrEmail("username");
 		credentials.setPassword("1234");
-		
+
 		String passwordHash = Hasher.getInstance().digest(credentials.getPassword(), "username");
 
 		Account account = createMock(Account.class);

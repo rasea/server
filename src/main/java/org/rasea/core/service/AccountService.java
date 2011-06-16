@@ -34,7 +34,7 @@ import org.rasea.core.exception.AccountNotActiveException;
 import org.rasea.core.exception.EmailAlreadyAssignedException;
 import org.rasea.core.exception.EmptyEmailException;
 import org.rasea.core.exception.EmptyUsernameException;
-import org.rasea.core.exception.InvalidActivationCodeException;
+import org.rasea.core.exception.InvalidConfirmationCodeException;
 import org.rasea.core.exception.InvalidCredentialsException;
 import org.rasea.core.exception.InvalidEmailFormatException;
 import org.rasea.core.exception.InvalidUsernameFormatException;
@@ -54,7 +54,7 @@ public class AccountService implements Serializable {
 	private AccountManager manager;
 
 	public User authenticate(final Credentials credentials) throws AccountNotActiveException, InvalidCredentialsException {
-		
+
 		if (credentials == null || credentials.getUsernameOrEmail() == null || credentials.getPassword() == null) {
 			throw new InvalidCredentialsException();
 		}
@@ -90,10 +90,9 @@ public class AccountService implements Serializable {
 		return user;
 	}
 
-	public void create(final Account account) throws EmptyUsernameException, InvalidUsernameFormatException,
-			EmptyEmailException, InvalidEmailFormatException, UsernameAlreadyExistsException,
-			EmailAlreadyAssignedException {
-		
+	public void create(final Account account) throws EmptyUsernameException, InvalidUsernameFormatException, EmptyEmailException,
+			InvalidEmailFormatException, UsernameAlreadyExistsException, EmailAlreadyAssignedException {
+
 		if (Strings.isEmpty(account.getUsername())) {
 			throw new EmptyUsernameException();
 		}
@@ -101,7 +100,7 @@ public class AccountService implements Serializable {
 		if (!Validator.getInstance().isValidUsernameFormat(account.getUsername())) {
 			throw new InvalidUsernameFormatException();
 		}
-		
+
 		if (Strings.isEmpty(account.getEmail())) {
 			throw new EmptyEmailException();
 		}
@@ -129,20 +128,20 @@ public class AccountService implements Serializable {
 		Mailer.getInstance().notifyAccountActivation(account);
 	}
 
-	public void activate(final Account account) throws InvalidActivationCodeException, AccountAlreadyActiveException {
-		
+	public void activate(final Account account) throws InvalidConfirmationCodeException, AccountAlreadyActiveException, EmptyUsernameException {
+
 		if (Strings.isEmpty(account.getUsername())) {
 			throw new EmptyUsernameException();
 		}
-		
+
 		if (Strings.isEmpty(account.getActivationCode())) {
-			throw new InvalidActivationCodeException();
+			throw new InvalidConfirmationCodeException();
 		}
-		
+
 		Account persisted = manager.findByUsername(account.getUsername());
 
 		if (persisted == null) {
-			throw new InvalidActivationCodeException();
+			throw new InvalidConfirmationCodeException();
 		}
 
 		if (persisted.getActivationDate() != null) {
@@ -150,7 +149,7 @@ public class AccountService implements Serializable {
 		}
 
 		if (!persisted.getActivationCode().equals(account.getActivationCode())) {
-			throw new InvalidActivationCodeException();
+			throw new InvalidConfirmationCodeException();
 		}
 
 		account.setActivationDate(Calendar.getInstance().getTime());
@@ -159,14 +158,9 @@ public class AccountService implements Serializable {
 		// TODO Mandar e-mail dizendo que a conta está ativa e mais alguns blá-blá-blás
 	}
 
-	public void passwordResetRequest(final Credentials credentials) {
-		
-		if (credentials == null || credentials.getUsernameOrEmail() == null) {
-			throw new InvalidCredentialsException();
-		}
+	public void passwordResetRequest(String email) throws InvalidConfirmationCodeException, EmptyEmailException, InvalidEmailFormatException,
+			AccountDoesNotExistsException {
 
-		final String email = credentials.getUsernameOrEmail();
-		
 		if (Strings.isEmpty(email)) {
 			throw new EmptyEmailException();
 		}
@@ -178,40 +172,39 @@ public class AccountService implements Serializable {
 		Account account = manager.findByEmail(email);
 
 		if (account == null) {
-			throw new InvalidCredentialsException();
+			throw new AccountDoesNotExistsException();
 		}
 
-		account.setActivationCode(generateCode(account.getUsername()));
+		account.setPasswordResetCode(generateCode(account.getUsername()));
 		manager.askPasswordReset(account);
-		
+
 		Mailer.getInstance().notifyPasswordResetRequest(account);
 	}
 
-	public void passwordResetConfirmation(final Account account) {
-
+	public void passwordResetConfirmation(final Account account) throws EmptyUsernameException, InvalidConfirmationCodeException {
 		if (Strings.isEmpty(account.getUsername())) {
 			throw new EmptyUsernameException();
 		}
-		
-		if (Strings.isEmpty(account.getActivationCode())) {
-			throw new InvalidActivationCodeException();
+
+		if (Strings.isEmpty(account.getPasswordResetCode())) {
+			throw new InvalidConfirmationCodeException();
 		}
 
 		Account persisted = manager.findByUsername(account.getUsername());
 
 		if (persisted == null) {
-			throw new InvalidActivationCodeException();
+			throw new InvalidConfirmationCodeException();
 		}
 
-		if (!persisted.getActivationCode().equals(account.getActivationCode())) {
-			throw new InvalidActivationCodeException();
+		if (!persisted.getPasswordResetCode().equals(account.getPasswordResetCode())) {
+			throw new InvalidConfirmationCodeException();
 		}
 
 		final String passwordHash = generatePasswordHash(account.getPassword(), account.getUsername());
 		account.setPassword(passwordHash);
 
 		manager.confirmPasswordReset(account);
-		
+
 		// TODO: mandar e-mail dizendo que a senha foi alterada com sucesso (sem incluí-la no texto!)
 	}
 
@@ -252,7 +245,8 @@ public class AccountService implements Serializable {
 	}
 
 	/**
-	 * Generates the URL corresponding to the user gravatar, based on its e-mail address.
+	 * Generates the URL corresponding to the user gravatar, based on its e-mail
+	 * address.
 	 * 
 	 * @param email
 	 * @return String

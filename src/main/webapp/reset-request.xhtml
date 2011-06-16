@@ -18,17 +18,21 @@
  or write to the Free Software Foundation, Inc., 51 Franklin Street,
  Fifth Floor, Boston, MA  02110-1301, USA.
 -->
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" template="/templates/main.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/main.xhtml">
 
 	<ui:define name="body">
-		<h:form id="passwordReset">
+		<h:form id="passwordReset" prependId="false">
 			<h:outputLabel value="e-mail" for="email" />
-			<h:inputText id="email" value="#{credentials.usernameOrEmail}" autocomplete="true" />
+			<h:inputText id="email" value="#{passwordResetController.email}" autocomplete="true" />
 			<h:message for="email" />
 			<br />
 
-			<h:commandButton id="reset" value="resetar a senha" action="#{passwordResetController.request}" />
+			<h:commandButton id="reset" value="resetar a senha"
+				action="#{passwordResetController.request}" />
 		</h:form>
 	</ui:define>
 

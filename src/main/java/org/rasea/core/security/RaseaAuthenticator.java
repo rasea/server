@@ -47,18 +47,14 @@ public class RaseaAuthenticator implements Authenticator {
 
 	@Override
 	public boolean authenticate() {
-		boolean authenticated;
-
 		try {
 			user = service.authenticate(credentials);
-			authenticated = true;
 
 		} catch (RaseaException cause) {
-			authenticated = false;
-			throw cause;
+			throw new AuthenticationException(cause);
 		}
 
-		return authenticated;
+		return true;
 	}
 
 	@Override

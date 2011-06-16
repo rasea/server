@@ -57,15 +57,15 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 
 		final String activationDateString = dateUtils.formatIso8601Date(account.getActivationDate());
 		attrs.add(new ReplaceableAttribute("activationDate", activationDateString, true));
+		attrs.remove("activationCode");
 
 		getSimpleDB().putAttributes(new PutAttributesRequest(getDomainName(), account.getUsername(), attrs));
 	}
-	
+
 	public Account findByUsername(final String username) {
 		Account account = null;
 
-		final GetAttributesResult result = getSimpleDB().getAttributes(
-				new GetAttributesRequest(getDomainName(), username));
+		final GetAttributesResult result = getSimpleDB().getAttributes(new GetAttributesRequest(getDomainName(), username));
 
 		if (result != null) {
 			account = new Account(username);
@@ -97,8 +97,7 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 	}
 
 	public boolean containsUsername(final String username) {
-		final GetAttributesRequest request = new GetAttributesRequest(getDomainName(), username)
-				.withAttributeNames("email");
+		final GetAttributesRequest request = new GetAttributesRequest(getDomainName(), username).withAttributeNames("email");
 		final GetAttributesResult result = getSimpleDB().getAttributes(request);
 
 		return (result != null && !result.getAttributes().isEmpty());
@@ -119,7 +118,7 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 
 	public void askPasswordReset(Account account) {
 		final List<ReplaceableAttribute> attrs = new ArrayList<ReplaceableAttribute>();
-		attrs.add(new ReplaceableAttribute("activationCode", account.getActivationCode(), true));
+		attrs.add(new ReplaceableAttribute("passwordResetCode", account.getPasswordResetCode(), true));
 
 		getSimpleDB().putAttributes(new PutAttributesRequest(getDomainName(), account.getUsername(), attrs));
 	}
@@ -127,6 +126,7 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 	public void confirmPasswordReset(Account account) {
 		final List<ReplaceableAttribute> attrs = new ArrayList<ReplaceableAttribute>();
 		attrs.add(new ReplaceableAttribute("password", account.getPassword(), true));
+		attrs.remove("passwordResetCode");
 
 		getSimpleDB().putAttributes(new PutAttributesRequest(getDomainName(), account.getUsername(), attrs));
 	}
@@ -145,7 +145,8 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 			account.setActivationDate(parseDateValue(value));
 		} else if ("activationCode".equals(name)) {
 			account.setActivationCode(value);
+		} else if ("passwordResetCode".equals(name)) {
+			account.setPasswordResetCode(value);
 		}
 	}
-
 }

@@ -44,6 +44,8 @@ public class Account implements Serializable {
 
 	private String activationCode;
 
+	private String passwordResetCode;
+
 	private Date activationDate;
 
 	public Account(String username) {
@@ -104,9 +106,16 @@ public class Account implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Account [username=" + username + ", email=" + email + ", photoUrl=" + photoUrl + ", password="
-				+ password + ", creationDate=" + creationDate + ", activationCode=" + activationCode
-				+ ", activationDate=" + activationDate + "]";
+		return "Account [username=" + username + ", email=" + email + ", photoUrl=" + photoUrl + ", password=" + password + ", creationDate="
+				+ creationDate + ", activationCode=" + activationCode + ", activationDate=" + activationDate + "]";
+	}
+
+	public String getPasswordResetCode() {
+		return passwordResetCode;
+	}
+
+	public void setPasswordResetCode(String passwordResetCode) {
+		this.passwordResetCode = passwordResetCode;
 	}
 
 }

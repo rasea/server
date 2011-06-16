@@ -27,6 +27,7 @@ import java.security.NoSuchAlgorithmException;
 
 import sun.misc.BASE64Encoder;
 
+@SuppressWarnings("restriction")
 public class Hasher implements Serializable {
 
 	private static final long serialVersionUID = 3670007311078805400L;
@@ -69,7 +70,7 @@ public class Hasher implements Serializable {
 
 		return hash;
 	}
-	
+
 	private static String hex(final byte[] array) {
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < array.length; ++i)

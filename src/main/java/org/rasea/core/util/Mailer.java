@@ -62,8 +62,7 @@ public class Mailer implements Serializable {
 		Content content = new Content();
 		content.setCharset("UTF-8");
 		// FIXME: substituir esse endereço hardcoded
-		content.setData(String.format("http://rasea.elasticbeanstalk.com/activate/%s/%s",
-				account.getUsername(), account.getActivationCode()));
+		content.setData(String.format("%s/activate/%s/%s", getBaseURL(), account.getUsername(), account.getActivationCode()));
 
 		Body body = new Body();
 		body.setText(content);
@@ -85,8 +84,7 @@ public class Mailer implements Serializable {
 		Content content = new Content();
 		content.setCharset("UTF-8");
 		// FIXME: substituir esse endereço hardcoded
-		content.setData(String.format("http://localhost:8080/rasea-server/reset/%s/%s",
-				account.getUsername(), account.getActivationCode()));
+		content.setData(String.format("%s/reset/%s/%s", getBaseURL(), account.getUsername(), account.getPasswordResetCode()));
 
 		Body body = new Body();
 		body.setText(content);
@@ -96,5 +94,10 @@ public class Mailer implements Serializable {
 		SendEmailRequest request = new SendEmailRequest(SENDER_EMAIL_ADDRESS, to, message);
 		AmazonSimpleEmailServiceAsync service = Beans.getReference(AmazonSimpleEmailServiceAsync.class);
 		service.sendEmail(request);
+	}
+
+	private String getBaseURL() {
+		return "http://localhost:8080/rasea-server";
+		//		return "http://rasea.elasticbeanstalk.com";
 	}
 }

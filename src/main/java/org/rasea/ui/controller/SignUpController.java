@@ -23,6 +23,7 @@ package org.rasea.ui.controller;
 import static org.rasea.ui.validator.FieldType.EMAIL;
 import static org.rasea.ui.validator.FieldType.USERNAME;
 
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
@@ -30,6 +31,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.rasea.core.domain.Account;
 import org.rasea.core.exception.EmailAlreadyAssignedException;
+import org.rasea.core.exception.EmptyEmailException;
+import org.rasea.core.exception.EmptyUsernameException;
 import org.rasea.core.exception.InvalidEmailFormatException;
 import org.rasea.core.exception.InvalidUsernameFormatException;
 import org.rasea.core.exception.UsernameAlreadyExistsException;
@@ -72,17 +75,30 @@ public class SignUpController extends AbstractController {
 	@Length(min = 1, message = "{required.field}")
 	private String confirmPassword;
 
-	public String createAccount() {
-		Account account = new Account(username);
-		account.setEmail(email);
-		account.setPassword(password);
+	public String createAccount() throws EmptyUsernameException, InvalidUsernameFormatException, EmptyEmailException, InvalidEmailFormatException,
+			UsernameAlreadyExistsException, EmailAlreadyAssignedException {
+		String outcome;
 
-		service.create(account);
+		if (password.equals(confirmPassword)) {
+			Account account = new Account(username);
+			account.setEmail(email);
+			account.setPassword(password);
 
-		messageContext.add("Conta criada com sucesso.");
-		messageContext.add("Verifique seu e-mail e siga as instruções para ativar sua conta.");
+			service.create(account);
 
-		return "pretty:index";
+			messageContext.add("Conta criada com sucesso.");
+			messageContext.add("Verifique seu e-mail e siga as instruções para ativar sua conta.");
+
+			outcome = "pretty:index";
+
+		} else {
+			FacesMessage message = new FacesMessage("Não confere com a senha");
+			getFacesContext().addMessage("confirmPassword", message);
+
+			outcome = null;
+		}
+
+		return outcome;
 	}
 
 	public String getUsername() {

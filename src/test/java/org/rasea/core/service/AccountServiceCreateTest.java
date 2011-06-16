@@ -43,7 +43,8 @@ public class AccountServiceCreateTest {
 	}
 
 	@Test
-	public void failWithNullUsername() {
+	public void failWithNullUsername() throws InvalidUsernameFormatException, EmptyEmailException, InvalidEmailFormatException,
+			UsernameAlreadyExistsException, EmailAlreadyAssignedException {
 		replay(manager);
 
 		Account acct = new Account(null);
@@ -58,7 +59,8 @@ public class AccountServiceCreateTest {
 	}
 
 	@Test
-	public void failWithEmptyUsername() {
+	public void failWithEmptyUsername() throws InvalidUsernameFormatException, EmptyEmailException, InvalidEmailFormatException,
+			UsernameAlreadyExistsException, EmailAlreadyAssignedException {
 		replay(manager);
 
 		Account acct = new Account(StringUtils.EMPTY);
@@ -73,7 +75,8 @@ public class AccountServiceCreateTest {
 	}
 
 	@Test
-	public void failWithInvalidUsername() {
+	public void failWithInvalidUsername() throws EmptyUsernameException, EmptyEmailException, InvalidEmailFormatException,
+			UsernameAlreadyExistsException, EmailAlreadyAssignedException {
 		replay(manager);
 
 		Account acct = new Account("invalid username");
@@ -88,7 +91,8 @@ public class AccountServiceCreateTest {
 	}
 
 	@Test
-	public void failWithNullEmail() {
+	public void failWithNullEmail() throws EmptyUsernameException, InvalidUsernameFormatException, InvalidEmailFormatException,
+			UsernameAlreadyExistsException, EmailAlreadyAssignedException {
 		replay(manager);
 
 		Account acct = new Account("username");
@@ -104,7 +108,8 @@ public class AccountServiceCreateTest {
 	}
 
 	@Test
-	public void failWithEmptyEmail() {
+	public void failWithEmptyEmail() throws EmptyUsernameException, InvalidUsernameFormatException, InvalidEmailFormatException,
+			UsernameAlreadyExistsException, EmailAlreadyAssignedException {
 		replay(manager);
 
 		Account acct = new Account("username");
@@ -120,7 +125,8 @@ public class AccountServiceCreateTest {
 	}
 
 	@Test
-	public void failWithInvalidEmail() {
+	public void failWithInvalidEmail() throws EmptyUsernameException, InvalidUsernameFormatException, EmptyEmailException,
+			UsernameAlreadyExistsException, EmailAlreadyAssignedException {
 		replay(manager);
 
 		Account acct = new Account("username");
@@ -136,7 +142,8 @@ public class AccountServiceCreateTest {
 	}
 
 	@Test
-	public void failWithExistentUsername() {
+	public void failWithExistentUsername() throws EmptyUsernameException, InvalidUsernameFormatException, EmptyEmailException,
+			InvalidEmailFormatException, EmailAlreadyAssignedException {
 		Account acct = new Account("username");
 		acct.setEmail("test@test.com");
 
@@ -153,7 +160,8 @@ public class AccountServiceCreateTest {
 	}
 
 	@Test
-	public void failWithExistentEmail() {
+	public void failWithExistentEmail() throws EmptyUsernameException, InvalidUsernameFormatException, EmptyEmailException,
+			InvalidEmailFormatException, UsernameAlreadyExistsException {
 		Account acct = new Account("username");
 		acct.setEmail("test@test.com");
 
@@ -175,26 +183,26 @@ public class AccountServiceCreateTest {
 	public void succeedCreation() {
 		Account acct = new Account("username");
 		acct.setEmail("test@test.com");
-		
+
 		PowerMock.mockStatic(Mailer.class);
-		
+
 		Mailer mockSingleton = createMock(Mailer.class);
-		
+
 		expect(Mailer.getInstance()).andReturn(mockSingleton).anyTimes();
-		
-        mockSingleton.notifyAccountActivation(acct);
-        expectLastCall().times(2);
-        
-        PowerMock.replay(Mailer.class, mockSingleton);
-		
+
+		mockSingleton.notifyAccountActivation(acct);
+		expectLastCall().times(2);
+
+		PowerMock.replay(Mailer.class, mockSingleton);
+
 		expect(manager.containsUsername(acct.getUsername())).andReturn(false);
 		expect(manager.containsEmail(acct.getEmail())).andReturn(false);
-		
+
 		manager.create(acct);
 		expectLastCall();
-		
+
 		PowerMock.replay(manager);
-		
+
 		try {
 			service.create(acct);
 			Assert.assertNotNull(acct.getCreationDate());

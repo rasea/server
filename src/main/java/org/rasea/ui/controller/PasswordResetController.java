@@ -20,20 +20,23 @@
  */
 package org.rasea.ui.controller;
 
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Length;
 import org.rasea.core.domain.Account;
-import org.rasea.core.domain.Credentials;
-import org.rasea.core.exception.EmptyPasswordException;
-import org.rasea.core.exception.PasswordsDoNotMatchException;
+import org.rasea.core.exception.AccountDoesNotExistsException;
+import org.rasea.core.exception.EmptyEmailException;
+import org.rasea.core.exception.EmptyUsernameException;
+import org.rasea.core.exception.InvalidConfirmationCodeException;
+import org.rasea.core.exception.InvalidEmailFormatException;
 import org.rasea.core.service.AccountService;
 
 import br.gov.frameworkdemoiselle.annotation.ViewScoped;
 import br.gov.frameworkdemoiselle.message.MessageContext;
 import br.gov.frameworkdemoiselle.util.Parameter;
-import br.gov.frameworkdemoiselle.util.Strings;
 
 @Named
 @ViewScoped
@@ -47,9 +50,9 @@ public class PasswordResetController extends AbstractController {
 	@Inject
 	private AccountService service;
 
-	@Inject
 	@NotNull
-	private Credentials credentials;
+	@Length(min = 1, message = "{required.field}")
+	private String email;
 
 	@Inject
 	private Parameter<String> usernameParam;
@@ -64,13 +67,15 @@ public class PasswordResetController extends AbstractController {
 	private String confirmationCode;
 
 	@NotNull
+	@Length(min = 1, message = "{required.field}")
 	private String newPassword;
 
 	@NotNull
+	@Length(min = 1, message = "{required.field}")
 	private String confirmPassword;
 
-	public String request() {
-		service.passwordResetRequest(credentials);
+	public String request() throws InvalidConfirmationCodeException, EmptyEmailException, InvalidEmailFormatException, AccountDoesNotExistsException {
+		service.passwordResetRequest(email);
 
 		messageContext.add("Pedido de reinicialização de senha efetuado com sucesso.");
 		messageContext.add("Verifique seu e-mail e siga as instruções para resetar sua senha.");
@@ -79,32 +84,40 @@ public class PasswordResetController extends AbstractController {
 	}
 
 	public void confirm() {
+		// TODO Neste ponto tem que verificar se o código é válido. Se não for, nem prossegue.
+		// TODO Ainda mais... o código só pode ser utilizado uma única vez. A partir do momento que a senha foi resetada, o código tem que sumir da base de dados
+		// TODO É interessante que o código de reset seja armazenado separadamente do código de ativação.
+
 		Account account = new Account(usernameParam.getValue());
-		account.setActivationCode(confirmationCodeParam.getValue());
+		account.setPasswordResetCode(confirmationCodeParam.getValue());
 
 		this.setUsername(account.getUsername());
-		this.setConfirmationCode(account.getActivationCode());
+		this.setConfirmationCode(account.getPasswordResetCode());
 	}
 
-	public String perform() {
-		Account account = new Account(username);
-		account.setActivationCode(confirmationCode);
-		account.setPassword(newPassword);
-		
-		if (Strings.isEmpty(newPassword)) {
-			throw new EmptyPasswordException();
+	public String perform() throws EmptyUsernameException, InvalidConfirmationCodeException {
+		String outcome;
+
+		if (newPassword.equals(confirmPassword)) {
+			Account account = new Account(username);
+			account.setPasswordResetCode(confirmationCode);
+			account.setPassword(newPassword);
+
+			service.passwordResetConfirmation(account);
+
+			messageContext.add("Sua senha foi alterada com sucesso.");
+			messageContext.add("Efetue o login e aproveite!");
+
+			return "pretty:index";
+
+		} else {
+			FacesMessage message = new FacesMessage("Não confere com a senha");
+			getFacesContext().addMessage("confirmPassword", message);
+
+			outcome = null;
 		}
-		
-		if (!newPassword.equals(confirmPassword)) {
-			throw new PasswordsDoNotMatchException();
-		}
-		
-		service.passwordResetConfirmation(account);
-		
-		messageContext.add("Sua senha foi alterada com sucesso.");
-		messageContext.add("Efetue o login e aproveite!");
-		
-		return "pretty:index";
+
+		return outcome;
 	}
 
 	public String getUsername() {
@@ -139,4 +152,11 @@ public class PasswordResetController extends AbstractController {
 		this.confirmPassword = confirmPassword;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 }
