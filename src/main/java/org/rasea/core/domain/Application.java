@@ -61,4 +61,9 @@ public class Application implements Serializable {
 		this.active = active;
 	}
 
+	@Override
+	public String toString() {
+		return "Application [name=" + name + ", description=" + description + ", active=" + active + "]";
+	}
+
 }

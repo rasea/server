@@ -42,7 +42,6 @@ public class ApplicationService implements Serializable {
 			throw new ApplicationAlreadyExistsException();
 		}
 		
-		app.setActive(true);
 		manager.create(app);
 	}
 
