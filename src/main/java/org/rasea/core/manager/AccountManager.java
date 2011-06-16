@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.rasea.core.domain.Account;
 
+import com.amazonaws.services.simpledb.model.Attribute;
 import com.amazonaws.services.simpledb.model.DeleteAttributesRequest;
 import com.amazonaws.services.simpledb.model.GetAttributesRequest;
 import com.amazonaws.services.simpledb.model.GetAttributesResult;
@@ -53,13 +54,14 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 	}
 
 	public void activate(final Account account) {
-		final List<ReplaceableAttribute> attrs = new ArrayList<ReplaceableAttribute>();
-
+		final List<ReplaceableAttribute> addAttrs = new ArrayList<ReplaceableAttribute>();
 		final String activationDateString = dateUtils.formatIso8601Date(account.getActivationDate());
-		attrs.add(new ReplaceableAttribute("activationDate", activationDateString, true));
-		attrs.remove("activationCode");
+		addAttrs.add(new ReplaceableAttribute("activationDate", activationDateString, true));
+		getSimpleDB().putAttributes(new PutAttributesRequest(getDomainName(), account.getUsername(), addAttrs));
 
-		getSimpleDB().putAttributes(new PutAttributesRequest(getDomainName(), account.getUsername(), attrs));
+		final List<Attribute> delAttrs = new ArrayList<Attribute>();
+		delAttrs.add(new Attribute("activationCode", account.getActivationCode()));
+		getSimpleDB().deleteAttributes(new DeleteAttributesRequest(getDomainName(), account.getUsername(), delAttrs));
 	}
 
 	public Account findByUsername(final String username) {
@@ -124,11 +126,13 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 	}
 
 	public void confirmPasswordReset(Account account) {
-		final List<ReplaceableAttribute> attrs = new ArrayList<ReplaceableAttribute>();
-		attrs.add(new ReplaceableAttribute("password", account.getPassword(), true));
-		attrs.remove("passwordResetCode");
+		final List<ReplaceableAttribute> addAttrs = new ArrayList<ReplaceableAttribute>();
+		addAttrs.add(new ReplaceableAttribute("password", account.getPassword(), true));
+		getSimpleDB().putAttributes(new PutAttributesRequest(getDomainName(), account.getUsername(), addAttrs));
 
-		getSimpleDB().putAttributes(new PutAttributesRequest(getDomainName(), account.getUsername(), attrs));
+		final List<Attribute> delAttrs = new ArrayList<Attribute>();
+		delAttrs.add(new Attribute("passwordResetCode", account.getPasswordResetCode()));
+		getSimpleDB().deleteAttributes(new DeleteAttributesRequest(getDomainName(), account.getUsername(), delAttrs));
 	}
 
 	@Override

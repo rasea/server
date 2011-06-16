@@ -196,7 +196,7 @@ public class AccountService implements Serializable {
 			throw new InvalidConfirmationCodeException();
 		}
 
-		if (!persisted.getPasswordResetCode().equals(account.getPasswordResetCode())) {
+		if (!account.getPasswordResetCode().equals(persisted.getPasswordResetCode())) {
 			throw new InvalidConfirmationCodeException();
 		}
 

@@ -85,8 +85,6 @@ public class PasswordResetController extends AbstractController {
 
 	public void confirm() {
 		// TODO Neste ponto tem que verificar se o código é válido. Se não for, nem prossegue.
-		// TODO Ainda mais... o código só pode ser utilizado uma única vez. A partir do momento que a senha foi resetada, o código tem que sumir da base de dados
-		// TODO É interessante que o código de reset seja armazenado separadamente do código de ativação.
 
 		Account account = new Account(usernameParam.getValue());
 		account.setPasswordResetCode(confirmationCodeParam.getValue());
