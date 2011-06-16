@@ -118,14 +118,14 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 		getSimpleDB().deleteAttributes(new DeleteAttributesRequest(getDomainName(), account.getUsername()));
 	}
 
-	public void askPasswordReset(Account account) {
+	public void askPasswordReset(final Account account) {
 		final List<ReplaceableAttribute> attrs = new ArrayList<ReplaceableAttribute>();
 		attrs.add(new ReplaceableAttribute("passwordResetCode", account.getPasswordResetCode(), true));
 
 		getSimpleDB().putAttributes(new PutAttributesRequest(getDomainName(), account.getUsername(), attrs));
 	}
 
-	public void confirmPasswordReset(Account account) {
+	public void confirmPasswordReset(final Account account) {
 		final List<ReplaceableAttribute> addAttrs = new ArrayList<ReplaceableAttribute>();
 		addAttrs.add(new ReplaceableAttribute("password", account.getPassword(), true));
 		getSimpleDB().putAttributes(new PutAttributesRequest(getDomainName(), account.getUsername(), addAttrs));
