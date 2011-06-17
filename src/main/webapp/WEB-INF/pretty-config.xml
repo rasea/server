@@ -70,5 +70,10 @@
 		<pattern value="/app/#{id}" />
 		<view-id value="/application-dashboard.jsf" />
 	</url-mapping>
+
+	<url-mapping id="application-create">
+		<pattern value="/new/app" />
+		<view-id value="/application-create.jsf" />
+	</url-mapping>
 	
 </pretty-config>
