@@ -22,6 +22,8 @@ package org.rasea.core.util;
 
 import java.io.Serializable;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.rasea.core.domain.Account;
 
 import br.gov.frameworkdemoiselle.util.Beans;
@@ -97,7 +99,19 @@ public class Mailer implements Serializable {
 	}
 
 	private String getBaseURL() {
-		return "http://localhost:8080/rasea-server";
-		//		return "http://rasea.elasticbeanstalk.com";
+		HttpServletRequest request = Beans.getReference(HttpServletRequest.class);
+		StringBuffer baseUrl = new StringBuffer();
+
+		baseUrl.append("http://");
+		baseUrl.append(request.getLocalName());
+
+		if (request.getLocalPort() != 80 && request.getLocalPort() != 443) {
+			baseUrl.append(":");
+			baseUrl.append(request.getLocalPort());
+		}
+
+		baseUrl.append(request.getContextPath());
+
+		return baseUrl.toString();
 	}
 }

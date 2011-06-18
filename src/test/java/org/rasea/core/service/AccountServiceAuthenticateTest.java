@@ -16,7 +16,9 @@ import org.rasea.core.domain.Account;
 import org.rasea.core.domain.Credentials;
 import org.rasea.core.domain.User;
 import org.rasea.core.exception.AccountNotActiveException;
+import org.rasea.core.exception.EmptyUsernameException;
 import org.rasea.core.exception.InvalidCredentialsException;
+import org.rasea.core.exception.InvalidUsernameFormatException;
 import org.rasea.core.manager.AccountManager;
 import org.rasea.core.util.Hasher;
 
@@ -35,7 +37,7 @@ public class AccountServiceAuthenticateTest {
 	}
 
 	@Test
-	public void failWithNullCredentials() throws AccountNotActiveException {
+	public void failWithNullCredentials() throws AccountNotActiveException, EmptyUsernameException, InvalidUsernameFormatException {
 		replay(manager);
 		User user = null;
 
@@ -49,7 +51,7 @@ public class AccountServiceAuthenticateTest {
 	}
 
 	@Test
-	public void failWithNullUsername() throws AccountNotActiveException {
+	public void failWithNullUsername() throws AccountNotActiveException, EmptyUsernameException, InvalidUsernameFormatException {
 		replay(manager);
 		User user = null;
 
@@ -67,7 +69,7 @@ public class AccountServiceAuthenticateTest {
 	}
 
 	@Test
-	public void failWithNullPassword() throws AccountNotActiveException {
+	public void failWithNullPassword() throws AccountNotActiveException, EmptyUsernameException, InvalidUsernameFormatException {
 		replay(manager);
 		User user = null;
 
@@ -85,7 +87,7 @@ public class AccountServiceAuthenticateTest {
 	}
 
 	@Test
-	public void failWithNullUsernameAndPassword() throws AccountNotActiveException {
+	public void failWithNullUsernameAndPassword() throws AccountNotActiveException, EmptyUsernameException, InvalidUsernameFormatException {
 		replay(manager);
 		User user = null;
 
@@ -103,7 +105,7 @@ public class AccountServiceAuthenticateTest {
 	}
 
 	@Test
-	public void failWithValidEmailNotFoundOnDatabase() throws AccountNotActiveException {
+	public void failWithValidEmailNotFoundOnDatabase() throws AccountNotActiveException, EmptyUsernameException, InvalidUsernameFormatException {
 		Credentials credentials = new Credentials();
 		credentials.setUsernameOrEmail("test@test.com");
 		credentials.setPassword("1234");
@@ -123,7 +125,7 @@ public class AccountServiceAuthenticateTest {
 	}
 
 	@Test
-	public void failWithValidEmailAndNullActivationDate() throws InvalidCredentialsException {
+	public void failWithValidEmailAndNullActivationDate() throws InvalidCredentialsException, EmptyUsernameException, InvalidUsernameFormatException {
 		Credentials credentials = new Credentials();
 		credentials.setUsernameOrEmail("test@test.com");
 		credentials.setPassword("1234");
@@ -146,7 +148,7 @@ public class AccountServiceAuthenticateTest {
 	}
 
 	@Test
-	public void failWithValidEmailAndWrongPassword() throws AccountNotActiveException {
+	public void failWithValidEmailAndWrongPassword() throws AccountNotActiveException, EmptyUsernameException, InvalidUsernameFormatException {
 		Credentials credentials = new Credentials();
 		credentials.setUsernameOrEmail("test@test.com");
 		credentials.setPassword("1234");
@@ -169,7 +171,7 @@ public class AccountServiceAuthenticateTest {
 	}
 
 	@Test
-	public void succeedWithValidEmail() throws AccountNotActiveException {
+	public void succeedWithValidEmail() throws AccountNotActiveException, EmptyUsernameException, InvalidUsernameFormatException {
 		Credentials credentials = new Credentials();
 		credentials.setUsernameOrEmail("test@test.com");
 		credentials.setPassword("1234");
@@ -195,7 +197,8 @@ public class AccountServiceAuthenticateTest {
 	}
 
 	@Test
-	public void failWithInvalidEmailAndUsernameNotFoundOnDatabase() throws AccountNotActiveException {
+	public void failWithInvalidEmailAndUsernameNotFoundOnDatabase() throws AccountNotActiveException, EmptyUsernameException,
+			InvalidUsernameFormatException {
 		Credentials credentials = new Credentials();
 		credentials.setUsernameOrEmail("test@test,com");
 		credentials.setPassword("1234");
@@ -215,7 +218,7 @@ public class AccountServiceAuthenticateTest {
 	}
 
 	@Test
-	public void succeedWithUsernameFoundOnDatabase() throws AccountNotActiveException {
+	public void succeedWithUsernameFoundOnDatabase() throws AccountNotActiveException, EmptyUsernameException, InvalidUsernameFormatException {
 		Credentials credentials = new Credentials();
 		credentials.setUsernameOrEmail("username");
 		credentials.setPassword("1234");

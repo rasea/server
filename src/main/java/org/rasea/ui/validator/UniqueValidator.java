@@ -23,11 +23,16 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
 			AccountService service = Beans.getReference(AccountService.class);
 
 			switch (annotation.type()) {
-				case EMAIL:
-					return !service.containsEmail(value);
+			case EMAIL:
+				return !service.containsEmail(value);
 
-				case USERNAME:
+			case USERNAME:
+				try {
 					return !service.containsUsername(value);
+
+				} catch (Exception cause) {
+					return false;
+				}
 			}
 
 		}

@@ -53,8 +53,8 @@ public class AccountService implements Serializable {
 	@Inject
 	private AccountManager manager;
 
-	public User authenticate(final Credentials credentials) throws AccountNotActiveException, InvalidCredentialsException {
-
+	public User authenticate(final Credentials credentials) throws AccountNotActiveException, InvalidCredentialsException, EmptyUsernameException,
+			InvalidUsernameFormatException {
 		if (credentials == null || credentials.getUsernameOrEmail() == null || credentials.getPassword() == null) {
 			throw new InvalidCredentialsException();
 		}
@@ -63,7 +63,7 @@ public class AccountService implements Serializable {
 		if (Validator.getInstance().isValidEmailFormat(credentials.getUsernameOrEmail())) {
 			account = manager.findByEmail(credentials.getUsernameOrEmail());
 		} else {
-			account = manager.findByUsername(credentials.getUsernameOrEmail());
+			account = findByUsername(credentials.getUsernameOrEmail());
 		}
 
 		if (account == null) {
@@ -90,16 +90,23 @@ public class AccountService implements Serializable {
 		return user;
 	}
 
-	public void create(final Account account) throws EmptyUsernameException, InvalidUsernameFormatException, EmptyEmailException,
-			InvalidEmailFormatException, UsernameAlreadyExistsException, EmailAlreadyAssignedException {
+	public Account findByUsername(String username) throws EmptyUsernameException, InvalidUsernameFormatException {
+		validateUsername(username);
+		return manager.findByUsername(username);
+	}
 
-		if (Strings.isEmpty(account.getUsername())) {
+	private void validateUsername(String username) throws EmptyUsernameException, InvalidUsernameFormatException {
+		if (Strings.isEmpty(username)) {
 			throw new EmptyUsernameException();
 		}
 
-		if (!Validator.getInstance().isValidUsernameFormat(account.getUsername())) {
+		if (!Validator.getInstance().isValidUsernameFormat(username)) {
 			throw new InvalidUsernameFormatException();
 		}
+	}
+
+	public void create(final Account account) throws EmptyUsernameException, InvalidUsernameFormatException, EmptyEmailException,
+			InvalidEmailFormatException, UsernameAlreadyExistsException, EmailAlreadyAssignedException {
 
 		if (Strings.isEmpty(account.getEmail())) {
 			throw new EmptyEmailException();
@@ -128,17 +135,14 @@ public class AccountService implements Serializable {
 		Mailer.getInstance().notifyAccountActivation(account);
 	}
 
-	public void activate(final Account account) throws InvalidConfirmationCodeException, AccountAlreadyActiveException, EmptyUsernameException {
-
-		if (Strings.isEmpty(account.getUsername())) {
-			throw new EmptyUsernameException();
-		}
+	public void activate(final Account account) throws InvalidConfirmationCodeException, AccountAlreadyActiveException, EmptyUsernameException,
+			InvalidUsernameFormatException {
 
 		if (Strings.isEmpty(account.getActivationCode())) {
 			throw new InvalidConfirmationCodeException();
 		}
 
-		Account persisted = manager.findByUsername(account.getUsername());
+		Account persisted = findByUsername(account.getUsername());
 
 		if (persisted == null) {
 			throw new InvalidConfirmationCodeException();
@@ -181,16 +185,14 @@ public class AccountService implements Serializable {
 		Mailer.getInstance().notifyPasswordResetRequest(account);
 	}
 
-	public void passwordResetConfirmation(final Account account) throws EmptyUsernameException, InvalidConfirmationCodeException {
-		if (Strings.isEmpty(account.getUsername())) {
-			throw new EmptyUsernameException();
-		}
+	public void passwordResetConfirmation(final Account account) throws InvalidConfirmationCodeException, EmptyUsernameException,
+			InvalidUsernameFormatException {
 
 		if (Strings.isEmpty(account.getPasswordResetCode())) {
 			throw new InvalidConfirmationCodeException();
 		}
 
-		Account persisted = manager.findByUsername(account.getUsername());
+		Account persisted = findByUsername(account.getUsername());
 
 		if (persisted == null) {
 			throw new InvalidConfirmationCodeException();
@@ -208,7 +210,8 @@ public class AccountService implements Serializable {
 		// TODO: mandar e-mail dizendo que a senha foi alterada com sucesso (sem incluí-la no texto!)
 	}
 
-	public boolean containsUsername(final String username) {
+	public boolean containsUsername(final String username) throws EmptyUsernameException, InvalidUsernameFormatException {
+		validateUsername(username);
 		return manager.containsUsername(username);
 	}
 
@@ -216,10 +219,11 @@ public class AccountService implements Serializable {
 		return manager.containsEmail(email);
 	}
 
-	public void delete(final Account account) throws AccountDoesNotExistsException {
+	public void delete(final Account account) throws AccountDoesNotExistsException, EmptyUsernameException, InvalidUsernameFormatException {
 		if (!containsUsername(account.getUsername())) {
 			throw new AccountDoesNotExistsException();
 		}
+
 		manager.delete(account);
 	}
 

@@ -27,6 +27,7 @@ import org.rasea.core.domain.Account;
 import org.rasea.core.exception.AccountAlreadyActiveException;
 import org.rasea.core.exception.EmptyUsernameException;
 import org.rasea.core.exception.InvalidConfirmationCodeException;
+import org.rasea.core.exception.InvalidUsernameFormatException;
 import org.rasea.core.service.AccountService;
 
 import br.gov.frameworkdemoiselle.annotation.ViewScoped;
@@ -51,7 +52,8 @@ public class AccountActivationController extends AbstractController {
 	@Inject
 	private Parameter<String> activationCode;
 
-	public void activate() throws InvalidConfirmationCodeException, AccountAlreadyActiveException, EmptyUsernameException {
+	public void activate() throws InvalidConfirmationCodeException, AccountAlreadyActiveException, EmptyUsernameException,
+			InvalidUsernameFormatException {
 		Account account = new Account(username.getValue());
 		account.setActivationCode(activationCode.getValue());
 

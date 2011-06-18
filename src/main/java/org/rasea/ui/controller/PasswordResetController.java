@@ -32,11 +32,11 @@ import org.rasea.core.exception.EmptyEmailException;
 import org.rasea.core.exception.EmptyUsernameException;
 import org.rasea.core.exception.InvalidConfirmationCodeException;
 import org.rasea.core.exception.InvalidEmailFormatException;
+import org.rasea.core.exception.InvalidUsernameFormatException;
 import org.rasea.core.service.AccountService;
 
 import br.gov.frameworkdemoiselle.annotation.ViewScoped;
 import br.gov.frameworkdemoiselle.message.MessageContext;
-import br.gov.frameworkdemoiselle.util.Parameter;
 
 @Named
 @ViewScoped
@@ -51,20 +51,20 @@ public class PasswordResetController extends AbstractController {
 	private AccountService service;
 
 	@NotNull
-	@Length(min = 1, message = "{required.field}")
-	private String email;
-
-	@Inject
-	private Parameter<String> usernameParam;
-
-	@Inject
-	private Parameter<String> confirmationCodeParam;
-
-	@NotNull
 	private String username;
 
 	@NotNull
 	private String confirmationCode;
+
+	@NotNull
+	@Length(min = 1, message = "{required.field}")
+	private String email;
+
+	//	@Inject
+	//	private Parameter<String> usernameParam;
+	//
+	//	@Inject
+	//	private Parameter<String> confirmationCodeParam;
 
 	@NotNull
 	@Length(min = 1, message = "{required.field}")
@@ -73,6 +73,8 @@ public class PasswordResetController extends AbstractController {
 	@NotNull
 	@Length(min = 1, message = "{required.field}")
 	private String confirmPassword;
+
+	private boolean invalidConfirmationCode = true;
 
 	public String request() throws InvalidConfirmationCodeException, EmptyEmailException, InvalidEmailFormatException, AccountDoesNotExistsException {
 		service.passwordResetRequest(email);
@@ -83,17 +85,32 @@ public class PasswordResetController extends AbstractController {
 		return "pretty:index";
 	}
 
-	public void confirm() {
-		// TODO Neste ponto tem que verificar se o código é válido. Se não for, nem prossegue.
+	public void confirm() throws InvalidConfirmationCodeException, EmptyUsernameException, InvalidUsernameFormatException {
+		//		Account account = service.findByUsername(usernameParam.getValue());
+		Account account = service.findByUsername(username);
 
-		Account account = new Account(usernameParam.getValue());
-		account.setPasswordResetCode(confirmationCodeParam.getValue());
+		invalidConfirmationCode = false;
 
-		this.setUsername(account.getUsername());
-		this.setConfirmationCode(account.getPasswordResetCode());
+		//		if (account == null || confirmationCodeParam.getValue() == null) {
+		if (account == null) {
+			invalidConfirmationCode = true;
+		}
+
+		//		if (!confirmationCodeParam.getValue().equals(account.getPasswordResetCode())) {
+		if (!confirmationCode.equals(account.getPasswordResetCode())) {
+			invalidConfirmationCode = true;
+		}
+
+		if (invalidConfirmationCode) {
+			throw new InvalidConfirmationCodeException();
+		}
 	}
 
-	public String perform() throws EmptyUsernameException, InvalidConfirmationCodeException {
+	public boolean isInvalidConfirmationCode() {
+		return invalidConfirmationCode;
+	}
+
+	public String perform() throws InvalidConfirmationCodeException, EmptyUsernameException, InvalidUsernameFormatException {
 		String outcome;
 
 		if (newPassword.equals(confirmPassword)) {

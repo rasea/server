@@ -25,7 +25,8 @@
 	template="/templates/main.xhtml">
 
 	<ui:define name="body">
-		<h:form id="passwordConfirm" prependId="false">
+		<h:form id="passwordConfirm" prependId="false"
+			rendered="#{!passwordResetController.invalidConfirmationCode}">
 			<h:inputHidden id="activationCode"
 				value="#{passwordResetController.confirmationCode}" />
 			
