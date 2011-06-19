@@ -82,7 +82,7 @@ public class Mailer implements Serializable {
 
 		Content content = new Content();
 		content.setCharset("UTF-8");
-		content.setData(String.format("%s/reset/%s/%s", getBaseURL(), account.getUsername(), account.getPasswordResetCode()));
+		content.setData(String.format("%s/password/reset/%s/%s", getBaseURL(), account.getUsername(), account.getPasswordResetCode()));
 
 		Body body = new Body();
 		body.setText(content);

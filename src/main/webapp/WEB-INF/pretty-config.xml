@@ -50,14 +50,14 @@
 		<action>#{accountActivationController.activate}</action>
 	</url-mapping>
 
-	<url-mapping id="reset-request">
-		<pattern value="/reset/request" />
-		<view-id value="/reset-request.jsf" />
+	<url-mapping id="password-request">
+		<pattern value="/password/request" />
+		<view-id value="/password-request.jsf" />
 	</url-mapping>
 
-	<url-mapping id="reset-perform">
-		<pattern value="/reset/#{passwordResetController.username}/#{passwordResetController.confirmationCode}" />
-		<view-id value="/reset-perform.jsf" />
+	<url-mapping id="password-reset">
+		<pattern value="/password/reset/#{passwordResetController.username}/#{passwordResetController.confirmationCode}" />
+		<view-id value="/password-reset.jsf" />
 		<action>#{passwordResetController.confirm}</action>
 	</url-mapping>
 
