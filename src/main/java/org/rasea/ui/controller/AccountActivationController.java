@@ -52,7 +52,7 @@ public class AccountActivationController extends AbstractController {
 	@Inject
 	private Parameter<String> activationCode;
 
-	public void activate() throws InvalidConfirmationCodeException, AccountAlreadyActiveException, EmptyUsernameException,
+	public String activate() throws InvalidConfirmationCodeException, AccountAlreadyActiveException, EmptyUsernameException,
 			InvalidUsernameFormatException {
 		Account account = new Account(username.getValue());
 		account.setActivationCode(activationCode.getValue());
@@ -61,5 +61,7 @@ public class AccountActivationController extends AbstractController {
 
 		messageContext.add("Sua conta foi ativada com sucesso.");
 		messageContext.add("Efetue o login e aproveite!");
+
+		return "pretty:login";
 	}
 }
