@@ -25,7 +25,16 @@
 	template="/templates/main.xhtml">
 
 	<ui:define name="body">
-		home do usuário #{securityContext.user.id}
+		<p>
+			<h:outputText value="home do usuário #{securityContext.user}"/>
+		</p>
+		<p>
+			<h:graphicImage value="#{securityContext.user.photoUrl}" 
+				alt="#{securityContext.user}" width="100" height="100" />
+		</p>
+		<p>
+			<h:button value="criar aplicação" outcome="pretty:application-new" />
+		</p>
 	</ui:define>
 
 </ui:composition>

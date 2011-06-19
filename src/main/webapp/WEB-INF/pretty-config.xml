@@ -18,9 +18,8 @@
  or write to the Free Software Foundation, Inc., 51 Franklin Street,
  Fifth Floor, Boston, MA  02110-1301, USA.
 -->
-<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.2.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.2.0 http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.2.0.xsd">
+<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.2.1 http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.2.1.xsd">
 
 	<rewrite match="^/(.*)/$" substitute="/$1" redirect="301" />
 
@@ -31,20 +30,13 @@
 
 	<url-mapping id="login">
 		<pattern value="/login" />
-		<view-id value="/signin.jsf" />
+		<view-id value="/login.jsf" />
 	</url-mapping>
-
-<!-- 	<url-mapping id="logout"> -->
-<!-- 		<pattern value="/logout" /> -->
-<!-- 		<view-id value="/logout.jsf" /> -->
-<!-- 	</url-mapping> -->
 
 	<url-mapping id="logout">
 		<pattern value="/logout" />
 		<view-id value="/logout.jsf" />
-<!-- 		<action>#{signInController.logout}</action> -->
 		<action>#{securityContext.logout}</action>
-<!-- 		<action>#{x.x}</action> -->
 	</url-mapping>
 
 	<url-mapping id="signup">
@@ -52,13 +44,36 @@
 		<view-id value="/signup.jsf" />
 	</url-mapping>
 
-	<url-mapping id="user-public-home">
-		<pattern value="/user/#{id}" />
+	<url-mapping id="activate">
+		<pattern value="/activate/#{username}/#{activationCode}" />
+		<view-id value="/activate.jsf" />
+		<action>#{accountActivationController.activate}</action>
+	</url-mapping>
+
+	<url-mapping id="reset-request">
+		<pattern value="/reset/request" />
+		<view-id value="/reset-request.jsf" />
+	</url-mapping>
+
+	<url-mapping id="reset-perform">
+		<pattern value="/reset/#{passwordResetController.username}/#{passwordResetController.confirmationCode}" />
+		<view-id value="/reset-perform.jsf" />
+		<action>#{passwordResetController.confirm}</action>
+	</url-mapping>
+
+	<url-mapping id="user-profile">
+		<pattern value="/user/#{username}" />
 		<view-id value="/user-profile.jsf" />
 	</url-mapping>
 
+	<url-mapping id="application-new">
+		<pattern value="/app/new" />
+		<view-id value="/application-new.jsf" />
+	</url-mapping>
+	
 	<url-mapping id="application-dashboard">
 		<pattern value="/app/#{id}" />
 		<view-id value="/application-dashboard.jsf" />
 	</url-mapping>
+	
 </pretty-config>
