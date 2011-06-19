@@ -45,7 +45,7 @@
 	</url-mapping>
 
 	<url-mapping id="activate">
-		<pattern value="/activate/#{username}/#{activationCode}" />
+		<pattern value="/activate/#{accountActivationController.username}/#{accountActivationController.activationCode}" />
 		<view-id value="/activate.jsf" />
 		<action>#{accountActivationController.activate}</action>
 	</url-mapping>

@@ -32,7 +32,6 @@ import org.rasea.core.service.AccountService;
 
 import br.gov.frameworkdemoiselle.annotation.ViewScoped;
 import br.gov.frameworkdemoiselle.message.MessageContext;
-import br.gov.frameworkdemoiselle.util.Parameter;
 
 @Named
 @ViewScoped
@@ -46,16 +45,14 @@ public class AccountActivationController extends AbstractController {
 	@Inject
 	private AccountService service;
 
-	@Inject
-	private Parameter<String> username;
+	private String username;
 
-	@Inject
-	private Parameter<String> activationCode;
+	private String activationCode;
 
 	public String activate() throws InvalidConfirmationCodeException, AccountAlreadyActiveException, EmptyUsernameException,
 			InvalidUsernameFormatException {
-		Account account = new Account(username.getValue());
-		account.setActivationCode(activationCode.getValue());
+		Account account = new Account(username);
+		account.setActivationCode(activationCode);
 
 		service.activate(account);
 
@@ -63,5 +60,13 @@ public class AccountActivationController extends AbstractController {
 		messageContext.add("Efetue o login e aproveite!");
 
 		return "pretty:login";
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setActivationCode(String activationCode) {
+		this.activationCode = activationCode;
 	}
 }
