@@ -187,30 +187,6 @@
 		</plugins>
 	</build>
 
-	<profiles>
-		<profile>
-			<id>jboss</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<profile.scope>provided</profile.scope>
-			</properties>
-		</profile>
-		<profile>
-			<id>tomcat</id>
-			<properties>
-				<profile.scope>compile</profile.scope>
-			</properties>
-		</profile>
-		<profile>
-			<id>jetty</id>
-			<properties>
-				<profile.scope>compile</profile.scope>
-			</properties>
-		</profile>
-	</profiles>
-
 	<scm>
 		<connection>scm:git:git@github.com:rasea/server.git</connection>
 		<url>scm:git:git@github.com:rasea/server.git</url>
