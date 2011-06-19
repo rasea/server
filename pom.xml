@@ -42,8 +42,8 @@
 			<dependency>
 				<groupId>br.gov.frameworkdemoiselle</groupId>
 				<artifactId>demoiselle-parent</artifactId>
-				<version>2.1.1-SNAPSHOT</version>
-				<!-- <version>2.1.0</version> -->
+<!--				<version>2.1.0-SNAPSHOT</version>-->
+				<version>2.1.0</version>
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
@@ -51,11 +51,6 @@
 	</dependencyManagement>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.rasea</groupId>
-			<artifactId>rasea-extensions</artifactId>
-			<version>0.1.0.GA</version>
-		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
@@ -73,6 +68,12 @@
 			</exclusions>
 		</dependency>
 		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.jboss.weld.servlet</groupId>
 			<artifactId>weld-servlet-core</artifactId>
 			<version>1.1.1.Final</version>
@@ -80,16 +81,16 @@
 		<dependency>
 			<groupId>com.ocpsoft</groupId>
 			<artifactId>prettyfaces-jsf2</artifactId>
-			<version>3.2.0</version>
+			<version>3.2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>br.gov.frameworkdemoiselle</groupId>
 			<artifactId>demoiselle-jsf</artifactId>
 			<exclusions>
-				<exclusion>
-					<artifactId>jstl</artifactId>
-					<groupId>javax.servlet</groupId>
-				</exclusion>
+<!--				<exclusion>-->
+<!--					<artifactId>jstl</artifactId>-->
+<!--					<groupId>javax.servlet</groupId>-->
+<!--				</exclusion>-->
 				<exclusion>
 					<artifactId>jsr250-api</artifactId>
 					<groupId>javax.annotation</groupId>
@@ -100,11 +101,6 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.4.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<version>1.8.0.10</version>
 		</dependency>
 
 		<dependency>
@@ -120,8 +116,14 @@
 		</dependency>
 		<dependency>
 			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>1.4.6</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
 			<artifactId>powermock-api-easymock</artifactId>
-			<version>1.4.8</version>
+			<version>1.4.6</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -134,6 +136,12 @@
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>1.4.4</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>activation</artifactId>
+					<groupId>javax.activation</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 

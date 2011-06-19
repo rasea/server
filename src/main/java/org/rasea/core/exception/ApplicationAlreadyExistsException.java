@@ -18,24 +18,10 @@
  * or write to the Free Software Foundation, Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.rasea.core.security;
+package org.rasea.core.exception;
 
-import javax.enterprise.inject.Alternative;
+public class ApplicationAlreadyExistsException extends RaseaException {
 
-import br.gov.frameworkdemoiselle.security.Authorizator;
+	private static final long serialVersionUID = 7183692719913475370L;
 
-@Alternative
-public class RaseaAuthorizator implements Authorizator {
-
-	private static final long serialVersionUID = -1432059116255260326L;
-
-	@Override
-	public boolean hasRole(String role) {
-		return true;
-	}
-
-	@Override
-	public boolean hasPermission(String resource, String operation) {
-		return true;
-	}
 }
