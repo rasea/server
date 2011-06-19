@@ -66,14 +66,14 @@
 		<view-id value="/user-profile.jsf" />
 	</url-mapping>
 
+	<url-mapping id="application-new">
+		<pattern value="/app/new" />
+		<view-id value="/application-new.jsf" />
+	</url-mapping>
+	
 	<url-mapping id="application-dashboard">
 		<pattern value="/app/#{id}" />
 		<view-id value="/application-dashboard.jsf" />
-	</url-mapping>
-
-	<url-mapping id="application-create">
-		<pattern value="/new/app" />
-		<view-id value="/application-create.jsf" />
 	</url-mapping>
 	
 </pretty-config>

@@ -50,15 +50,14 @@ public class ApplicationController extends AbstractController {
 
 	@NotNull
 	@Length(min = 1, message = "{required.field}")
-	private String description;
+	private String displayName;
 
 	private Boolean active;
 
 	public String createApp() throws ApplicationAlreadyExistsException {
 
 		Application app = new Application(name);
-		app.setDescription(description);
-		app.setActive(active);
+		app.setDisplayName(displayName);
 
 		service.create(app);
 
@@ -75,12 +74,12 @@ public class ApplicationController extends AbstractController {
 		this.name = name;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getDisplayName() {
+		return displayName;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 
 	public Boolean getActive() {

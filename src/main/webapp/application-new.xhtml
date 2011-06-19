@@ -28,14 +28,9 @@
 			<h:message for="name" />
 			<br />
 
-			<h:outputLabel value="descrição" for="description" />
-			<h:inputText id="description" value="#{applicationController.description}" autocomplete="true" />
-			<h:message for="description" />
-			<br />
-
-			<h:outputLabel value="ativar" for="active" />
-			<h:selectBooleanCheckbox id="active" value="#{applicationController.active}" />
-			<h:message for="active" />
+			<h:outputLabel value="Nome para exibição" for="displayName" />
+			<h:inputText id="displayName" value="#{applicationController.displayName}" autocomplete="true" />
+			<h:message for="displayName" />
 			<br />
 
 			<h:commandButton id="submit" value="criar aplicação" action="#{applicationController.createApp}" />

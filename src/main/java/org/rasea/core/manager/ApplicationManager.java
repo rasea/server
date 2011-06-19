@@ -37,17 +37,15 @@ public class ApplicationManager extends AbstractSimpleDBManager<Application> {
 
 	public void create(final Application app) {
 		final List<ReplaceableAttribute> attrs = new ArrayList<ReplaceableAttribute>();
-		attrs.add(new ReplaceableAttribute("description", app.getDescription(), true));
-		attrs.add(new ReplaceableAttribute("active", app.getActive().toString(), true));
+		attrs.add(new ReplaceableAttribute("displayName", app.getDisplayName(), true));
 
 		getSimpleDB().putAttributes(new PutAttributesRequest(getDomainName(), app.getName(), attrs));
 	}
-	
+
 	public Application findByName(final String name) {
 		Application app = null;
 
-		final GetAttributesResult result = getSimpleDB().getAttributes(
-				new GetAttributesRequest(getDomainName(), name));
+		final GetAttributesResult result = getSimpleDB().getAttributes(new GetAttributesRequest(getDomainName(), name));
 
 		if (result != null) {
 			app = new Application(name);
@@ -58,8 +56,7 @@ public class ApplicationManager extends AbstractSimpleDBManager<Application> {
 	}
 
 	public boolean containsName(final String name) {
-		final GetAttributesRequest request = new GetAttributesRequest(
-				getDomainName(), name).withAttributeNames("active");
+		final GetAttributesRequest request = new GetAttributesRequest(getDomainName(), name).withAttributeNames("active");
 		final GetAttributesResult result = getSimpleDB().getAttributes(request);
 
 		return (result != null && !result.getAttributes().isEmpty());
@@ -71,10 +68,10 @@ public class ApplicationManager extends AbstractSimpleDBManager<Application> {
 
 	@Override
 	protected void fillAttribute(final Application app, final String name, final String value) {
-		if ("description".equals(name)) {
-			app.setDescription(value);
-		} else if ("active".equals(name)) {
-			app.setActive(new Boolean(value));
+		if ("displayName".equals(name)) {
+			app.setDisplayName(value);
+			//		} else if ("active".equals(name)) {
+			//			app.setActive(new Boolean(value));
 		}
 	}
 }

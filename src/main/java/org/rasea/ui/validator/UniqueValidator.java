@@ -3,6 +3,7 @@ package org.rasea.ui.validator;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import org.rasea.core.exception.InvalidUsernameFormatException;
 import org.rasea.core.service.AccountService;
 
 import br.gov.frameworkdemoiselle.util.Beans;
@@ -30,11 +31,13 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
 				try {
 					return !service.containsUsername(value);
 
+				} catch (InvalidUsernameFormatException cause) {
+					return true;
+					
 				} catch (Exception cause) {
 					return false;
 				}
 			}
-
 		}
 
 		return true;

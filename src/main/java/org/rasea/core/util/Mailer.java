@@ -22,8 +22,6 @@ package org.rasea.core.util;
 
 import java.io.Serializable;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.rasea.core.domain.Account;
 
 import br.gov.frameworkdemoiselle.util.Beans;
@@ -63,7 +61,6 @@ public class Mailer implements Serializable {
 
 		Content content = new Content();
 		content.setCharset("UTF-8");
-		// FIXME: substituir esse endereço hardcoded
 		content.setData(String.format("%s/activate/%s/%s", getBaseURL(), account.getUsername(), account.getActivationCode()));
 
 		Body body = new Body();
@@ -85,7 +82,6 @@ public class Mailer implements Serializable {
 
 		Content content = new Content();
 		content.setCharset("UTF-8");
-		// FIXME: substituir esse endereço hardcoded
 		content.setData(String.format("%s/reset/%s/%s", getBaseURL(), account.getUsername(), account.getPasswordResetCode()));
 
 		Body body = new Body();
@@ -99,19 +95,24 @@ public class Mailer implements Serializable {
 	}
 
 	private String getBaseURL() {
-		HttpServletRequest request = Beans.getReference(HttpServletRequest.class);
-		StringBuffer baseUrl = new StringBuffer();
 
-		baseUrl.append("http://");
-		baseUrl.append(request.getLocalName());
+		// Isso aqui não funciona!
 
-		if (request.getLocalPort() != 80 && request.getLocalPort() != 443) {
-			baseUrl.append(":");
-			baseUrl.append(request.getLocalPort());
-		}
+		//		HttpServletRequest request = Beans.getReference(HttpServletRequest.class);
+		//		StringBuffer baseUrl = new StringBuffer();
+		//
+		//		baseUrl.append("http://");
+		//		baseUrl.append(request.getLocalName());
+		//
+		//		if (request.getLocalPort() != 80 && request.getLocalPort() != 443) {
+		//			baseUrl.append(":");
+		//			baseUrl.append(request.getLocalPort());
+		//		}
+		//
+		//		baseUrl.append(request.getContextPath());
 
-		baseUrl.append(request.getContextPath());
+		//		return "http://localhost:8080/rasea-server";
 
-		return baseUrl.toString();
+		return "http://aws.rasea.org";
 	}
 }

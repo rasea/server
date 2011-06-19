@@ -33,37 +33,26 @@ public class Application implements Serializable {
 	@ItemName
 	private final String name;
 
-	private String description;
-
-	private Boolean active;
+	private String displayName;
 
 	public Application(String name) {
 		this.name = name;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getDisplayName() {
+		return displayName;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public Boolean getActive() {
-		return active;
-	}
-
-	public void setActive(Boolean active) {
-		this.active = active;
-	}
-
 	@Override
 	public String toString() {
-		return "Application [name=" + name + ", description=" + description + ", active=" + active + "]";
+		return "Application [name=" + name + ", displayName=" + displayName + "]";
 	}
-
 }
