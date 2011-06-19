@@ -27,6 +27,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.rasea.core.domain.Account;
+import org.rasea.core.domain.Credentials;
 import org.rasea.core.exception.AccountDoesNotExistsException;
 import org.rasea.core.exception.EmptyEmailException;
 import org.rasea.core.exception.EmptyUsernameException;
@@ -37,6 +38,8 @@ import org.rasea.core.service.AccountService;
 
 import br.gov.frameworkdemoiselle.annotation.ViewScoped;
 import br.gov.frameworkdemoiselle.message.MessageContext;
+import br.gov.frameworkdemoiselle.security.SecurityContext;
+import br.gov.frameworkdemoiselle.util.Beans;
 
 @Named
 @ViewScoped
@@ -60,12 +63,6 @@ public class PasswordResetController extends AbstractController {
 	@Length(min = 1, message = "{required.field}")
 	private String email;
 
-	//	@Inject
-	//	private Parameter<String> usernameParam;
-	//
-	//	@Inject
-	//	private Parameter<String> confirmationCodeParam;
-
 	@NotNull
 	@Length(min = 1, message = "{required.field}")
 	private String newPassword;
@@ -86,17 +83,14 @@ public class PasswordResetController extends AbstractController {
 	}
 
 	public void confirm() throws InvalidConfirmationCodeException, EmptyUsernameException, InvalidUsernameFormatException {
-		//		Account account = service.findByUsername(usernameParam.getValue());
 		Account account = service.findByUsername(username);
 
 		invalidConfirmationCode = false;
 
-		//		if (account == null || confirmationCodeParam.getValue() == null) {
 		if (account == null) {
 			invalidConfirmationCode = true;
 		}
 
-		//		if (!confirmationCodeParam.getValue().equals(account.getPasswordResetCode())) {
 		if (!confirmationCode.equals(account.getPasswordResetCode())) {
 			invalidConfirmationCode = true;
 		}
@@ -110,29 +104,26 @@ public class PasswordResetController extends AbstractController {
 		return invalidConfirmationCode;
 	}
 
-	public String perform() throws InvalidConfirmationCodeException, EmptyUsernameException, InvalidUsernameFormatException {
-		String outcome;
-
+	public void perform() throws InvalidConfirmationCodeException, EmptyUsernameException, InvalidUsernameFormatException {
 		if (newPassword.equals(confirmPassword)) {
 			Account account = new Account(username);
 			account.setPasswordResetCode(confirmationCode);
 			account.setPassword(newPassword);
 
 			service.passwordResetConfirmation(account);
-
 			messageContext.add("Sua senha foi alterada com sucesso.");
-			messageContext.add("Efetue o login e aproveite!");
 
-			return "pretty:index";
+			Credentials credentials = Beans.getReference(Credentials.class);
+			credentials.setUsernameOrEmail(username);
+			credentials.setPassword(newPassword);
+
+			SecurityContext securityContext = Beans.getReference(SecurityContext.class);
+			securityContext.login();
 
 		} else {
 			FacesMessage message = new FacesMessage("Não confere com a senha");
 			getFacesContext().addMessage("confirmPassword", message);
-
-			outcome = null;
 		}
-
-		return outcome;
 	}
 
 	public String getUsername() {
