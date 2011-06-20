@@ -84,6 +84,10 @@ public abstract class AbstractSimpleDBManager<T> implements Serializable {
 		return domainName;
 	}
 
+	protected String getDomainName(final String sufix) {
+		return domainName + "_" + sufix;
+	}
+
 	protected Date parseDateValue(final String value) {
 		Date date = null;
 		if (value != null && !"".equals(value)) {
