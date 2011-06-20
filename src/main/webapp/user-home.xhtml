@@ -27,6 +27,11 @@
 	<ui:define name="body">
 		<p>
 			<h:outputText value="home do usuário #{securityContext.user}"/>
+			<h:outputText value=" (último login em "/>
+			<h:outputText value="#{securityContext.user.lastLogin}">
+				<f:convertDateTime type="both" dateStyle="short"/>
+			</h:outputText>
+			<h:outputText value=")"/>
 		</p>
 		<p>
 			<h:graphicImage value="#{securityContext.user.photoUrl}" 

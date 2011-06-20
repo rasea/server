@@ -53,8 +53,9 @@ public class AccountService implements Serializable {
 	@Inject
 	private AccountManager manager;
 
-	public User authenticate(final Credentials credentials) throws AccountNotActiveException, InvalidCredentialsException, EmptyUsernameException,
-			InvalidUsernameFormatException {
+	public User authenticate(final Credentials credentials) throws AccountNotActiveException,
+			InvalidCredentialsException, EmptyUsernameException, InvalidUsernameFormatException {
+		
 		if (credentials == null || credentials.getUsernameOrEmail() == null || credentials.getPassword() == null) {
 			throw new InvalidCredentialsException();
 		}
@@ -81,12 +82,16 @@ public class AccountService implements Serializable {
 		}
 
 		final User user = new User(account.getUsername());
+		user.setLastLogin(account.getLastLogin());
 		String photoURL = account.getPhotoUrl();
 		if (photoURL == null || photoURL.isEmpty()) {
 			photoURL = generateGravatarURL(account.getEmail());
 		}
 		user.setPhotoUrl(photoURL);
 
+		account.setLastLogin(Calendar.getInstance().getTime());
+		manager.saveLoginInfo(account);
+		
 		return user;
 	}
 
@@ -105,8 +110,8 @@ public class AccountService implements Serializable {
 		}
 	}
 
-	public void create(final Account account) throws EmptyUsernameException, InvalidUsernameFormatException, EmptyEmailException,
-			InvalidEmailFormatException, UsernameAlreadyExistsException, EmailAlreadyAssignedException {
+	public void create(final Account account) throws EmptyUsernameException, InvalidUsernameFormatException,
+			EmptyEmailException, InvalidEmailFormatException, UsernameAlreadyExistsException, EmailAlreadyAssignedException {
 
 		if (Strings.isEmpty(account.getEmail())) {
 			throw new EmptyEmailException();
@@ -135,8 +140,8 @@ public class AccountService implements Serializable {
 		Mailer.getInstance().notifyAccountActivation(account);
 	}
 
-	public void activate(final Account account) throws InvalidConfirmationCodeException, AccountAlreadyActiveException, EmptyUsernameException,
-			InvalidUsernameFormatException {
+	public void activate(final Account account) throws InvalidConfirmationCodeException,
+			AccountAlreadyActiveException, EmptyUsernameException, InvalidUsernameFormatException {
 
 		if (Strings.isEmpty(account.getActivationCode())) {
 			throw new InvalidConfirmationCodeException();
@@ -162,8 +167,8 @@ public class AccountService implements Serializable {
 		// TODO Mandar e-mail dizendo que a conta está ativa e mais alguns blá-blá-blás
 	}
 
-	public void passwordResetRequest(String email) throws InvalidConfirmationCodeException, EmptyEmailException, InvalidEmailFormatException,
-			AccountDoesNotExistsException {
+	public void passwordResetRequest(String email) throws InvalidConfirmationCodeException,
+			EmptyEmailException, InvalidEmailFormatException, AccountDoesNotExistsException {
 
 		if (Strings.isEmpty(email)) {
 			throw new EmptyEmailException();
@@ -185,8 +190,8 @@ public class AccountService implements Serializable {
 		Mailer.getInstance().notifyPasswordResetRequest(account);
 	}
 
-	public void passwordResetConfirmation(final Account account) throws InvalidConfirmationCodeException, EmptyUsernameException,
-			InvalidUsernameFormatException {
+	public void passwordResetConfirmation(final Account account) throws InvalidConfirmationCodeException,
+			EmptyUsernameException, InvalidUsernameFormatException {
 
 		if (Strings.isEmpty(account.getPasswordResetCode())) {
 			throw new InvalidConfirmationCodeException();
@@ -219,7 +224,9 @@ public class AccountService implements Serializable {
 		return manager.containsEmail(email);
 	}
 
-	public void delete(final Account account) throws AccountDoesNotExistsException, EmptyUsernameException, InvalidUsernameFormatException {
+	public void delete(final Account account) throws AccountDoesNotExistsException,
+			EmptyUsernameException, InvalidUsernameFormatException {
+		
 		if (!containsUsername(account.getUsername())) {
 			throw new AccountDoesNotExistsException();
 		}
@@ -257,6 +264,7 @@ public class AccountService implements Serializable {
 	 */
 	private String generateGravatarURL(final String email) {
 
+		// TODO: parametrizar opção de usar versão segura
 		final String GRAVATAR_PREFIX_SECURE = "https://secure.gravatar.com/avatar/";
 		// final String GRAVATAR_PREFIX_REGULAR = "http://www.gravatar.com/avatar/";
 
