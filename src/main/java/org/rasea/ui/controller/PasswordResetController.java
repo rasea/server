@@ -20,6 +20,7 @@
  */
 package org.rasea.ui.controller;
 
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -36,13 +37,12 @@ import org.rasea.core.exception.InvalidEmailFormatException;
 import org.rasea.core.exception.InvalidUsernameFormatException;
 import org.rasea.core.service.AccountService;
 
-import br.gov.frameworkdemoiselle.annotation.ViewScoped;
 import br.gov.frameworkdemoiselle.message.MessageContext;
 import br.gov.frameworkdemoiselle.security.SecurityContext;
 import br.gov.frameworkdemoiselle.util.Beans;
 
 @Named
-@ViewScoped
+@RequestScoped
 public class PasswordResetController extends AbstractController {
 
 	private static final long serialVersionUID = 1996192235542503778L;

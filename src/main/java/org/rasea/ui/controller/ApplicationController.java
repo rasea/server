@@ -20,6 +20,7 @@
  */
 package org.rasea.ui.controller;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
@@ -29,11 +30,10 @@ import org.rasea.core.domain.Application;
 import org.rasea.core.exception.ApplicationAlreadyExistsException;
 import org.rasea.core.service.ApplicationService;
 
-import br.gov.frameworkdemoiselle.annotation.ViewScoped;
 import br.gov.frameworkdemoiselle.message.MessageContext;
 
 @Named
-@ViewScoped
+@RequestScoped
 public class ApplicationController extends AbstractController {
 
 	private static final long serialVersionUID = 7252813694049446973L;

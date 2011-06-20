@@ -20,6 +20,7 @@
  */
 package org.rasea.ui.controller;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -30,11 +31,10 @@ import org.rasea.core.exception.InvalidConfirmationCodeException;
 import org.rasea.core.exception.InvalidUsernameFormatException;
 import org.rasea.core.service.AccountService;
 
-import br.gov.frameworkdemoiselle.annotation.ViewScoped;
 import br.gov.frameworkdemoiselle.message.MessageContext;
 
 @Named
-@ViewScoped
+@RequestScoped
 public class AccountActivationController extends AbstractController {
 
 	private static final long serialVersionUID = 5164076649447930796L;
