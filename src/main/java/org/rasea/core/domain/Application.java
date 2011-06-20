@@ -21,6 +21,8 @@
 package org.rasea.core.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.rasea.core.annotation.Domain;
 import org.rasea.core.annotation.ItemName;
@@ -34,9 +36,16 @@ public class Application implements Serializable {
 	private final String name;
 
 	private String displayName;
+	
+	private String url;
+	
+	private Set<String> owners;
 
+	private Long accessCount;
+	
 	public Application(String name) {
 		this.name = name;
+		this.owners = new HashSet<String>();
 	}
 
 	public String getDisplayName() {
@@ -51,8 +60,34 @@ public class Application implements Serializable {
 		return name;
 	}
 
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public Set<String> getOwners() {
+		return owners;
+	}
+
+	public void setOwners(Set<String> owners) {
+		this.owners = owners;
+	}
+
+	public Long getAccessCount() {
+		return accessCount;
+	}
+
+	public void setAccessCount(Long accessCount) {
+		this.accessCount = accessCount;
+	}
+
 	@Override
 	public String toString() {
-		return "Application [name=" + name + ", displayName=" + displayName + "]";
+		return "Application [name=" + name + ", displayName=" + displayName +
+				", url=" + url + ", owners=" + owners + ", accessCount=" + accessCount + "]";
 	}
+
 }

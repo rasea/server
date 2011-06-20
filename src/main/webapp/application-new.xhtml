@@ -33,6 +33,11 @@
 			<h:message for="displayName" />
 			<br />
 
+			<h:outputLabel value="Endereço (URL)" for="url" />
+			<h:inputText id="url" value="#{applicationController.url}" autocomplete="true" />
+			<h:message for="url" />
+			<br />
+
 			<h:commandButton id="submit" value="criar aplicação" action="#{applicationController.createApp}" />
 		</h:form>
 	</ui:define>

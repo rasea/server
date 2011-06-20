@@ -71,6 +71,12 @@
 		<view-id value="/application-new.jsf" />
 	</url-mapping>
 	
+	<url-mapping id="application-list">
+		<pattern value="/app/list" />
+		<view-id value="/application-list.jsf" />
+		<action>#{applicationController.loadApplicationsList}</action>
+	</url-mapping>
+	
 	<url-mapping id="application-dashboard">
 		<pattern value="/app/#{id}" />
 		<view-id value="/application-dashboard.jsf" />

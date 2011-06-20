@@ -18,29 +18,27 @@
  or write to the Free Software Foundation, Inc., 51 Franklin Street,
  Fifth Floor, Boston, MA  02110-1301, USA.
 -->
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/templates/main.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" template="/templates/main.xhtml">
 
 	<ui:define name="body">
-		<p>
-			<h:outputText value="home do usuário #{securityContext.user}"/>
-			<h:outputText value=" (último login em "/>
-			<h:outputText value="#{securityContext.user.lastLogin}">
-				<f:convertDateTime type="both" dateStyle="short"/>
-			</h:outputText>
-			<h:outputText value=")"/>
-		</p>
-		<p>
-			<h:graphicImage value="#{securityContext.user.photoUrl}" 
-				alt="#{securityContext.user}" width="100" height="100" />
-		</p>
-		<p>
-			<h:button value="criar aplicação" outcome="pretty:application-new" />
-			<h:button value="lista de aplicações" outcome="pretty:application-list" />
-		</p>
+		<h:form id="applist" prependId="false">
+			<h:dataTable id="list" var="bean" value="#{applicationController.appsList}">
+				<f:facet name="header">cabecalho</f:facet>
+				<h:column>
+					<f:facet name="header">nome interno</f:facet>
+					<h:outputText value="#{bean.name}"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">nome de exibição</f:facet>
+					<h:outputText value="#{bean.displayName}"/>
+				</h:column>
+				<h:column>
+					<f:facet name="header">acessos</f:facet>
+					<h:outputText value="#{bean.accessCount}"/>
+				</h:column>
+			</h:dataTable>
+		</h:form>
 	</ui:define>
 
 </ui:composition>
