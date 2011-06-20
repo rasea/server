@@ -21,6 +21,7 @@
 package org.rasea.core.service;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -29,6 +30,8 @@ import org.rasea.core.exception.ApplicationAlreadyExistsException;
 import org.rasea.core.exception.ApplicationDoesNotExistException;
 import org.rasea.core.manager.ApplicationManager;
 
+import br.gov.frameworkdemoiselle.security.SecurityContext;
+
 public class ApplicationService implements Serializable {
 
 	private static final long serialVersionUID = 2750329357752203004L;
@@ -36,12 +39,17 @@ public class ApplicationService implements Serializable {
 	@Inject
 	private ApplicationManager manager;
 
+	@Inject
+	private SecurityContext securityContext;
+	
 	public void create(final Application app) throws ApplicationAlreadyExistsException  {
 		
 		if (containsName(app.getName())) {
 			throw new ApplicationAlreadyExistsException();
 		}
 		
+		final String username = securityContext.getUser().toString();
+		app.getOwners().add(username);
 		manager.create(app);
 	}
 
@@ -56,6 +64,11 @@ public class ApplicationService implements Serializable {
 		}
 		
 		manager.delete(app);
+	}
+
+	public List<Application> getCurrentUserApplications() {
+		final String username = securityContext.getUser().toString();
+		return manager.getApplicationsFromOwner(username);
 	}
 
 }

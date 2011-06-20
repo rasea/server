@@ -21,6 +21,7 @@
 package org.rasea.core.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.rasea.core.annotation.Domain;
@@ -44,6 +45,7 @@ public class Application implements Serializable {
 	
 	public Application(String name) {
 		this.name = name;
+		this.owners = new HashSet<String>();
 	}
 
 	public String getDisplayName() {
