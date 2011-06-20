@@ -38,6 +38,8 @@ public class Account implements Serializable {
 	@Unique
 	private String email;
 
+	private String fullname;
+	
 	private String photoUrl;
 
 	private String password;
@@ -50,6 +52,8 @@ public class Account implements Serializable {
 
 	private String passwordResetCode;
 
+	private Date lastLogin;
+	
 	public Account(String username) {
 		this.username = username;
 	}
@@ -114,10 +118,28 @@ public class Account implements Serializable {
 		this.passwordResetCode = passwordResetCode;
 	}
 
-	@Override
-	public String toString() {
-		return "Account [username=" + username + ", email=" + email + ", photoUrl=" + photoUrl + ", password=" + password + ", creationDate="
-				+ creationDate + ", activationCode=" + activationCode + ", activationDate=" + activationDate + "]";
+	public String getFullname() {
+		return fullname;
 	}
 
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
+	}
+
+	public Date getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+	@Override
+	public String toString() {
+		return "Account [username=" + username + ", email=" + email + ", fullname=" + fullname + ", photoUrl="
+				+ photoUrl + ", password=" + password + ", creationDate=" + creationDate + ", activationDate="
+				+ activationDate + ", activationCode=" + activationCode + ", passwordResetCode=" + passwordResetCode
+				+ ", lastLogin=" + lastLogin + "]";
+	}
+	
 }
