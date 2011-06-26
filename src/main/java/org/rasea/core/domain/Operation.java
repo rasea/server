@@ -18,28 +18,46 @@
  * or write to the Free Software Foundation, Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.rasea.ui.validator;
+package org.rasea.core.domain;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import java.io.Serializable;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import org.rasea.core.annotation.Domain;
+import org.rasea.core.annotation.ItemName;
+import org.rasea.core.annotation.Transient;
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
+@Domain(name = "OPERATIONS")
+public class Operation implements Serializable {
 
-@Retention(RUNTIME)
-@Target({ FIELD, METHOD })
-@Constraint(validatedBy = UniqueValidator.class)
-public @interface Unique {
+	private static final long serialVersionUID = -6776601526993229812L;
 
-	FieldType type();
+	@Transient
+	private final String app;
 
-	Class<?>[] groups() default {};
+	@ItemName
+	private final String name;
 
-	String message();
+	private String displayName;
 
-	Class<? extends Payload>[] payload() default {};
+	public Operation(String app, String name) {
+		this.app = app;
+		this.name = name;
+	}
+
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getApplication() {
+		return app;
+	}
+
 }

@@ -23,6 +23,7 @@ package org.rasea.ui.controller;
 import static org.rasea.ui.validator.FieldType.EMAIL;
 import static org.rasea.ui.validator.FieldType.USERNAME;
 
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -40,11 +41,10 @@ import org.rasea.core.service.AccountService;
 import org.rasea.ui.validator.Unique;
 import org.rasea.ui.validator.ValidFormat;
 
-import br.gov.frameworkdemoiselle.annotation.ViewScoped;
 import br.gov.frameworkdemoiselle.message.MessageContext;
 
 @Named
-@ViewScoped
+@RequestScoped
 public class SignUpController extends AbstractController {
 
 	private static final long serialVersionUID = -7576321048358680557L;

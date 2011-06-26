@@ -55,6 +55,7 @@ public class AccountService implements Serializable {
 
 	public User authenticate(final Credentials credentials) throws AccountNotActiveException, InvalidCredentialsException, EmptyUsernameException,
 			InvalidUsernameFormatException {
+
 		if (credentials == null || credentials.getUsernameOrEmail() == null || credentials.getPassword() == null) {
 			throw new InvalidCredentialsException();
 		}
@@ -81,21 +82,29 @@ public class AccountService implements Serializable {
 		}
 
 		final User user = new User(account.getUsername());
+		user.setLastLogin(account.getLastLogin());
 		String photoURL = account.getPhotoUrl();
 		if (photoURL == null || photoURL.isEmpty()) {
 			photoURL = generateGravatarURL(account.getEmail());
 		}
 		user.setPhotoUrl(photoURL);
 
+		account.setLastLogin(Calendar.getInstance().getTime());
+		manager.saveLoginInfo(account);
+
 		return user;
 	}
 
 	public Account findByUsername(String username) throws EmptyUsernameException, InvalidUsernameFormatException {
 		validateUsername(username);
-		return manager.findByUsername(username);
+
+		Account account = manager.findByUsername(username);
+		account.setPhotoUrl(generateGravatarURL(account.getEmail()));
+
+		return account;
 	}
 
-	private void validateUsername(String username) throws EmptyUsernameException, InvalidUsernameFormatException {
+	public void validateUsername(String username) throws EmptyUsernameException, InvalidUsernameFormatException {
 		if (Strings.isEmpty(username)) {
 			throw new EmptyUsernameException();
 		}
@@ -257,6 +266,7 @@ public class AccountService implements Serializable {
 	 */
 	private String generateGravatarURL(final String email) {
 
+		// TODO: parametrizar opção de usar versão segura
 		final String GRAVATAR_PREFIX_SECURE = "https://secure.gravatar.com/avatar/";
 		// final String GRAVATAR_PREFIX_REGULAR = "http://www.gravatar.com/avatar/";
 

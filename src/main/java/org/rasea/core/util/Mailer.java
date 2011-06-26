@@ -70,7 +70,7 @@ public class Mailer implements Serializable {
 
 		SendEmailRequest request = new SendEmailRequest(SENDER_EMAIL_ADDRESS, to, message);
 		AmazonSimpleEmailServiceAsync service = Beans.getReference(AmazonSimpleEmailServiceAsync.class);
-		service.sendEmail(request);
+		service.sendEmailAsync(request);
 	}
 
 	public void notifyPasswordResetRequest(Account account) {
@@ -82,7 +82,7 @@ public class Mailer implements Serializable {
 
 		Content content = new Content();
 		content.setCharset("UTF-8");
-		content.setData(String.format("%s/reset/%s/%s", getBaseURL(), account.getUsername(), account.getPasswordResetCode()));
+		content.setData(String.format("%s/password/reset/%s/%s", getBaseURL(), account.getUsername(), account.getPasswordResetCode()));
 
 		Body body = new Body();
 		body.setText(content);
@@ -91,7 +91,7 @@ public class Mailer implements Serializable {
 
 		SendEmailRequest request = new SendEmailRequest(SENDER_EMAIL_ADDRESS, to, message);
 		AmazonSimpleEmailServiceAsync service = Beans.getReference(AmazonSimpleEmailServiceAsync.class);
-		service.sendEmail(request);
+		service.sendEmailAsync(request);
 	}
 
 	private String getBaseURL() {

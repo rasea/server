@@ -18,48 +18,44 @@
  * or write to the Free Software Foundation, Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.rasea.ui.validator;
+package org.rasea.ui.controller;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
+import org.rasea.core.domain.Account;
+import org.rasea.core.exception.EmptyUsernameException;
 import org.rasea.core.exception.InvalidUsernameFormatException;
 import org.rasea.core.service.AccountService;
 
-import br.gov.frameworkdemoiselle.util.Beans;
-import br.gov.frameworkdemoiselle.util.Strings;
+@Named
+@RequestScoped
+public class UserProfileController extends AbstractUserController {
 
-public class UniqueValidator implements ConstraintValidator<Unique, String> {
+	private static final long serialVersionUID = 1L;
 
-	private Unique annotation;
+	@Inject
+	private AccountService accountService;
 
-	@Override
-	public void initialize(final Unique annotation) {
-		this.annotation = annotation;
+	private Account account;
+
+	private String username;
+
+	public Account getAccount() throws EmptyUsernameException, InvalidUsernameFormatException {
+		if (account == null) {
+			account = accountService.findByUsername(getUsername());
+		}
+
+		return account;
 	}
 
 	@Override
-	public boolean isValid(final String value, final ConstraintValidatorContext context) {
-		if (!Strings.isEmpty(value)) {
-			AccountService service = Beans.getReference(AccountService.class);
+	protected String getUsername() {
+		return username;
+	}
 
-			switch (annotation.type()) {
-			case EMAIL:
-				return !service.containsEmail(value);
-
-			case USERNAME:
-				try {
-					return !service.containsUsername(value);
-
-				} catch (InvalidUsernameFormatException cause) {
-					return true;
-
-				} catch (Exception cause) {
-					return false;
-				}
-			}
-		}
-
-		return true;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 }

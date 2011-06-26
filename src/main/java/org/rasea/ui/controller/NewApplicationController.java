@@ -20,6 +20,7 @@
  */
 package org.rasea.ui.controller;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
@@ -29,12 +30,11 @@ import org.rasea.core.domain.Application;
 import org.rasea.core.exception.ApplicationAlreadyExistsException;
 import org.rasea.core.service.ApplicationService;
 
-import br.gov.frameworkdemoiselle.annotation.ViewScoped;
 import br.gov.frameworkdemoiselle.message.MessageContext;
 
 @Named
-@ViewScoped
-public class ApplicationController extends AbstractController {
+@RequestScoped
+public class NewApplicationController extends AbstractController {
 
 	private static final long serialVersionUID = 7252813694049446973L;
 
@@ -52,12 +52,13 @@ public class ApplicationController extends AbstractController {
 	@Length(min = 1, message = "{required.field}")
 	private String displayName;
 
-	private Boolean active;
+	private String url;
 
 	public String createApp() throws ApplicationAlreadyExistsException {
 
 		Application app = new Application(name);
 		app.setDisplayName(displayName);
+		app.setUrl(url);
 
 		service.create(app);
 
@@ -82,12 +83,11 @@ public class ApplicationController extends AbstractController {
 		this.displayName = displayName;
 	}
 
-	public Boolean getActive() {
-		return active;
+	public String getUrl() {
+		return url;
 	}
 
-	public void setActive(Boolean active) {
-		this.active = active;
+	public void setUrl(String url) {
+		this.url = url;
 	}
-
 }

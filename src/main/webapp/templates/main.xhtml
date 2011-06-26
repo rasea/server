@@ -22,16 +22,15 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:body>
-	<b>inicio menu</b>
-	<ui:include src="/menu.xhtml" />
-	<b>fim menu</b>
-	<br />
+	<div>
+		<ui:include src="/menu.xhtml" />
+	</div>
 	
 	<h:messages globalOnly="true" />
-
-	<b>inicio corpo</b>
-	<ui:insert name="body" />
-	<b>fim corpo</b>
+		
+	<div>
+		<ui:insert name="body" />
+	</div>
 </h:body>
 
 </html>

@@ -46,10 +46,8 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 			attrs.add(new ReplaceableAttribute("photoUrl", account.getPhotoUrl(), true));
 		attrs.add(new ReplaceableAttribute("password", account.getPassword(), true));
 		attrs.add(new ReplaceableAttribute("activationCode", account.getActivationCode(), true));
-
 		final String creationDateString = dateUtils.formatIso8601Date(account.getCreationDate());
 		attrs.add(new ReplaceableAttribute("creationDate", creationDateString, true));
-
 		getSimpleDB().putAttributes(new PutAttributesRequest(getDomainName(), account.getUsername(), attrs));
 	}
 
@@ -66,14 +64,12 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 
 	public Account findByUsername(final String username) {
 		Account account = null;
-
-		final GetAttributesResult result = getSimpleDB().getAttributes(new GetAttributesRequest(getDomainName(), username));
-
+		final GetAttributesResult result = getSimpleDB().getAttributes(
+				new GetAttributesRequest(getDomainName(), username));
 		if (result != null) {
 			account = new Account(username);
 			account = fillAttributes(account, result.getAttributes());
 		}
-
 		return account;
 	}
 
@@ -81,7 +77,6 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 		Account account = null;
 
 		final String expr = "select * from `" + getDomainName() + "` where email = '" + email + "'";
-
 		final SelectRequest request = new SelectRequest(expr);
 		final SelectResult result = getSimpleDB().select(request);
 
@@ -94,23 +89,19 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 				break;
 			}
 		}
-
 		return account;
 	}
 
 	public boolean containsUsername(final String username) {
 		final GetAttributesRequest request = new GetAttributesRequest(getDomainName(), username).withAttributeNames("email");
 		final GetAttributesResult result = getSimpleDB().getAttributes(request);
-
 		return (result != null && !result.getAttributes().isEmpty());
 	}
 
 	public boolean containsEmail(final String email) {
 		final String expr = "select ItemName() from `" + getDomainName() + "` where email = '" + email + "'";
-
 		final SelectRequest request = new SelectRequest(expr);
 		final SelectResult result = getSimpleDB().select(request);
-
 		return (result != null && !result.getItems().isEmpty());
 	}
 
@@ -121,7 +112,6 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 	public void askPasswordReset(final Account account) {
 		final List<ReplaceableAttribute> attrs = new ArrayList<ReplaceableAttribute>();
 		attrs.add(new ReplaceableAttribute("passwordResetCode", account.getPasswordResetCode(), true));
-
 		getSimpleDB().putAttributes(new PutAttributesRequest(getDomainName(), account.getUsername(), attrs));
 	}
 
@@ -135,6 +125,13 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 		getSimpleDB().deleteAttributes(new DeleteAttributesRequest(getDomainName(), account.getUsername(), delAttrs));
 	}
 
+	public void saveLoginInfo(final Account account) {
+		final List<ReplaceableAttribute> attrs = new ArrayList<ReplaceableAttribute>();
+		final String lastLoginString = dateUtils.formatIso8601Date(account.getLastLogin());
+		attrs.add(new ReplaceableAttribute("lastLogin", lastLoginString, true));
+		getSimpleDB().putAttributes(new PutAttributesRequest(getDomainName(), account.getUsername(), attrs));
+	}
+	
 	@Override
 	protected void fillAttribute(final Account account, final String name, final String value) {
 		if ("email".equals(name)) {
@@ -151,6 +148,8 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 			account.setActivationCode(value);
 		} else if ("passwordResetCode".equals(name)) {
 			account.setPasswordResetCode(value);
+		} else if ("lastLogin".equals(name)) {
+			account.setLastLogin(parseDateValue(value));
 		}
 	}
 }

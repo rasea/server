@@ -20,6 +20,7 @@
  */
 package org.rasea.ui.controller;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -30,12 +31,10 @@ import org.rasea.core.exception.InvalidConfirmationCodeException;
 import org.rasea.core.exception.InvalidUsernameFormatException;
 import org.rasea.core.service.AccountService;
 
-import br.gov.frameworkdemoiselle.annotation.ViewScoped;
 import br.gov.frameworkdemoiselle.message.MessageContext;
-import br.gov.frameworkdemoiselle.util.Parameter;
 
 @Named
-@ViewScoped
+@RequestScoped
 public class AccountActivationController extends AbstractController {
 
 	private static final long serialVersionUID = 5164076649447930796L;
@@ -46,20 +45,28 @@ public class AccountActivationController extends AbstractController {
 	@Inject
 	private AccountService service;
 
-	@Inject
-	private Parameter<String> username;
+	private String username;
 
-	@Inject
-	private Parameter<String> activationCode;
+	private String activationCode;
 
-	public void activate() throws InvalidConfirmationCodeException, AccountAlreadyActiveException, EmptyUsernameException,
+	public String activate() throws InvalidConfirmationCodeException, AccountAlreadyActiveException, EmptyUsernameException,
 			InvalidUsernameFormatException {
-		Account account = new Account(username.getValue());
-		account.setActivationCode(activationCode.getValue());
+		Account account = new Account(username);
+		account.setActivationCode(activationCode);
 
 		service.activate(account);
 
 		messageContext.add("Sua conta foi ativada com sucesso.");
 		messageContext.add("Efetue o login e aproveite!");
+
+		return "pretty:login";
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setActivationCode(String activationCode) {
+		this.activationCode = activationCode;
 	}
 }
