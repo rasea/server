@@ -18,28 +18,25 @@
  * or write to the Free Software Foundation, Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.rasea.ui.validator;
+package org.rasea.ui.controller;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import br.gov.frameworkdemoiselle.security.SecurityContext;
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
+@Named
+@RequestScoped
+public class UserHomeController extends AbstractUserController {
 
-@Retention(RUNTIME)
-@Target({ FIELD, METHOD })
-@Constraint(validatedBy = UniqueValidator.class)
-public @interface Unique {
+	private static final long serialVersionUID = 4469250648226206663L;
 
-	FieldType type();
+	@Inject
+	private SecurityContext securityContext;
 
-	Class<?>[] groups() default {};
-
-	String message();
-
-	Class<? extends Payload>[] payload() default {};
+	@Override
+	protected String getUsername() {
+		return securityContext.getUser().toString();
+	}
 }

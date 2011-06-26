@@ -20,6 +20,8 @@
  */
 package org.rasea.core.domain;
 
+import java.util.Date;
+
 public class User implements br.gov.frameworkdemoiselle.security.User {
 
 	private static final long serialVersionUID = -1260271078329207417L;
@@ -28,6 +30,8 @@ public class User implements br.gov.frameworkdemoiselle.security.User {
 
 	private String photoUrl;
 
+	private Date lastLogin;
+	
 	public User(String username) {
 		this.username = username;
 	}
@@ -48,6 +52,14 @@ public class User implements br.gov.frameworkdemoiselle.security.User {
 		this.photoUrl = photoUrl;
 	}
 
+	public Date getLastLogin() {
+		return lastLogin;
+	}
+	
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
 	@Override
 	public String toString() {
 		return getUsername();
@@ -61,8 +73,7 @@ public class User implements br.gov.frameworkdemoiselle.security.User {
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return username;
 	}
 
 	@Override

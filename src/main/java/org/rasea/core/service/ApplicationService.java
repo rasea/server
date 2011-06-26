@@ -21,27 +21,41 @@
 package org.rasea.core.service;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import org.rasea.core.domain.Application;
+import org.rasea.core.exception.AccountDoesNotExistsException;
 import org.rasea.core.exception.ApplicationAlreadyExistsException;
 import org.rasea.core.exception.ApplicationDoesNotExistException;
+import org.rasea.core.exception.EmptyUsernameException;
+import org.rasea.core.exception.InvalidUsernameFormatException;
 import org.rasea.core.manager.ApplicationManager;
+
+import br.gov.frameworkdemoiselle.security.SecurityContext;
 
 public class ApplicationService implements Serializable {
 
 	private static final long serialVersionUID = 2750329357752203004L;
-	
+
 	@Inject
 	private ApplicationManager manager;
 
-	public void create(final Application app) throws ApplicationAlreadyExistsException  {
-		
+	@Inject
+	private AccountService accountService;
+
+	@Inject
+	private SecurityContext securityContext;
+
+	public void create(final Application app) throws ApplicationAlreadyExistsException {
+
 		if (containsName(app.getName())) {
 			throw new ApplicationAlreadyExistsException();
 		}
-		
+
+		final String username = securityContext.getUser().toString();
+		app.getOwners().add(username);
 		manager.create(app);
 	}
 
@@ -50,12 +64,19 @@ public class ApplicationService implements Serializable {
 	}
 
 	public void delete(final Application app) throws ApplicationDoesNotExistException {
-		
 		if (!containsName(app.getName())) {
 			throw new ApplicationDoesNotExistException();
 		}
-		
+
 		manager.delete(app);
 	}
 
+	public List<Application> findByOwner(String username) throws EmptyUsernameException, InvalidUsernameFormatException,
+			AccountDoesNotExistsException {
+		if (!accountService.containsUsername(username)) {
+			throw new AccountDoesNotExistsException();
+		}
+
+		return manager.findByOwner(username);
+	}
 }

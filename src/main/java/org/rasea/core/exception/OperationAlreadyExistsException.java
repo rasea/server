@@ -18,28 +18,10 @@
  * or write to the Free Software Foundation, Inc., 51 Franklin Street,
  * Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package org.rasea.ui.validator;
+package org.rasea.core.exception;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+public class OperationAlreadyExistsException extends RaseaException {
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+	private static final long serialVersionUID = 1830469812081996439L;
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
-
-@Retention(RUNTIME)
-@Target({ FIELD, METHOD })
-@Constraint(validatedBy = UniqueValidator.class)
-public @interface Unique {
-
-	FieldType type();
-
-	Class<?>[] groups() default {};
-
-	String message();
-
-	Class<? extends Payload>[] payload() default {};
 }

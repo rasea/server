@@ -25,11 +25,16 @@ import java.util.List;
 
 import org.rasea.core.domain.Application;
 
+import br.gov.frameworkdemoiselle.util.Strings;
+
 import com.amazonaws.services.simpledb.model.DeleteAttributesRequest;
 import com.amazonaws.services.simpledb.model.GetAttributesRequest;
 import com.amazonaws.services.simpledb.model.GetAttributesResult;
+import com.amazonaws.services.simpledb.model.Item;
 import com.amazonaws.services.simpledb.model.PutAttributesRequest;
 import com.amazonaws.services.simpledb.model.ReplaceableAttribute;
+import com.amazonaws.services.simpledb.model.SelectRequest;
+import com.amazonaws.services.simpledb.model.SelectResult;
 
 public class ApplicationManager extends AbstractSimpleDBManager<Application> {
 
@@ -38,27 +43,28 @@ public class ApplicationManager extends AbstractSimpleDBManager<Application> {
 	public void create(final Application app) {
 		final List<ReplaceableAttribute> attrs = new ArrayList<ReplaceableAttribute>();
 		attrs.add(new ReplaceableAttribute("displayName", app.getDisplayName(), true));
-
+		if (!Strings.isEmpty(app.getUrl()))
+			attrs.add(new ReplaceableAttribute("url", app.getUrl(), true));
+		final String owner = app.getOwners().iterator().next();
+		attrs.add(new ReplaceableAttribute("owners", owner, true));
 		getSimpleDB().putAttributes(new PutAttributesRequest(getDomainName(), app.getName(), attrs));
 	}
 
 	public Application findByName(final String name) {
 		Application app = null;
-
-		final GetAttributesResult result = getSimpleDB().getAttributes(new GetAttributesRequest(getDomainName(), name));
-
+		final GetAttributesResult result = getSimpleDB().getAttributes(
+				new GetAttributesRequest(getDomainName(), name));
 		if (result != null) {
 			app = new Application(name);
 			app = fillAttributes(app, result.getAttributes());
 		}
-
 		return app;
 	}
 
 	public boolean containsName(final String name) {
-		final GetAttributesRequest request = new GetAttributesRequest(getDomainName(), name).withAttributeNames("active");
+		final GetAttributesRequest request = new GetAttributesRequest(
+				getDomainName(), name).withAttributeNames("displayName");
 		final GetAttributesResult result = getSimpleDB().getAttributes(request);
-
 		return (result != null && !result.getAttributes().isEmpty());
 	}
 
@@ -66,12 +72,33 @@ public class ApplicationManager extends AbstractSimpleDBManager<Application> {
 		getSimpleDB().deleteAttributes(new DeleteAttributesRequest(getDomainName(), app.getName()));
 	}
 
+	public List<Application> findByOwner(final String owner) {
+		List<Application> list = null;
+
+		final String expr = "select * from `" + getDomainName() + "` where owners = '" + owner + "'";
+		final SelectRequest request = new SelectRequest(expr);
+		final SelectResult result = getSimpleDB().select(request);
+
+		if (result != null) {
+			for (Item item : result.getItems()) {
+				Application app = new Application(item.getName());
+				app = fillAttributes(app, item.getAttributes());
+				if (list == null)
+					list = new ArrayList<Application>();
+				list.add(app);
+			}
+		}
+		return list;
+	}
+
 	@Override
 	protected void fillAttribute(final Application app, final String name, final String value) {
 		if ("displayName".equals(name)) {
 			app.setDisplayName(value);
-			//		} else if ("active".equals(name)) {
-			//			app.setActive(new Boolean(value));
+		} else if ("url".equals(name)) {
+			app.setUrl(value);
+		} else if ("owners".equals(name)) {
+			app.getOwners().add(value);
 		}
 	}
 }
