@@ -97,10 +97,14 @@ public class AccountService implements Serializable {
 
 	public Account findByUsername(String username) throws EmptyUsernameException, InvalidUsernameFormatException {
 		validateUsername(username);
-		return manager.findByUsername(username);
+
+		Account account = manager.findByUsername(username);
+		account.setPhotoUrl(generateGravatarURL(account.getEmail()));
+
+		return account;
 	}
 
-	public  void validateUsername(String username) throws EmptyUsernameException, InvalidUsernameFormatException {
+	public void validateUsername(String username) throws EmptyUsernameException, InvalidUsernameFormatException {
 		if (Strings.isEmpty(username)) {
 			throw new EmptyUsernameException();
 		}

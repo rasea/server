@@ -73,8 +73,7 @@ public class User implements br.gov.frameworkdemoiselle.security.User {
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return username;
 	}
 
 	@Override
