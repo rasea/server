@@ -72,7 +72,7 @@ public class ApplicationManager extends AbstractSimpleDBManager<Application> {
 		getSimpleDB().deleteAttributes(new DeleteAttributesRequest(getDomainName(), app.getName()));
 	}
 
-	public List<Application> getApplicationsFromOwner(final String owner) {
+	public List<Application> findByOwner(final String owner) {
 		List<Application> list = null;
 
 		final String expr = "select * from `" + getDomainName() + "` where owners = '" + owner + "'";

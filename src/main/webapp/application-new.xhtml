@@ -24,21 +24,21 @@
 	<ui:define name="body">
 		<h:form id="signup" prependId="false">
 			<h:outputLabel value="nome" for="name" />
-			<h:inputText id="name" value="#{applicationController.name}" autocomplete="true" />
+			<h:inputText id="name" value="#{newApplicationController.name}" autocomplete="true" />
 			<h:message for="name" />
 			<br />
 
 			<h:outputLabel value="Nome para exibição" for="displayName" />
-			<h:inputText id="displayName" value="#{applicationController.displayName}" autocomplete="true" />
+			<h:inputText id="displayName" value="#{newApplicationController.displayName}" autocomplete="true" />
 			<h:message for="displayName" />
 			<br />
 
 			<h:outputLabel value="Endereço (URL)" for="url" />
-			<h:inputText id="url" value="#{applicationController.url}" autocomplete="true" />
+			<h:inputText id="url" value="#{newApplicationController.url}" autocomplete="true" />
 			<h:message for="url" />
 			<br />
 
-			<h:commandButton id="submit" value="criar aplicação" action="#{applicationController.createApp}" />
+			<h:commandButton id="submit" value="criar aplicação" action="#{newApplicationController.createApp}" />
 		</h:form>
 	</ui:define>
 

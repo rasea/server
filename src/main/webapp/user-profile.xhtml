@@ -24,10 +24,19 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/templates/main.xhtml">
 
-	<f:viewParam name="username" />
-
 	<ui:define name="body">
 		perfil público do usuário #{username}
+		
+		<h:dataTable id="list" var="app" value="#{userProfileController.applications}">
+			<h:column>
+				<f:facet name="header">nome interno</f:facet>
+				<h:outputText value="#{app.name}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">nome de exibição</f:facet>
+				<h:outputText value="#{app.displayName}" />
+			</h:column>
+		</h:dataTable>
 	</ui:define>
 
 </ui:composition>

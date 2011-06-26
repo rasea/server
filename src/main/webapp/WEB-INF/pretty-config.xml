@@ -18,7 +18,8 @@
  or write to the Free Software Foundation, Inc., 51 Franklin Street,
  Fifth Floor, Boston, MA  02110-1301, USA.
 -->
-<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.2.1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.2.1 http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.2.1.xsd">
 
 	<rewrite match="^/(.*)/$" substitute="/$1" redirect="301" />
@@ -45,7 +46,8 @@
 	</url-mapping>
 
 	<url-mapping id="activate">
-		<pattern value="/activate/#{accountActivationController.username}/#{accountActivationController.activationCode}" />
+		<pattern
+			value="/activate/#{accountActivationController.username}/#{accountActivationController.activationCode}" />
 		<view-id value="/activate.jsf" />
 		<action>#{accountActivationController.activate}</action>
 	</url-mapping>
@@ -56,13 +58,14 @@
 	</url-mapping>
 
 	<url-mapping id="password-reset">
-		<pattern value="/password/reset/#{passwordResetController.username}/#{passwordResetController.confirmationCode}" />
+		<pattern
+			value="/password/reset/#{passwordResetController.username}/#{passwordResetController.confirmationCode}" />
 		<view-id value="/password-reset.jsf" />
 		<action>#{passwordResetController.confirm}</action>
 	</url-mapping>
 
 	<url-mapping id="user-profile">
-		<pattern value="/user/#{username}" />
+		<pattern value="/user/#{userProfileController.username}" />
 		<view-id value="/user-profile.jsf" />
 	</url-mapping>
 
@@ -70,16 +73,10 @@
 		<pattern value="/app/new" />
 		<view-id value="/application-new.jsf" />
 	</url-mapping>
-	
-	<url-mapping id="application-list">
-		<pattern value="/app/list" />
-		<view-id value="/application-list.jsf" />
-		<action>#{applicationController.loadApplicationsList}</action>
-	</url-mapping>
-	
+
 	<url-mapping id="application-dashboard">
 		<pattern value="/app/#{id}" />
 		<view-id value="/application-dashboard.jsf" />
 	</url-mapping>
-	
+
 </pretty-config>

@@ -20,8 +20,6 @@
  */
 package org.rasea.ui.controller;
 
-import java.util.List;
-
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -36,7 +34,7 @@ import br.gov.frameworkdemoiselle.message.MessageContext;
 
 @Named
 @RequestScoped
-public class ApplicationController extends AbstractController {
+public class NewApplicationController extends AbstractController {
 
 	private static final long serialVersionUID = 7252813694049446973L;
 
@@ -55,11 +53,7 @@ public class ApplicationController extends AbstractController {
 	private String displayName;
 
 	private String url;
-	
-	private Boolean active;
 
-	private List<Application> appsList;
-	
 	public String createApp() throws ApplicationAlreadyExistsException {
 
 		Application app = new Application(name);
@@ -73,14 +67,6 @@ public class ApplicationController extends AbstractController {
 		return "pretty:index";
 	}
 
-	public void loadApplicationsList() {
-		appsList = service.getCurrentUserApplications();
-	}
-	
-	public List<Application> getAppsList() {
-		return appsList;
-	}
-	
 	public String getName() {
 		return name;
 	}
@@ -97,14 +83,6 @@ public class ApplicationController extends AbstractController {
 		this.displayName = displayName;
 	}
 
-	public Boolean getActive() {
-		return active;
-	}
-
-	public void setActive(Boolean active) {
-		this.active = active;
-	}
-
 	public String getUrl() {
 		return url;
 	}
@@ -112,5 +90,4 @@ public class ApplicationController extends AbstractController {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-
 }

@@ -26,20 +26,34 @@
 
 	<ui:define name="body">
 		<p>
-			<h:outputText value="home do usuário #{securityContext.user}"/>
-			<h:outputText value=" (último login em "/>
+			<h:outputText value="home do usuário #{securityContext.user}" />
+			<h:outputText value=" (último login em " />
 			<h:outputText value="#{securityContext.user.lastLogin}">
-				<f:convertDateTime type="both" dateStyle="short"/>
+				<f:convertDateTime type="both" dateStyle="short" />
 			</h:outputText>
-			<h:outputText value=")"/>
+			<h:outputText value=")" />
 		</p>
 		<p>
-			<h:graphicImage value="#{securityContext.user.photoUrl}" 
+			<h:graphicImage value="#{securityContext.user.photoUrl}"
 				alt="#{securityContext.user}" width="100" height="100" />
 		</p>
 		<p>
 			<h:button value="criar aplicação" outcome="pretty:application-new" />
-			<h:button value="lista de aplicações" outcome="pretty:application-list" />
+
+			<h:dataTable id="list" var="app" value="#{userHomeController.applications}">
+				<h:column>
+					<f:facet name="header">nome interno</f:facet>
+					<h:outputText value="#{app.name}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">nome de exibição</f:facet>
+					<h:outputText value="#{app.displayName}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">acessos</f:facet>
+					<h:outputText value="#{app.accessCount}" />
+				</h:column>
+			</h:dataTable>
 		</p>
 	</ui:define>
 
