@@ -22,10 +22,10 @@ package org.rasea.core.security;
 
 import javax.enterprise.inject.Alternative;
 
-import br.gov.frameworkdemoiselle.security.Authorizator;
+import br.gov.frameworkdemoiselle.security.Authorizer;
 
 @Alternative
-public class RaseaAuthorizer implements Authorizator {
+public class RaseaAuthorizer implements Authorizer {
 
 	private static final long serialVersionUID = -1432059116255260326L;
 
@@ -35,7 +35,7 @@ public class RaseaAuthorizer implements Authorizator {
 	}
 
 	@Override
-	public boolean hasPermission(Object resource, String operation) {
+	public boolean hasPermission(String resource, String operation) {
 		return true;
 	}
 }
