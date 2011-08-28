@@ -41,7 +41,7 @@
 			<dependency>
 				<groupId>br.gov.frameworkdemoiselle</groupId>
 				<artifactId>demoiselle-parent</artifactId>
-				<version>2.1.1</version>
+				<version>2.1.2</version>
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
@@ -52,12 +52,10 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
-<!-- 			<version>4.2.0.Beta1</version> -->
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.weld</groupId>
 			<artifactId>weld-core</artifactId>
-<!-- 			<version>1.1.1.Final</version> -->
 			<exclusions>
 				<exclusion>
 					<artifactId>jsr250-api</artifactId>
@@ -68,13 +66,11 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
-<!-- 			<version>2.5</version> -->
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.weld.servlet</groupId>
 			<artifactId>weld-servlet-core</artifactId>
-<!-- 			<version>1.1.1.Final</version> -->
 		</dependency>
 		<dependency>
 			<groupId>com.ocpsoft</groupId>
@@ -109,7 +105,6 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-<!-- 			<version>1.4.2</version> -->
 		</dependency>
 		<dependency>
 			<groupId>com.amazonaws</groupId>
@@ -118,6 +113,7 @@
 		</dependency>
 
 		<dependency>
+<!-- 			<groupId>br.gov.frameworkdemoiselle.component</groupId> -->
 			<groupId>br.gov.frameworkdemoiselle</groupId>
 			<artifactId>demoiselle-junit</artifactId>
 			<scope>test</scope>
@@ -125,19 +121,16 @@
 		<dependency>
 			<groupId>org.easymock</groupId>
 			<artifactId>easymock</artifactId>
-<!-- 			<version>3.0</version> -->
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.powermock</groupId>
 			<artifactId>powermock-module-junit4</artifactId>
-<!-- 			<version>1.4.6</version> -->
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.powermock</groupId>
 			<artifactId>powermock-api-easymock</artifactId>
-<!-- 			<version>1.4.6</version> -->
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

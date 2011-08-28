@@ -54,9 +54,6 @@ public class PasswordResetController extends AbstractController {
 	private AccountService service;
 
 	@NotNull
-	private String username;
-
-	@NotNull
 	private String confirmationCode;
 
 	@NotNull
@@ -73,7 +70,8 @@ public class PasswordResetController extends AbstractController {
 
 	private boolean invalidConfirmationCode = true;
 
-	public String request() throws InvalidConfirmationCodeException, EmptyEmailException, InvalidEmailFormatException, AccountDoesNotExistsException {
+	public String request() throws InvalidConfirmationCodeException, EmptyEmailException, InvalidEmailFormatException,
+			AccountDoesNotExistsException {
 		service.passwordResetRequest(email);
 
 		messageContext.add("Pedido de reinicialização de senha efetuado com sucesso.");
@@ -82,41 +80,28 @@ public class PasswordResetController extends AbstractController {
 		return "pretty:index";
 	}
 
-	public void confirm() throws InvalidConfirmationCodeException, EmptyUsernameException, InvalidUsernameFormatException {
-		Account account = service.findByUsername(username);
-
+	public void confirm() throws InvalidConfirmationCodeException, EmptyUsernameException,
+			InvalidUsernameFormatException {
+		service.findByPasswordResetCode(confirmationCode);
 		invalidConfirmationCode = false;
-
-		if (account == null) {
-			invalidConfirmationCode = true;
-		}
-
-		if (!confirmationCode.equals(account.getPasswordResetCode())) {
-			invalidConfirmationCode = true;
-		}
-
-		if (invalidConfirmationCode) {
-			throw new InvalidConfirmationCodeException();
-		}
 	}
 
 	public boolean isInvalidConfirmationCode() {
 		return invalidConfirmationCode;
 	}
 
-	public void perform() throws InvalidConfirmationCodeException, EmptyUsernameException, InvalidUsernameFormatException {
+	public void perform() throws InvalidConfirmationCodeException, EmptyUsernameException,
+			InvalidUsernameFormatException {
 		if (newPassword.equals(confirmPassword)) {
-			Account account = new Account(username);
-			account.setPasswordResetCode(confirmationCode);
-			account.setPassword(newPassword);
-
-			service.passwordResetConfirmation(account);
-			messageContext.add("Sua senha foi alterada com sucesso.");
-
+			service.passwordResetConfirmation(confirmationCode, newPassword);
+			Account account = service.findByPasswordResetCode(confirmationCode);
+			
 			Credentials credentials = Beans.getReference(Credentials.class);
-			credentials.setUsernameOrEmail(username);
+			credentials.setUsernameOrEmail(account.getUsername());
 			credentials.setPassword(newPassword);
 
+			messageContext.add("Sua senha foi alterada com sucesso.");
+			
 			SecurityContext securityContext = Beans.getReference(SecurityContext.class);
 			securityContext.login();
 
@@ -124,14 +109,6 @@ public class PasswordResetController extends AbstractController {
 			FacesMessage message = new FacesMessage("Não confere com a senha");
 			getFacesContext().addMessage("confirmPassword", message);
 		}
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public String getConfirmationCode() {

@@ -31,8 +31,8 @@ import org.rasea.core.service.AccountService;
 
 import br.gov.frameworkdemoiselle.security.Authenticator;
 
-@RequestScoped
 @Alternative
+@RequestScoped
 public class RaseaAuthenticator implements Authenticator {
 
 	private static final long serialVersionUID = -6728424241183581910L;

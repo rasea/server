@@ -92,6 +92,45 @@ public class AccountManager extends AbstractSimpleDBManager<Account> {
 		return account;
 	}
 
+	public Account findByActivationCode(String activationCode) {
+		Account account = null;
+
+		final String expr = "select * from `" + getDomainName() + "` where activationCode = '" + activationCode + "'";
+		final SelectRequest request = new SelectRequest(expr);
+		final SelectResult result = getSimpleDB().select(request);
+
+		if (result != null) {
+			for (Item item : result.getItems()) {
+				account = new Account(item.getName());
+				account = fillAttributes(account, item.getAttributes());
+
+				// TODO: o campo "activationCode" será único no domínio, ver como informar no SimpleDB
+				break;
+			}
+		}
+		return account;
+	}
+	
+	public Account findByPasswordResetCode(String passwordResetCode) {
+		Account account = null;
+		
+		final String expr = "select * from `" + getDomainName() + "` where passwordResetCode = '" + passwordResetCode + "'";
+		final SelectRequest request = new SelectRequest(expr);
+		final SelectResult result = getSimpleDB().select(request);
+		
+		if (result != null) {
+			for (Item item : result.getItems()) {
+				account = new Account(item.getName());
+				account = fillAttributes(account, item.getAttributes());
+				
+				// TODO: o campo "passwordResetCode" será único no domínio, ver como informar no SimpleDB
+				break;
+			}
+		}
+		return account;
+	}
+	
+	
 	public boolean containsUsername(final String username) {
 		final GetAttributesRequest request = new GetAttributesRequest(getDomainName(), username).withAttributeNames("email");
 		final GetAttributesResult result = getSimpleDB().getAttributes(request);

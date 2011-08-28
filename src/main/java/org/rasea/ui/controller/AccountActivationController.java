@@ -24,7 +24,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.rasea.core.domain.Account;
 import org.rasea.core.exception.AccountAlreadyActiveException;
 import org.rasea.core.exception.EmptyUsernameException;
 import org.rasea.core.exception.InvalidConfirmationCodeException;
@@ -45,25 +44,21 @@ public class AccountActivationController extends AbstractController {
 	@Inject
 	private AccountService service;
 
-	private String username;
-
 	private String activationCode;
 
-	public String activate() throws InvalidConfirmationCodeException, AccountAlreadyActiveException, EmptyUsernameException,
-			InvalidUsernameFormatException {
-		Account account = new Account(username);
-		account.setActivationCode(activationCode);
+	public String activate() throws InvalidConfirmationCodeException, AccountAlreadyActiveException,
+			EmptyUsernameException, InvalidUsernameFormatException {
+		// Account account = new Account(username);
+		// account.setActivationCode(activationCode);
+		//
+		// service.activate(account);
 
-		service.activate(account);
+		service.activate(activationCode);
 
 		messageContext.add("Sua conta foi ativada com sucesso.");
 		messageContext.add("Efetue o login e aproveite!");
 
 		return "pretty:login";
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public void setActivationCode(String activationCode) {

@@ -61,7 +61,7 @@ public class Mailer implements Serializable {
 
 		Content content = new Content();
 		content.setCharset("UTF-8");
-		content.setData(String.format("%s/activate/%s/%s", getBaseURL(), account.getUsername(), account.getActivationCode()));
+		content.setData(String.format("%s/activate/%s", getBaseURL(), account.getActivationCode()));
 
 		Body body = new Body();
 		body.setText(content);
@@ -82,7 +82,7 @@ public class Mailer implements Serializable {
 
 		Content content = new Content();
 		content.setCharset("UTF-8");
-		content.setData(String.format("%s/password/reset/%s/%s", getBaseURL(), account.getUsername(), account.getPasswordResetCode()));
+		content.setData(String.format("%s/password/reset/%s", getBaseURL(), account.getPasswordResetCode()));
 
 		Body body = new Body();
 		body.setText(content);
@@ -98,20 +98,20 @@ public class Mailer implements Serializable {
 
 		// Isso aqui não funciona!
 
-		//		HttpServletRequest request = Beans.getReference(HttpServletRequest.class);
-		//		StringBuffer baseUrl = new StringBuffer();
+		// HttpServletRequest request = Beans.getReference(HttpServletRequest.class);
+		// StringBuffer baseUrl = new StringBuffer();
 		//
-		//		baseUrl.append("http://");
-		//		baseUrl.append(request.getLocalName());
+		// baseUrl.append("http://");
+		// baseUrl.append(request.getLocalName());
 		//
-		//		if (request.getLocalPort() != 80 && request.getLocalPort() != 443) {
-		//			baseUrl.append(":");
-		//			baseUrl.append(request.getLocalPort());
-		//		}
+		// if (request.getLocalPort() != 80 && request.getLocalPort() != 443) {
+		// baseUrl.append(":");
+		// baseUrl.append(request.getLocalPort());
+		// }
 		//
-		//		baseUrl.append(request.getContextPath());
+		// baseUrl.append(request.getContextPath());
 
-		//		return "http://localhost:8080/rasea-server";
+		// return "http://localhost:8080/rasea-server";
 
 		return "http://aws.rasea.org";
 	}

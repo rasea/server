@@ -47,7 +47,7 @@
 
 	<url-mapping id="activate">
 		<pattern
-			value="/activate/#{accountActivationController.username}/#{accountActivationController.activationCode}" />
+			value="/activate/#{accountActivationController.activationCode}" />
 		<view-id value="/activate.jsf" />
 		<action>#{accountActivationController.activate}</action>
 	</url-mapping>
@@ -59,7 +59,7 @@
 
 	<url-mapping id="password-reset">
 		<pattern
-			value="/password/reset/#{passwordResetController.username}/#{passwordResetController.confirmationCode}" />
+			value="/password/reset/#{passwordResetController.confirmationCode}" />
 		<view-id value="/password-reset.jsf" />
 		<action>#{passwordResetController.confirm}</action>
 	</url-mapping>
