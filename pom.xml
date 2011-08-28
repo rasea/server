@@ -42,6 +42,7 @@
 				<groupId>br.gov.frameworkdemoiselle</groupId>
 				<artifactId>demoiselle-parent</artifactId>
 				<version>2.1.2</version>
+<!-- 				<version>2.2.0-RC1</version> -->
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
@@ -52,6 +53,16 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>jaxb-api</artifactId>
+					<groupId>javax.xml.bind</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jaxb-impl</artifactId>
+					<groupId>com.sun.xml.bind</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.weld</groupId>
@@ -75,7 +86,7 @@
 		<dependency>
 			<groupId>com.ocpsoft</groupId>
 			<artifactId>prettyfaces-jsf2</artifactId>
-			<version>3.2.1</version>
+			<version>3.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>br.gov.frameworkdemoiselle</groupId>
@@ -109,7 +120,7 @@
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk</artifactId>
-			<version>1.2.1</version>
+			<version>1.2.7</version>
 		</dependency>
 
 		<dependency>
@@ -117,6 +128,12 @@
 			<groupId>br.gov.frameworkdemoiselle</groupId>
 			<artifactId>demoiselle-junit</artifactId>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>jsr250-api</artifactId>
+					<groupId>javax.annotation</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.easymock</groupId>

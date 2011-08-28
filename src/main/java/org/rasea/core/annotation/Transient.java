@@ -20,7 +20,8 @@
  */
 package org.rasea.core.annotation;
 
-import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
